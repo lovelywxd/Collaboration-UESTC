@@ -21,7 +21,7 @@ _RE_EMAIL = _RE_EMAIL = re.compile(r'^[a-z0-9\.\-_]+@[a-z0-9\-_]+(\.[a-z0-9\-_]+
 _RE_SHA1 = re.compile(r'[0-9a-f]{40}$')
 
 def check_admin(request):
-    if request.__user__ is None or not request.__user__.admin:
+    if request.__user__ is None:
         return APIPermissionError()
 
 
@@ -101,6 +101,7 @@ def api_register_user(*, email, name, passwd,studentNo,phone,gender):
         raise APIValueError("name")
     if not email or not _RE_EMAIL.match(email):
         raise APIValueError("email")
+    # some question ? why.
     if not passwd or not _RE_SHA1.match(passwd):
         raise APIValueError("passwd")
     users = yield from User.findAll('name=?', [name])
@@ -160,5 +161,5 @@ def authenticate(*, name, passwd):
 
 
 @get('/api/act/{id}')
-def api_get_blog(*, id):
+def api_get_act(*, id):
     pass
