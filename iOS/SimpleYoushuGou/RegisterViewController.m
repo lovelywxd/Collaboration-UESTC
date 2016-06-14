@@ -42,6 +42,7 @@
     NSString* url;
     if (appdele.OnLineTest) {
         url = @"http://115.159.219.141:80/api/users";
+//        url = @"http://52.69.162.241:8888/register/";
     }
     else
     {
