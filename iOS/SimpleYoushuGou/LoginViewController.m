@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "AFURLRequestSerialization.h"
+#import "homeViewController.h"
 
 @interface LoginViewController ()
 {
@@ -27,8 +28,105 @@ NSMutableData* totalData;
    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"loginbackground.png"]]];
     self.headview.image = [UIImage imageNamed:@"head_background.png"];
     appdele = [UIApplication sharedApplication].delegate;
+    
+//    self.table.dataSource = self;
+//    self.table.delegate = self;
+//    self.table.backgroundColor = [UIColor clearColor];
+    CGRect frame = self.view.frame;
+    UITableView *tableView1 = [[UITableView alloc]initWithFrame:CGRectMake(30, 80, frame.size.width-60,80)style:UITableViewStylePlain];
+    tableView1.dataSource = self;
+    tableView1.delegate = self;
+    tableView1.scrollEnabled = NO;
+    [tableView1 setBackgroundColor:[UIColor blueColor]];
+    [tableView1 setBackgroundView:nil];
+    tableView1.layer.cornerRadius=12;
+    tableView1.clipsToBounds=YES;
+    tableView1.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    tableView1.separatorColor = [UIColor redColor];
+    [self.view addSubview:tableView1];
+    
+//    //单击空白处隐藏键
+    UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+    tapGr.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapGr];
 }
-  
+
+-(void)viewTapped:(UITapGestureRecognizer*)tapGr
+{
+    [self.username resignFirstResponder];
+    [self.passwd resignFirstResponder];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableview cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.username = [[UITextField alloc]initWithFrame:CGRectMake(120, 5, 140, 30)];
+    [self.username setBorderStyle:UITextBorderStyleNone];
+    [self.username setPlaceholder:@"请输入用户名"];
+    [self.username setTextColor:[UIColor brownColor]];
+    [self.username setFont:[UIFont fontWithName:@"Arial" size:14]];
+    [self.username setBackgroundColor:[UIColor redColor]];
+    [self.username setReturnKeyType:UIReturnKeyDone];
+    [self.username addTarget:self action:@selector(textchanged:) forControlEvents:UIControlEventEditingChanged];
+ 
+//    self.username.keyboardType =  UIKeyboardTypeURL;
+    
+    self.passwd = [[UITextField alloc]initWithFrame:CGRectMake(120, 5, 140, 30)];
+    [self.passwd setBorderStyle:UITextBorderStyleNone];
+    [self.passwd setPlaceholder:@"请输入密码"];
+    [self.passwd setTextColor:[UIColor brownColor]];
+    [self.passwd setFont:[UIFont fontWithName:@"Arial" size:14]];
+    [self.passwd setSecureTextEntry:YES];
+    [self.passwd setReturnKeyType:UIReturnKeyDone];
+    //cell.selectionStyle = UITableViewStyleGrouped;
+    self.passwd.keyboardType = UIKeyboardTypeNumberPad;
+    
+    //    [self.username addTarget:self action:@selector(finishInput:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    
+    static NSString *identifier = @"_QiShiCELL";
+    UITableViewCell *cell =(UITableViewCell *) [tableview dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:identifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        if (indexPath.row == 0) {
+            
+            [cell.textLabel setTextColor:[UIColor blackColor]];
+            [cell.textLabel setFont:[UIFont fontWithName:@"Arial" size:14]];
+            [cell.textLabel setText: @"用户名:"];
+            
+            [cell addSubview:self.username];
+        }else if(indexPath.row == 1)
+        {
+            
+            [cell.textLabel setTextColor:[UIColor blackColor]];
+            [cell.textLabel setFont:[UIFont fontWithName:@"Arial" size:14]];
+            [cell.textLabel setText:  @"密   码:"];
+            [cell addSubview:self.passwd];
+        }
+        
+    }
+    return cell;
+}
+
+//- (void)finishInput:(id)sender
+//{
+////    [self.username resignFirstResponder];
+//    [self.passwd becomeFirstResponder];
+//    NSLog(@"%@",((UITextField*)sender).text);
+//}
+
+- (void)textchanged:(id)sender
+{
+    NSLog(@"%@",((UITextField*)sender).text);
+}
+
+- (CGFloat)tableView:(UITableView *)tableview heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40;
+}
+
+- (NSInteger)tableView:(UITableView *)tableview numberOfRowsInSection:(NSInteger)section{
+    return 2;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -52,8 +150,8 @@ NSMutableData* totalData;
     NSString* username;
     NSString* passwd;
     if (self.enableInput.on) {
-        username = self.userName.text;
-        passwd = self.password.text;
+        username = self.username.text;
+        passwd = self.passwd.text;
     }
     else
     {
@@ -74,6 +172,17 @@ NSMutableData* totalData;
          // 此处将NSDictionary转换成NSString、并使用UIAlertView显示登录结果
          if ([keys containsObject:@"result"]) {
              [login_result appendString:@"Login success"];
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Login result" message:login_result preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                 // 获取指定的Storyboard，name填写Storyboard的文件名
+                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                 // 从Storyboard上按照identifier获取指定的界面（VC），identifier必须是唯一的
+                 homeViewController* homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
+                 
+                 [self.navigationController pushViewController:homeVC animated:YES];
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
          }
          else
          {
@@ -81,12 +190,13 @@ NSMutableData* totalData;
              NSData* data = [NSJSONSerialization dataWithJSONObject:responseObject options:0 error:nil];
              NSString *err_msg = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
              [login_result appendString:err_msg];
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Login result" message:login_result preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
          }
          
-         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Login result" message:login_result preferredStyle:UIAlertControllerStyleAlert];
-         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
-         [alert addAction:defaultAction];
-         [self presentViewController:alert animated:YES completion:nil];
+       
      }
      // 获取服务器响应失败时激发的代码块
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -98,8 +208,6 @@ NSMutableData* totalData;
      }];
 }
 
-- (IBAction)LoginBySina:(id)sender {
-}
 
 /*
 #pragma mark - Navigation

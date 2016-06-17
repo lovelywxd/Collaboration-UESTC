@@ -1,26 +1,23 @@
 //
-//  settingViewController.m
+//  welcomeViewController.m
 //  MyBookRecycle
 //
-//  Created by 苏丽荣 on 16/6/12.
+//  Created by 苏丽荣 on 16/6/17.
 //  Copyright © 2016年 苏丽荣. All rights reserved.
 //
 
-#import "settingViewController.h"
-#import "AppDelegate.h"
+#import "welcomeViewController.h"
 
-@interface settingViewController ()
-{
-    AppDelegate* appdele;
-}
+@interface welcomeViewController ()
+
 @end
 
-@implementation settingViewController
+@implementation welcomeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    appdele.OnLineTest = YES;
+//    [self.navigationController  setToolbarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,8 +35,4 @@
 }
 */
 
-- (IBAction)submitModdify:(id)sender {
-    appdele = [UIApplication sharedApplication].delegate;
-    appdele.OnLineTest = self.onLine.on;
-}
 @end

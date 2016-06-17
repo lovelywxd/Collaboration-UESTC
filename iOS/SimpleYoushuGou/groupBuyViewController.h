@@ -1,5 +1,5 @@
 //
-//  baseViewController.h
+//  groupBuyViewController.h
 //  MyBookRecycle
 //
 //  Created by 苏丽荣 on 16/6/17.
@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "baseViewController.h"
 
-@interface baseViewController : UIViewController
+@interface groupBuyViewController : baseViewController
 
 @end

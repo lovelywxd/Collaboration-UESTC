@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *headview;
-@property (strong, nonatomic) IBOutlet UITextField *userName;
-@property (strong, nonatomic) IBOutlet UITextField *password;
+
 - (IBAction)Login:(id)sender;
 @property (strong, nonatomic) IBOutlet UISwitch *enableInput;
-
-- (IBAction)LoginBySina:(id)sender;
-
+@property (nonatomic,retain) UITextField *username;
+@property (nonatomic,retain) UITextField *passwd;
+//@property (strong, nonatomic) IBOutlet UITableView *table;
+@property (strong, nonatomic) IBOutlet UIButton *loginBtn;
 
 @end

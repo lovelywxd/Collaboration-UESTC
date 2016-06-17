@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5854A5841D13EE6C00A65193 /* welcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5831D13EE6C00A65193 /* welcomeViewController.m */; };
+		5854A5871D142AEB00A65193 /* homeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5861D142AEB00A65193 /* homeViewController.m */; };
+		5854A58A1D14344000A65193 /* collectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5891D14344000A65193 /* collectionViewController.m */; };
+		5854A58D1D14344F00A65193 /* groupBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A58C1D14344F00A65193 /* groupBuyViewController.m */; };
+		5854A5901D14388300A65193 /* baseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A58F1D14388300A65193 /* baseViewController.m */; };
+		5854A5931D143B5300A65193 /* assistantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5921D143B5300A65193 /* assistantViewController.m */; };
+		5854A5961D143DB700A65193 /* userSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5951D143DB700A65193 /* userSettingViewController.m */; };
 		58DE5C3B1CE071A4000BE711 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C3A1CE071A4000BE711 /* main.m */; };
 		58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C3D1CE071A4000BE711 /* AppDelegate.m */; };
 		58DE5C411CE071A4000BE711 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C401CE071A4000BE711 /* ViewController.m */; };
@@ -15,7 +22,6 @@
 		58DE5C491CE071A4000BE711 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58DE5C481CE071A4000BE711 /* Assets.xcassets */; };
 		58DE5C4C1CE071A4000BE711 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58DE5C4A1CE071A4000BE711 /* LaunchScreen.storyboard */; };
 		58DE5C571CE071A4000BE711 /* MyBookRecycleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C561CE071A4000BE711 /* MyBookRecycleUITests.m */; };
-		58DE5C6E1CE072DD000BE711 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C671CE072DD000BE711 /* BaseViewController.m */; };
 		58DE5C6F1CE072DD000BE711 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C691CE072DD000BE711 /* HelpViewController.m */; };
 		58DE5C701CE072DD000BE711 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C6B1CE072DD000BE711 /* RegisterViewController.m */; };
 		58DE5C711CE072DD000BE711 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C6D1CE072DD000BE711 /* LoginViewController.m */; };
@@ -130,6 +136,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5854A5821D13EE6C00A65193 /* welcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = welcomeViewController.h; sourceTree = "<group>"; };
+		5854A5831D13EE6C00A65193 /* welcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = welcomeViewController.m; sourceTree = "<group>"; };
+		5854A5851D142AEB00A65193 /* homeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = homeViewController.h; sourceTree = "<group>"; };
+		5854A5861D142AEB00A65193 /* homeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = homeViewController.m; sourceTree = "<group>"; };
+		5854A5881D14344000A65193 /* collectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = collectionViewController.h; sourceTree = "<group>"; };
+		5854A5891D14344000A65193 /* collectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = collectionViewController.m; sourceTree = "<group>"; };
+		5854A58B1D14344F00A65193 /* groupBuyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = groupBuyViewController.h; sourceTree = "<group>"; };
+		5854A58C1D14344F00A65193 /* groupBuyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = groupBuyViewController.m; sourceTree = "<group>"; };
+		5854A58E1D14388300A65193 /* baseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = baseViewController.h; sourceTree = "<group>"; };
+		5854A58F1D14388300A65193 /* baseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = baseViewController.m; sourceTree = "<group>"; };
+		5854A5911D143B5300A65193 /* assistantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assistantViewController.h; sourceTree = "<group>"; };
+		5854A5921D143B5300A65193 /* assistantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = assistantViewController.m; sourceTree = "<group>"; };
+		5854A5941D143DB700A65193 /* userSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userSettingViewController.h; sourceTree = "<group>"; };
+		5854A5951D143DB700A65193 /* userSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userSettingViewController.m; sourceTree = "<group>"; };
 		58DE5C361CE071A4000BE711 /* MyBookRecycle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBookRecycle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DE5C3A1CE071A4000BE711 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		58DE5C3C1CE071A4000BE711 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -144,8 +164,6 @@
 		58DE5C521CE071A4000BE711 /* MyBookRecycleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyBookRecycleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DE5C561CE071A4000BE711 /* MyBookRecycleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyBookRecycleUITests.m; sourceTree = "<group>"; };
 		58DE5C581CE071A4000BE711 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		58DE5C661CE072DD000BE711 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
-		58DE5C671CE072DD000BE711 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		58DE5C681CE072DD000BE711 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		58DE5C691CE072DD000BE711 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		58DE5C6A1CE072DD000BE711 /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
@@ -339,16 +357,28 @@
 		58DE5C611CE07262000BE711 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5854A5821D13EE6C00A65193 /* welcomeViewController.h */,
+				5854A5831D13EE6C00A65193 /* welcomeViewController.m */,
 				58E01C771D0D693100D3E259 /* settingViewController.h */,
 				58E01C781D0D693100D3E259 /* settingViewController.m */,
-				58DE5C661CE072DD000BE711 /* BaseViewController.h */,
-				58DE5C671CE072DD000BE711 /* BaseViewController.m */,
 				58DE5C681CE072DD000BE711 /* HelpViewController.h */,
 				58DE5C691CE072DD000BE711 /* HelpViewController.m */,
 				58DE5C6A1CE072DD000BE711 /* RegisterViewController.h */,
 				58DE5C6B1CE072DD000BE711 /* RegisterViewController.m */,
 				58DE5C6C1CE072DD000BE711 /* LoginViewController.h */,
 				58DE5C6D1CE072DD000BE711 /* LoginViewController.m */,
+				5854A5851D142AEB00A65193 /* homeViewController.h */,
+				5854A5861D142AEB00A65193 /* homeViewController.m */,
+				5854A58E1D14388300A65193 /* baseViewController.h */,
+				5854A58F1D14388300A65193 /* baseViewController.m */,
+				5854A5941D143DB700A65193 /* userSettingViewController.h */,
+				5854A5951D143DB700A65193 /* userSettingViewController.m */,
+				5854A5881D14344000A65193 /* collectionViewController.h */,
+				5854A5891D14344000A65193 /* collectionViewController.m */,
+				5854A58B1D14344F00A65193 /* groupBuyViewController.h */,
+				5854A58C1D14344F00A65193 /* groupBuyViewController.m */,
+				5854A5911D143B5300A65193 /* assistantViewController.h */,
+				5854A5921D143B5300A65193 /* assistantViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -674,20 +704,26 @@
 			files = (
 				58E3B5EF1D0BA9CF00B5689F /* AFURLSessionManager.m in Sources */,
 				58E3B5EC1D0BA9CF00B5689F /* AFURLConnectionOperation.m in Sources */,
+				5854A5961D143DB700A65193 /* userSettingViewController.m in Sources */,
 				58E3B5E71D0BA9CF00B5689F /* AFHTTPRequestOperation.m in Sources */,
+				5854A5871D142AEB00A65193 /* homeViewController.m in Sources */,
+				5854A5931D143B5300A65193 /* assistantViewController.m in Sources */,
 				58DE5C711CE072DD000BE711 /* LoginViewController.m in Sources */,
 				58E3B5E81D0BA9CF00B5689F /* AFHTTPRequestOperationManager.m in Sources */,
 				58DE5C411CE071A4000BE711 /* ViewController.m in Sources */,
+				5854A5901D14388300A65193 /* baseViewController.m in Sources */,
+				5854A58A1D14344000A65193 /* collectionViewController.m in Sources */,
 				58DE5C6F1CE072DD000BE711 /* HelpViewController.m in Sources */,
 				58E01C791D0D693100D3E259 /* settingViewController.m in Sources */,
 				58E3B5E91D0BA9CF00B5689F /* AFHTTPSessionManager.m in Sources */,
-				58DE5C6E1CE072DD000BE711 /* BaseViewController.m in Sources */,
 				58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */,
+				5854A58D1D14344F00A65193 /* groupBuyViewController.m in Sources */,
 				58DE5C701CE072DD000BE711 /* RegisterViewController.m in Sources */,
 				58E3B5EB1D0BA9CF00B5689F /* AFSecurityPolicy.m in Sources */,
 				58DE5C471CE071A4000BE711 /* MyBookRecycle.xcdatamodeld in Sources */,
 				58E3B5ED1D0BA9CF00B5689F /* AFURLRequestSerialization.m in Sources */,
 				58E3B5EA1D0BA9CF00B5689F /* AFNetworkReachabilityManager.m in Sources */,
+				5854A5841D13EE6C00A65193 /* welcomeViewController.m in Sources */,
 				58E3B5EE1D0BA9CF00B5689F /* AFURLResponseSerialization.m in Sources */,
 				58DE5C3B1CE071A4000BE711 /* main.m in Sources */,
 			);
