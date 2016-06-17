@@ -299,9 +299,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5854A5971D14447000A65193 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Image;
+			sourceTree = "<group>";
+		};
 		58DE5C2D1CE071A3000BE711 = {
 			isa = PBXGroup;
 			children = (
+				5854A5971D14447000A65193 /* Image */,
 				58DE5C651CE0728A000BE711 /* Resource */,
 				58DE5C631CE07278000BE711 /* Lib */,
 				58DE5C611CE07262000BE711 /* Controller */,

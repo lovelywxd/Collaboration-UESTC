@@ -20,6 +20,19 @@
 @implementation baseViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    ［UIViewController pref
+    //设置Navigation Bar背景图片
+    UIImage *title_bg = [UIImage imageNamed:@"head_background.png"];  //获取图片
+    CGSize titleSize = self.navigationController.navigationBar.bounds.size;  //获取Navigation Bar的位置和大小
+    titleSize.height += 60;
+    title_bg = [self scaleToSize:title_bg size:titleSize];//设置图片的大小与Navigation Bar相同
+    [self.navigationController.navigationBar
+     setBackgroundImage:title_bg
+     forBarMetrics:UIBarMetricsDefault];  //设置背景
+    
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
+    self.navigationController.navigationBar.tintColor = [UIColor redColor];//实际上这个改变的是navigationbar中字的颜色
     // Do any additional setup after loading the view.
     // Do any additional setup after loading the view.
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -32,6 +45,15 @@
 
     UIBarButtonItem* left = [[UIBarButtonItem alloc] initWithTitle:@"用户设置" style:UIBarButtonItemStylePlain target:self action:@selector(goUserSettingVC)];
     [self.navigationItem setLeftBarButtonItem:left];
+}
+
+//调整图片大小
+- (UIImage *)scaleToSize:(UIImage *)img size:(CGSize)size{
+    UIGraphicsBeginImageContext(size);
+    [img drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
 }
 
 - (void)goUserSettingVC
