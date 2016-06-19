@@ -7,6 +7,7 @@ class User(models.Model):
 	school = models.CharField(max_length=50)
 	email = models.EmailField()
 	studentNo = models.CharField(max_length=20)
+<<<<<<< HEAD
 	gender = models.BooleanField()
 
 class News(models.Model):
@@ -21,3 +22,6 @@ class Sale(models.Model):
 	end = models.CharField(max_length=50)
 	link = models.CharField(max_length=100)
 	
+=======
+	gender = models.BooleanField()
+>>>>>>> 4e309638c24d78a3b993fd2530c56c5e4392e56d
