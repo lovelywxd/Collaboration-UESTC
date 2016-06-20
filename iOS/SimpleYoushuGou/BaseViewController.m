@@ -22,25 +22,44 @@
     [super viewDidLoad];
 //    ［UIViewController pref
     //设置Navigation Bar背景图片
-    UIImage *title_bg = [UIImage imageNamed:@"head_background.png"];  //获取图片
-    CGSize titleSize = self.navigationController.navigationBar.bounds.size;  //获取Navigation Bar的位置和大小
-    titleSize.height += 60;
-    title_bg = [self scaleToSize:title_bg size:titleSize];//设置图片的大小与Navigation Bar相同
-    [self.navigationController.navigationBar
-     setBackgroundImage:title_bg
-     forBarMetrics:UIBarMetricsDefault];  //设置背景
+//    UIImage *title_bg = [UIImage imageNamed:@"head_background.png"];  //获取图片
+//    CGSize titleSize = self.navigationController.navigationBar.bounds.size;  //获取Navigation Bar的位置和大小
+//    titleSize.height += 60;
+//    title_bg = [self scaleToSize:title_bg size:titleSize];//设置图片的大小与Navigation Bar相同
+//    [self.navigationController.navigationBar
+//     setBackgroundImage:title_bg
+//     forBarMetrics:UIBarMetricsDefault];  //设置背景
+    self.navigationController.navigationBar.backgroundColor = [UIColor colorWithHue:0 saturation:0.478431 brightness:1 alpha:1];
+
+//    0 0.478431 1 1
     
 //    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     self.navigationController.navigationBar.tintColor = [UIColor redColor];//实际上这个改变的是navigationbar中字的颜色
     // Do any additional setup after loading the view.
     // Do any additional setup after loading the view.
+    UITabBarItem *tabBarItem1;
+    
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIView *homeBtnView = [[UIView alloc] initWithFrame:CGRectMake(0, 0 , 50, 44)];
+    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0 , 50, 30)];
+    [image setImage:[UIImage imageNamed:@"home_icon.png"]];
+    [homeBtnView addSubview:image];
+//    UIBarButtonItem *one2 = [[UIBarButtonItem alloc] initWithCustomView:homeBtnView];
+//   [UIImage imageNamed: @"home_icon.png"]
+//    UIBarButtonItem *one2 = [[UIBarButtonItem alloc] initWithImage:nil style:UIBarButtonItemStylePlain target:self action:@selector(goHomeVC)];
+//    one2.image
+    UIBarButtonItem *one2 = [[UIBarButtonItem alloc] initWithTitle:@"ddfd" style:UIBarButtonItemStylePlain target:self action:@selector((goHomeVC))];
+
+    one2.image = [UIImage imageNamed:@"home_icon.png"];
+    one2.title = @"aaadfdf";
+
+    
     UIBarButtonItem *one = [[UIBarButtonItem alloc] initWithTitle:@"主页" style:UIBarButtonItemStylePlain target:self action:@selector(goHomeVC)];
     UIBarButtonItem *two = [[UIBarButtonItem alloc] initWithTitle:@"收藏" style:UIBarButtonItemStylePlain target:self action:@selector(goCollectionVC)];
     UIBarButtonItem *three = [[UIBarButtonItem alloc] initWithTitle:@"拼单" style:UIBarButtonItemStylePlain target:self action:@selector(goGroupBuyVC)];
     UIBarButtonItem *four = [[UIBarButtonItem alloc] initWithTitle:@"校园助手" style:UIBarButtonItemStylePlain target:self action:@selector(goAssistantVC)];
-    NSArray* items = [NSArray arrayWithObjects:flexItem, one, flexItem, two, flexItem, three,flexItem,four,flexItem,nil];
+    NSArray* items = [NSArray arrayWithObjects:flexItem, one2, flexItem, two, flexItem, three,flexItem,four,flexItem,nil];
     [self setToolbarItems:items];
 
     UIBarButtonItem* left = [[UIBarButtonItem alloc] initWithTitle:@"用户设置" style:UIBarButtonItemStylePlain target:self action:@selector(goUserSettingVC)];

@@ -14,6 +14,7 @@
 		5854A5901D14388300A65193 /* baseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A58F1D14388300A65193 /* baseViewController.m */; };
 		5854A5931D143B5300A65193 /* assistantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5921D143B5300A65193 /* assistantViewController.m */; };
 		5854A5961D143DB700A65193 /* userSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5951D143DB700A65193 /* userSettingViewController.m */; };
+		588DBF1E1D16D10D008F881D /* home_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 588DBF1D1D16D10D008F881D /* home_icon.png */; };
 		58DE5C3B1CE071A4000BE711 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C3A1CE071A4000BE711 /* main.m */; };
 		58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C3D1CE071A4000BE711 /* AppDelegate.m */; };
 		58DE5C411CE071A4000BE711 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C401CE071A4000BE711 /* ViewController.m */; };
@@ -150,6 +151,7 @@
 		5854A5921D143B5300A65193 /* assistantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = assistantViewController.m; sourceTree = "<group>"; };
 		5854A5941D143DB700A65193 /* userSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userSettingViewController.h; sourceTree = "<group>"; };
 		5854A5951D143DB700A65193 /* userSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userSettingViewController.m; sourceTree = "<group>"; };
+		588DBF1D1D16D10D008F881D /* home_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_icon.png; sourceTree = "<group>"; };
 		58DE5C361CE071A4000BE711 /* MyBookRecycle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBookRecycle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DE5C3A1CE071A4000BE711 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		58DE5C3C1CE071A4000BE711 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 		5854A5971D14447000A65193 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				588DBF1D1D16D10D008F881D /* home_icon.png */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				58DE5C4C1CE071A4000BE711 /* LaunchScreen.storyboard in Resources */,
 				58DE5D011CE072F3000BE711 /* icon_share.png in Resources */,
 				58DE5CE51CE072F3000BE711 /* forward_mail.png in Resources */,
+				588DBF1E1D16D10D008F881D /* home_icon.png in Resources */,
 				58DE5CD41CE072F3000BE711 /* block_top.png in Resources */,
 				58DE5D0A1CE072F3000BE711 /* input_center_active.9.png in Resources */,
 				58DE5D101CE072F3000BE711 /* my_block_center_background.png in Resources */,
