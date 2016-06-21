@@ -115,6 +115,8 @@
 		58DE5D201CE072F3000BE711 /* zoom_in.png in Resources */ = {isa = PBXBuildFile; fileRef = 58DE5CC81CE072F3000BE711 /* zoom_in.png */; };
 		58DE5D211CE072F3000BE711 /* zoom_out.png in Resources */ = {isa = PBXBuildFile; fileRef = 58DE5CC91CE072F3000BE711 /* zoom_out.png */; };
 		58E01C791D0D693100D3E259 /* settingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E01C781D0D693100D3E259 /* settingViewController.m */; };
+		58E1F3041D19530E00E2E3E2 /* searchResultTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E1F3031D19530E00E2E3E2 /* searchResultTableViewController.m */; };
+		58E1F3071D197DF100E2E3E2 /* tempHomeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E1F3061D197DF100E2E3E2 /* tempHomeTableViewController.m */; };
 		58E3B5E71D0BA9CF00B5689F /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E3B5D51D0BA9CF00B5689F /* AFHTTPRequestOperation.m */; };
 		58E3B5E81D0BA9CF00B5689F /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E3B5D71D0BA9CF00B5689F /* AFHTTPRequestOperationManager.m */; };
 		58E3B5E91D0BA9CF00B5689F /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E3B5D91D0BA9CF00B5689F /* AFHTTPSessionManager.m */; };
@@ -262,6 +264,10 @@
 		58DE5CC91CE072F3000BE711 /* zoom_out.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zoom_out.png; sourceTree = "<group>"; };
 		58E01C771D0D693100D3E259 /* settingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settingViewController.h; sourceTree = "<group>"; };
 		58E01C781D0D693100D3E259 /* settingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = settingViewController.m; sourceTree = "<group>"; };
+		58E1F3021D19530E00E2E3E2 /* searchResultTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchResultTableViewController.h; sourceTree = "<group>"; };
+		58E1F3031D19530E00E2E3E2 /* searchResultTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchResultTableViewController.m; sourceTree = "<group>"; };
+		58E1F3051D197DF100E2E3E2 /* tempHomeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tempHomeTableViewController.h; path = MyBookRecycle/tempHomeTableViewController.h; sourceTree = "<group>"; };
+		58E1F3061D197DF100E2E3E2 /* tempHomeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = tempHomeTableViewController.m; path = MyBookRecycle/tempHomeTableViewController.m; sourceTree = "<group>"; };
 		58E3B5D41D0BA9CF00B5689F /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		58E3B5D51D0BA9CF00B5689F /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		58E3B5D61D0BA9CF00B5689F /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -380,6 +386,8 @@
 				58DE5C6D1CE072DD000BE711 /* LoginViewController.m */,
 				5854A5851D142AEB00A65193 /* homeViewController.h */,
 				5854A5861D142AEB00A65193 /* homeViewController.m */,
+				58E1F3021D19530E00E2E3E2 /* searchResultTableViewController.h */,
+				58E1F3031D19530E00E2E3E2 /* searchResultTableViewController.m */,
 				5854A58E1D14388300A65193 /* baseViewController.h */,
 				5854A58F1D14388300A65193 /* baseViewController.m */,
 				5854A5941D143DB700A65193 /* userSettingViewController.h */,
@@ -390,6 +398,8 @@
 				5854A58C1D14344F00A65193 /* groupBuyViewController.m */,
 				5854A5911D143B5300A65193 /* assistantViewController.h */,
 				5854A5921D143B5300A65193 /* assistantViewController.m */,
+				58E1F3051D197DF100E2E3E2 /* tempHomeTableViewController.h */,
+				58E1F3061D197DF100E2E3E2 /* tempHomeTableViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -714,11 +724,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58E1F3041D19530E00E2E3E2 /* searchResultTableViewController.m in Sources */,
 				58E3B5EF1D0BA9CF00B5689F /* AFURLSessionManager.m in Sources */,
 				58E3B5EC1D0BA9CF00B5689F /* AFURLConnectionOperation.m in Sources */,
 				5854A5961D143DB700A65193 /* userSettingViewController.m in Sources */,
 				58E3B5E71D0BA9CF00B5689F /* AFHTTPRequestOperation.m in Sources */,
 				5854A5871D142AEB00A65193 /* homeViewController.m in Sources */,
+				58E1F3071D197DF100E2E3E2 /* tempHomeTableViewController.m in Sources */,
 				5854A5931D143B5300A65193 /* assistantViewController.m in Sources */,
 				58DE5C711CE072DD000BE711 /* LoginViewController.m in Sources */,
 				58E3B5E81D0BA9CF00B5689F /* AFHTTPRequestOperationManager.m in Sources */,

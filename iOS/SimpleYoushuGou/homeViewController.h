@@ -10,5 +10,6 @@
 #import "baseViewController.h"
 
 //@interface homeViewController : baseViewController
-@interface homeViewController : UIViewController
+@interface homeViewController : UIViewController 
+//@property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @end
