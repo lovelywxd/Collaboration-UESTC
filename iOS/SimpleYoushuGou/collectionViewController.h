@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "baseViewController.h"
 
-@interface collectionViewController : baseViewController
-
+//@interface collectionViewController : baseViewController
+@interface collectionViewController : UIViewController
 @end

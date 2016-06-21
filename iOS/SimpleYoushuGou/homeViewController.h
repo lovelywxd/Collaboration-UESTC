@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "baseViewController.h"
 
-@interface homeViewController : baseViewController
-
+//@interface homeViewController : baseViewController
+@interface homeViewController : UIViewController
 @end

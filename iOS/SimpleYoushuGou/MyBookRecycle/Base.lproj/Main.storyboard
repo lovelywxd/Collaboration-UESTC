@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fuf-Ll-TP3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Eli-j8-crE">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Help View Controller-->
@@ -433,7 +434,43 @@
             </objects>
             <point key="canvasLocation" x="1515" y="-413.25"/>
         </scene>
-        <!--Home View Controller-->
+        <!--View Controller-->
+        <scene sceneID="UFQ-a7-X0I">
+            <objects>
+                <viewController id="r5z-f6-a57" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mjy-hB-cRH"/>
+                        <viewControllerLayoutGuide type="bottom" id="Tol-hL-RH0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tGj-aR-7de">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J6H-xX-CTW">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.18787441269999999" green="1" blue="0.35321428970000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="71" y="559" width="240" height="128"/>
+                                </variation>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="J6H-xX-CTW"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="J6H-xX-CTW"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tEe-SC-3f9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2220" y="-1014.75"/>
+        </scene>
+        <!--主页-->
         <scene sceneID="Bkd-9a-ors">
             <objects>
                 <viewController storyboardIdentifier="homeVC" id="aBh-ZL-WZS" customClass="homeViewController" sceneMemberID="viewController">
@@ -445,13 +482,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iP1-Xs-c1Y">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" red="0.96727035979999998" green="0.16865383289999999" blue="0.10699228650000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="117" y="152" width="240" height="128"/>
-                                </variation>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5L-Kb-K55">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -461,32 +491,68 @@
                                     <rect key="frame" x="136" y="300" width="44" height="21"/>
                                 </variation>
                             </label>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hc8-3a-JQl">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <navigationItem title="Title" id="MXW-D1-H5M">
+                                        <leftBarButtonItems>
+                                            <barButtonItem title="全新" id="HWL-tg-Pmg"/>
+                                            <barButtonItem title="京东" id="Yfh-i0-2vk"/>
+                                        </leftBarButtonItems>
+                                    </navigationItem>
+                                </items>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="67" width="414" height="44"/>
+                                </variation>
+                            </navigationBar>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="o9t-fU-qJ4">
+                                <rect key="frame" x="-60" y="-14" width="121" height="29"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="155" y="28" width="121" height="29"/>
+                                </variation>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iP1-Xs-c1Y">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.96727035979999998" green="0.16865383289999999" blue="0.10699228650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="117" y="152" width="240" height="128"/>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="iP1-Xs-c1Y"/>
                                 <exclude reference="L5L-Kb-K55"/>
+                                <exclude reference="Hc8-3a-JQl"/>
+                                <exclude reference="o9t-fU-qJ4"/>
+                                <exclude reference="iP1-Xs-c1Y"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="iP1-Xs-c1Y"/>
                                 <include reference="L5L-Kb-K55"/>
+                                <include reference="Hc8-3a-JQl"/>
+                                <include reference="o9t-fU-qJ4"/>
+                                <include reference="iP1-Xs-c1Y"/>
                             </mask>
                         </variation>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem image="home_icon.png" id="X52-WO-kSl"/>
-                    </toolbarItems>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <tabBarItem key="tabBarItem" title="主页" image="home" selectedImage="home-sel" id="uIx-gM-vSd">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EQT-Pj-yuo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2172" y="-389.25"/>
+            <point key="canvasLocation" x="2247" y="-402"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--收藏夹-->
         <scene sceneID="GW2-Ez-dyX">
             <objects>
                 <viewController storyboardIdentifier="collectionVC" id="BmO-xa-kPe" customClass="collectionViewController" sceneMemberID="viewController">
@@ -520,13 +586,16 @@
                             </mask>
                         </variation>
                     </view>
+                    <tabBarItem key="tabBarItem" title="收藏夹" image="collection" selectedImage="collection-sel" id="8fi-oK-Y5R">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
+                    </tabBarItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bpJ-ZH-tqt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2794.5" y="-501"/>
+            <point key="canvasLocation" x="3313.5" y="-402"/>
         </scene>
-        <!--Group Buy View Controller-->
+        <!--拼购-->
         <scene sceneID="CjX-po-LZ0">
             <objects>
                 <viewController storyboardIdentifier="groupBuyVC" id="wp2-gC-hMd" customClass="groupBuyViewController" sceneMemberID="viewController">
@@ -560,10 +629,13 @@
                             </mask>
                         </variation>
                     </view>
+                    <tabBarItem key="tabBarItem" title="拼购" image="cart" selectedImage="cart-sel" id="sla-wS-fUx">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cjw-V1-El4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3253.5" y="-584.25"/>
+            <point key="canvasLocation" x="2881.5" y="-374.25"/>
         </scene>
         <!--Base View Controller-->
         <scene sceneID="nN8-4a-E2w">
@@ -605,9 +677,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VbM-Rj-cxW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3216" y="-1133.25"/>
+            <point key="canvasLocation" x="2988" y="-1270.5"/>
         </scene>
-        <!--Assistant View Controller-->
+        <!--书友助手-->
         <scene sceneID="oxZ-p0-hrg">
             <objects>
                 <viewController storyboardIdentifier="assistantVC" id="BVY-bH-lgL" customClass="assistantViewController" sceneMemberID="viewController">
@@ -641,10 +713,13 @@
                             </mask>
                         </variation>
                     </view>
+                    <tabBarItem key="tabBarItem" title="书友助手" image="service" selectedImage="service-sel" id="e5e-gR-PwJ">
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VON-78-e2m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3876" y="-824.25"/>
+            <point key="canvasLocation" x="3199.5" y="306"/>
         </scene>
         <!--User Setting View Controller-->
         <scene sceneID="x7K-dc-s16">
@@ -755,7 +830,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IZZ-0S-dst" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4375.5" y="-990.75"/>
+            <point key="canvasLocation" x="4177.5" y="-1228.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="L8S-oa-x1j">
@@ -859,12 +934,39 @@
             </objects>
             <point key="canvasLocation" x="805.5" y="-402"/>
         </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="EcD-58-YNO">
+            <objects>
+                <tabBarController id="Eli-j8-crE" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Pcc-D7-t2z">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="aBh-ZL-WZS" kind="relationship" relationship="viewControllers" id="kSn-Hh-a3u"/>
+                        <segue destination="wp2-gC-hMd" kind="relationship" relationship="viewControllers" id="6N1-gb-0El"/>
+                        <segue destination="BmO-xa-kPe" kind="relationship" relationship="viewControllers" id="84y-Td-TxY"/>
+                        <segue destination="BVY-bH-lgL" kind="relationship" relationship="viewControllers" id="dAO-Ny-DsX"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="03F-lj-His" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2329.5" y="287.25"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="cart" width="20" height="20"/>
+        <image name="cart-sel" width="20" height="20"/>
+        <image name="collection" width="20" height="20"/>
+        <image name="collection-sel" width="20" height="20"/>
         <image name="head_background.png" width="320" height="44"/>
         <image name="help.png" width="315" height="380"/>
-        <image name="home_icon.png" width="20" height="20"/>
+        <image name="home" width="20" height="20"/>
+        <image name="home-sel" width="20" height="20"/>
         <image name="pic.png" width="480" height="80"/>
+        <image name="service" width="20" height="20"/>
+        <image name="service-sel" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="vsd-up-87d"/>
