@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-database: User,
-consider：these three database. how to store data, and the relationship between these three db.
+database: User
 """
 
 import time
