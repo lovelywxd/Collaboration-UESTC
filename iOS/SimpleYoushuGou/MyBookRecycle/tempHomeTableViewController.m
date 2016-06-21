@@ -60,30 +60,105 @@
     
 //    self.navigationItem.titleView = self.searchController.searchBar;
     self.tableView.tableHeaderView = self.searchController.searchBar;
+//    self.tableView.style = UITableViewStyleGrouped;
     
     NSString *pos = NSStringFromCGRect(self.searchController.searchBar.frame);
     NSLog(@"%@",pos);
     ////    [self.view addSubview:self.searchController.searchBar];
     //     NSLog(@"navigationBar:%@",NSStringFromCGRect(self.navigationBar.frame));
-    //    self.title = @"主页";
+        self.title = @"主页";
 }
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.tableData count];
+    NSInteger row_amout;
+    switch (section) {
+        case 0:
+            row_amout = 1;
+            break;
+        default:
+            row_amout = [self.tableData count];
+            break;
+    }
+    return row_amout;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"tempCell" forIndexPath:indexPath];
-    cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
-    
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell;
+    NSInteger section = indexPath.section;
+    switch (section) {
+        case 0:
+            cell = [tableView dequeueReusableCellWithIdentifier:@"homeSection0Cell" forIndexPath:indexPath];
+            break;
+        default:
+            cell = [tableView dequeueReusableCellWithIdentifier:@"tempCell" forIndexPath:indexPath];
+            cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
+            break;
+    }
     return cell;
 }
 
+//- (NSString*)sectionIndexTitlesForTableView:(UITableView*) tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    NSString* section_title;
+//    switch (section) {
+//        case 0:
+//            section_title = @"";
+//            break;
+//        case 1:
+//            section_title = @"类别";
+//            break;
+//        default:
+//            section_title = @"热门资讯";
+//            break;
+//    }
+//    return section_title;
+//}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:
+(NSIndexPath *)indexPath
+{
+    switch (indexPath.section) {
+        case 0:
+            return 90;
+        default:
+           return 45;
+    }
+
+}
+
+//section头部间距
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30;//section头部高度
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 1;
+}
+
+
+- (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection
+                       :(NSInteger)section
+{
+    NSString* section_title;
+    switch (section) {
+        case 0:
+            section_title = @"";
+            break;
+        default:
+            section_title = @"热门资讯";
+            break;
+    }
+    return section_title;
+}
 
 - (void)filteredContentBySubString:(NSString *)subStr
 {
