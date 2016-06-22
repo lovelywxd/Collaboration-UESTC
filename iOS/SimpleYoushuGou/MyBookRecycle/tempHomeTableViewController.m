@@ -11,28 +11,30 @@
 @interface tempHomeTableViewController ()<UISearchResultsUpdating>
 @property (nonatomic,strong) UISearchController *searchController;
 @property (nonatomic, strong) NSMutableArray *searchResults;
-@property (nonatomic,strong) NSMutableArray *tableData;
+//@property (nonatomic,strong) NSMutableArray *tableData;
+@property (nonatomic,strong) NSMutableDictionary *promotionList;
+@property (nonatomic,strong) NSArray *promotionIds;
 @end
 
 @implementation tempHomeTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableData = [NSMutableArray arrayWithObjects:@"疯狂Java讲义",
-                      @"轻量级Java EE企业应用实战",
-                      @"疯狂Android讲义",
-                      @"疯狂Ajax讲义",
-                      @"疯狂HTML5/CSS3/JavaScript讲义",
-                      @"疯狂iOS讲义",
-                      @"疯狂XML讲义",
-                      @"经典Java EE企业应用实战"
-                      @"Java入门与精通",
-                      @"Java基础教程",
-                      @"学习Java",
-                      @"Objective-C基础" ,
-                      @"Ruby入门与精通",
-                      @"iOS开发教程" , nil];
-    
+//    self.promotionList = [NSMutableArray arrayWithObjects:@"疯狂Java讲义",
+//                      @"轻量级Java EE企业应用实战",
+//                      @"疯狂Android讲义",
+//                      @"疯狂Ajax讲义",
+//                      @"疯狂HTML5/CSS3/JavaScript讲义",
+//                      @"疯狂iOS讲义",
+//                      @"疯狂XML讲义",
+//                      @"经典Java EE企业应用实战"
+//                      @"Java入门与精通",
+//                      @"Java基础教程",
+//                      @"学习Java",
+//                      @"Objective-C基础" ,
+//                      @"Ruby入门与精通",
+//                      @"iOS开发教程" , nil];
+    [self GEtPromotrion];
     UINavigationController* searchResultVC = [[self storyboard] instantiateViewControllerWithIdentifier:@"TableSearchResultsNavController"];
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultVC];
     self.searchController.searchResultsUpdater = self;
@@ -81,7 +83,7 @@
             row_amout = 1;
             break;
         default:
-            row_amout = [self.tableData count];
+            row_amout = [self.promotionList count];
             break;
     }
     return row_amout;
@@ -91,14 +93,31 @@
 {
     UITableViewCell *cell;
     NSInteger section = indexPath.section;
+    static NSString* cellId = @"section0";
+    static NSString* cellId2 = @"otherSection";
     switch (section) {
         case 0:
-            cell = [tableView dequeueReusableCellWithIdentifier:@"homeSection0Cell" forIndexPath:indexPath];
+         //   cell = [tableView dequeueReusableCellWithIdentifier:@"homeSection0Cell" forIndexPath:indexPath];
+            cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
+            cell.imageView.image = [UIImage imageNamed:@"promote"];
+            cell.textLabel.text = @"促销活动";
+            
+//            if  (cell == nil)
+//            {
+//                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+//               
+//            }
             break;
         default:
-            cell = [tableView dequeueReusableCellWithIdentifier:@"tempCell" forIndexPath:indexPath];
-            cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
-            break;
+            cell = [tableView dequeueReusableCellWithIdentifier:cellId2 forIndexPath:indexPath];
+            cell.imageView.image = [UIImage imageNamed:@"Amazon"];
+            NSString *promotionID = [self.promotionIds objectAtIndex:indexPath.row];
+            cell.textLabel.text = [[self.promotionList objectForKey:promotionID] objectForKey:@"promotionName"];
+
+//            if  (cell == nil)
+//            {
+//                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId2];
+//                            }
     }
     return cell;
 }
@@ -125,9 +144,9 @@
 {
     switch (indexPath.section) {
         case 0:
-            return 90;
+            return 55;
         default:
-           return 45;
+           return 35;
     }
 
 }
@@ -135,6 +154,9 @@
 //section头部间距
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if (section == 0) {
+        return 0;
+    }
     return 30;//section头部高度
 }
 
@@ -160,20 +182,37 @@
     return section_title;
 }
 
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
+//(NSIndexPath *)indexPath
+//{
+//    // 获取该应用的应用程序委托对象
+//    FKAppDelegate* appDelegate = [UIApplication
+//                                  sharedApplication].delegate;
+//    // 获取Storyboard文件中ID为detail的视图控制器
+//    FKDetailViewController* detailController = [self.storyboard
+//                                                instantiateViewControllerWithIdentifier:@"detail"];
+//    // 保存用户正在编辑的表格行对应的NSIndexPath
+//    detailController.editingIndexPath = indexPath;
+//    // 让应用程序的窗口显示detailViewController
+//    appDelegate.window.rootViewController = detailController;
+//}
+
+
+
 - (void)filteredContentBySubString:(NSString *)subStr
 {
     
-    if ([subStr  isEqual: @""]) {
-        
-        // If empty the search results are the same as the original data
-        self.searchResults = [self.tableData mutableCopy];
-    } else {
-        NSPredicate* pred = [NSPredicate predicateWithFormat:
-                             @"SELF CONTAINS[c] %@" , subStr];
-        // 使用谓词过滤NSArray
-        self.searchResults = [NSMutableArray arrayWithArray:[self.tableData filteredArrayUsingPredicate:pred]];
-        //        [self PrintArray:self.searchResults];
-    }
+//    if ([subStr  isEqual: @""]) {
+//        
+//        // If empty the search results are the same as the original data
+//        self.searchResults = [self.promotionList mutableCopy];
+//    } else {
+//        NSPredicate* pred = [NSPredicate predicateWithFormat:
+//                             @"SELF CONTAINS[c] %@" , subStr];
+//        // 使用谓词过滤NSArray
+//        self.searchResults = [NSMutableArray arrayWithArray:[self.promotionList filteredArrayUsingPredicate:pred]];
+//        //        [self PrintArray:self.searchResults];
+//    }
 }
 
 
@@ -270,5 +309,36 @@
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark - internal functions
+- (void)GEtPromotrion
+{
+    self.promotionList = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+    [NSMutableDictionary dictionaryWithObjectsAndKeys:@"京东少儿经管原版专场200-100",@"promotionName",@"wwwGbJd1",@"link", nil],@"GbJd1",
+    [NSMutableDictionary dictionaryWithObjectsAndKeys: @"京东二十余万图书每100-30",@"promotionName",@"wwwGbJd2",@"link", nil],@"GbJd2",
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys: @"亚马逊22万中文书200-50",@"promotionName",@"wwwGbAm1",@"link", nil],@"GbAm1",
+    [NSMutableDictionary dictionaryWithObjectsAndKeys: @"微信领券满200-80、150-50",@"promotionName",@"wwwGbWc1",@"link", nil],@"GbWc1",
+    [NSMutableDictionary dictionaryWithObjectsAndKeys: @"当当万种图书200-100",@"promotionName",@"wwwGbDd1",@"link", nil],@"GbDd1",
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys: @"当当教育类100-30 300-100",@"promotionName",@"wwwGbDd2",@"link", nil],@"GbDd2",
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys:  @"亚马逊4万原版书满300减150",@"promotionName",@"wwwGbAm2",@"link", nil],@"GbAm2",
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys: @"亚马逊电子书包月服务",@"promotionName",@"wwwPbAm1",@"link", nil],@"PbAm1",
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys: @"淘宝云驭风全场满188减100",@"promotionName",@"wwwGbTb1",@"link", nil],@"GbTb1", nil];
+    self.promotionIds = [self.promotionList allKeys];
+    
+    
+//    self.promotionList = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+//        [NSMutableDictionary alloc] initWithObjectsAndKeys: @"京东少儿经管原版专场200-100",@"promotionName",@"wwwGbJd1",@"link", nil],@"GbJd1",
+//        [NSMutableDictionary alloc] initWithObjectsAndKeys: @"京东二十余万图书每100-30",@"promotionName",@"wwwGbJd2",@"link", nil],@"GbJd2",
+//        [NSMutableDictionary alloc] initWithObjectsAndKeys: @"亚马逊22万中文书200-50",@"promotionName",@"wwwGbAm1",@"link", nil],@"GbAm1",
+//        [NSMutableDictionary alloc] initWithObjectsAndKeys: @"微信领券满200-80、150-50",@"promotionName",@"wwwGbWc1",@"link", nil],@"GbWc1",
+//        [NSMutableDictionary alloc] initWithObjectsAndKeys: @"当当万种图书200-100",@"promotionName",@"wwwGbDd1",@"link", nil],@"GbDd1",
+//        [NSMutableDictionary alloc] initWithObjectsAndKeys: @"当当教育类100-30 300-100",@"promotionName",@"wwwGbDd2",@"link", nil],@"GbDd2",
+//        [NSMutableDictionary alloc] initWithObjectsAndKeys:  @"亚马逊4万原版书满300减150",@"promotionName",@"wwwGbAm2",@"link", nil],@"GbAm2",
+//        [NSMutableDictionary alloc] initWithObjectsAndKeys: @"亚马逊电子书包月服务",@"promotionName",@"wwwPbAm1",@"link", nil],@"PbAm1",
+//        [NSMutableDictionary alloc] initWithObjectsAndKeys: @"淘宝云驭风全场满188减100",@"promotionName",@"wwwGbTb1",@"link", nil],@"GbTb1",
+//    
+//    ,nil];
+    
+}
+
 
 @end
