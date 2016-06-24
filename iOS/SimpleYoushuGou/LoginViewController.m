@@ -20,7 +20,7 @@
 
 
 @implementation LoginViewController
-
+NSDictionary* requestFields;
 NSMutableData* totalData;
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -167,6 +167,12 @@ NSMutableData* totalData;
      // 获取服务器响应成功时激发的代码块
      success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
+         NSDictionary *fields= [operation.response allHeaderFields];
+         NSArray *cookies=[NSHTTPCookie cookiesWithResponseHeaderFields:fields forURL:[NSURL URLWithString:url]];
+         requestFields=[NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
+//         [[NSUserDefaults standardUserDefaults] setObject:[requestFields objectForKey:@"Cookie"] forKey:mUserDefaultsCookie];
+         
+
          NSMutableString* login_result = [[NSMutableString alloc] init];
          // 当使用HTTP响应解析器时，服务器响应数据responseObject是一个NSDictionary
          NSArray* keys = [responseObject allKeys];
@@ -175,12 +181,23 @@ NSMutableData* totalData;
              [login_result appendString:@"Login success"];
              UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Login result" message:login_result preferredStyle:UIAlertControllerStyleAlert];
              UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-                 // 获取指定的Storyboard，name填写Storyboard的文件名
+//                 // 获取指定的Storyboard，name填写Storyboard的文件名
                  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                  // 从Storyboard上按照identifier获取指定的界面（VC），identifier必须是唯一的
                  homeViewController* homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
-                 
+//
                  [self.navigationController pushViewController:homeVC animated:YES];
+               
+                 [appdele.manager.requestSerializer setValue:[requestFields objectForKey:@"Cookie"]forHTTPHeaderField:@"Cookie"];
+                  NSString* tempUrl = @"http://115.159.219.141:80/api/users";
+                 [appdele.manager GET:tempUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+                  {
+                      NSLog(@"seccess");
+                  }
+                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+                  {
+                      NSLog(@"fail");
+                  }];
              }];
              [alert addAction:defaultAction];
              [self presentViewController:alert animated:YES completion:nil];
