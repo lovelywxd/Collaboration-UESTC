@@ -24,29 +24,18 @@
     NSInteger higherBarHeight =  self.navigationController.navigationBar.frame.size.height;
     NSInteger statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     [self.view setBackgroundColor:[UIColor grayColor]];
-
-    CGRect rootviewFrame = self.view.frame;
-    NSLog(@"rootviewFrame:%@",NSStringFromCGRect(rootviewFrame));
-    NSLog(@"statusBarHeight:%ld,lowerBarHeight:%ld,higherBarHeight:%ld",statusBarHeight,lowerBarHeight,higherBarHeight);
 //    self.navigationController.navigationBar.hidden = YES;
     
     CGRect frame = [[UIScreen mainScreen] bounds];
-    NSLog(@"main screen:%@",NSStringFromCGRect(frame));
-    UIScrollView *view = [[UIScrollView alloc] initWithFrame:frame];
-//    UIView *view = [[UIView alloc] initWithFrame:frame];
-//    [view setBackgroundColor:[UIColor redColor]];
-    
+
+
     NSInteger slideBarViewHeight = frame.size.height - (lowerBarHeight + statusBarHeight + higherBarHeight);
     CGRect slideBarViewFrame = CGRectMake(0,0,frame.size.width,slideBarViewHeight);
     
     self.slideBarView = [[SlideTabBarView alloc] initWithFrame:slideBarViewFrame withDelegate:self];
-     NSLog(@"slideBarViewFrame:%@",NSStringFromCGRect(slideBarViewFrame));
     
     [self.slideBarView setColor:[UIColor purpleColor] AtIndex:2];
-
-    [self.view addSubview:view];
-    [view addSubview:self.self.slideBarView];
-//    [self.navigationController
+    [self.view addSubview:self.slideBarView];
 }
 
 - (CGFloat) heightForTopBar
@@ -60,7 +49,7 @@
 
 - (UITableView*) tableForPage:(NSInteger)page withFrame:(CGRect)frame {
     
-    NSLog(@"tableForPage:%@",NSStringFromCGRect(frame));
+//    NSLog(@"tableForPage:%@",NSStringFromCGRect(frame));
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     return tableView;
     

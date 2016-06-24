@@ -22,12 +22,12 @@
 -(UITableViewCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath atPage:(NSInteger)page;
 @end
 
-@interface SlideTabBarView : UIView
+@interface SlideTabBarView : UIScrollView
 //@interface SlideTabBarView : UISc
 @property (assign) NSInteger tabCount;
 @property (nonatomic,assign) NSInteger topBarHeight;
 @property (nonatomic,assign) NSInteger indicatorSlideHeight;
-@property (nonatomic, strong) id<SlideTabBarViewDelegate,SlideTabBarViewDataSource> delegate;
+@property (nonatomic, strong) id<SlideTabBarViewDelegate,SlideTabBarViewDataSource> slideTabBarViewDelegate;
 -(instancetype)initWithFrame:(CGRect)frame withDelegate:(id)delegate;
 - (void)setColor:(UIColor*)color AtIndex:(NSInteger)index;
 

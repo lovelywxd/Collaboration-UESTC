@@ -40,17 +40,16 @@
 
 #pragma mark --初始化函数
 -(instancetype)initWithFrame:(CGRect)frame withDelegate:(id)delegate {
-     NSLog(@"SlideTabBarViewFrame,%@",NSStringFromCGRect(frame));
     self = [super initWithFrame:frame];
     if (self) {
         self.autoresizesSubviews = NO;
-        self.delegate = delegate;
+         self.slideTabBarViewDelegate = delegate;
         self.tapButtons = [[NSMutableArray alloc] init];
         self.contentPageView = [[NSMutableArray alloc] init];
         if (self.indicatorSlideHeight == 0) {
             self.indicatorSlideHeight = 5;
         }
-        self.TabBtnTitles = [self.delegate titlesForTapButton];
+        self.TabBtnTitles = [ self.slideTabBarViewDelegate titlesForTapButton];
         if (self.TabBtnTitles.count == 0) {
             self.TabBtnTitles = [NSArray arrayWithObjects:@"按钮0", @"按钮1",@"按钮2",nil];
             self.tabCount = 3;
@@ -58,14 +57,14 @@
         else{
             self.tabCount = self.TabBtnTitles.count;
         }
-        self.topBarHeight = [self.delegate heightForTopBar];
+        self.topBarHeight = [ self.slideTabBarViewDelegate heightForTopBar];
         
         [self initTopTabs];
         [self initContentView];
         [self initContentPageView];
         [self initSlideView];
     }
-    [self addObserver];
+//    [self addObserver];
     return self;
     
 }
@@ -74,9 +73,8 @@
 {
     CGRect frame = self.frame;
     self.contentView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,self.topBarHeight, frame.size.width, frame.size.height - self.topBarHeight)];
-    NSLog(@"ContentViewFrame,%@",NSStringFromCGRect( self.contentView.frame));
+
     self.contentView.contentSize = CGSizeMake(frame.size.width * self.tabCount, frame.size.height - self.topBarHeight);
-     NSLog(@"ContentVieContentSize:%@",NSStringFromCGSize(self.contentView.contentSize));
     self.contentView.backgroundColor = [UIColor whiteColor];
     self.contentView.pagingEnabled = YES;
     self.contentView.delegate = self;
@@ -100,7 +98,6 @@
     frame.size.height = self.topBarHeight;
     frame.origin.x = 0;
     frame.origin.y = 0;
-    NSLog(@"SlideTabBarView,TopTabFrame,%@",NSStringFromCGRect(frame));
     self.BarView = [[UIScrollView alloc] initWithFrame:frame];
     [self.BarView setBackgroundColor:[UIColor brownColor]];
     self.BarView.showsHorizontalScrollIndicator = YES;
@@ -114,15 +111,13 @@
         self.BarView.contentSize = CGSizeMake(frame.size.width,self.topBarHeight);
 //        self.BarView.contentSize = CGSizeMake(frame.size.width,0);
     }
-    NSLog(@"BarviewContentSize:%@",NSStringFromCGSize(self.BarView.contentSize));
+
     [self addSubview:self.BarView];
     
     for (int i = 0; i < self.tabCount; i ++) {
         CGRect BtnFrame = CGRectMake(i * width, 0, width, self.topBarHeight);
-        NSLog(@"Btn%d,frame is:%@",i,NSStringFromCGRect(BtnFrame));
         UIButton *button = [[UIButton alloc] initWithFrame:BtnFrame];
         button.tag = i;
-//        [button setTitle:[NSString stringWithFormat:@"按钮%d", i+1] forState:UIControlStateNormal];
         [button setTitle:[self.TabBtnTitles objectAtIndex:i] forState:UIControlStateNormal];
         [button addTarget:self action:@selector(tabButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.BarView addSubview:button];
@@ -144,12 +139,10 @@
     NSInteger width = self.frame.size.width;
      for (int i = 0; i < self.tabCount; i ++) {
          CGRect tableFrame = CGRectMake(i*width,0, width, self.frame.size.height - self.topBarHeight);
-         NSLog(@"initContentPageView,befor:tableFrame:%@",NSStringFromCGRect(tableFrame));
-         UITableView *table = [self.delegate tableForPage:i withFrame:(tableFrame)];
+         UITableView *table = [ self.slideTabBarViewDelegate tableForPage:i withFrame:(tableFrame)];
          table.dataSource = self;
          table.delegate = self;
          [self.contentView addSubview:table];
-        NSLog(@"initContentPageView,after:tableFrame:%@,parentFrame:%@",NSStringFromCGRect(tableFrame),NSStringFromCGRect(table.superview.frame));
          [self.contentPageView addObject:table];
      }
 }
@@ -169,7 +162,7 @@
 #pragma mark --点击顶部的按钮所触发的方法
 -(void) tabButton: (id) sender{
     UIButton *button = sender;
-    NSLog(@"shoud offerset:%f",button.tag * self.frame.size.width);
+//    NSLog(@"shoud offerset:%f",button.tag * self.frame.size.width);
     [self.contentView setContentOffset:CGPointMake(button.tag * self.frame.size.width, 0) animated:NO];
 }
 
@@ -201,11 +194,10 @@
 {
     if ([scrollView isEqual:self.contentView]) {
         _currentPage = self.contentView.contentOffset.x/self.frame.size.width;
-        NSLog(@"current page:%ld,offset:%f",_currentPage,self.contentView.contentOffset.x);
+//        NSLog(@"current page:%ld,offset:%f",_currentPage,self.contentView.contentOffset.x);
         
         [self updataBarView:_currentPage];
         [self updateTableAtPage:self.currentPage];
-        NSLog(@"scrollViewDidEndDecelerating,BarView offset:%@",NSStringFromCGPoint(self.BarView.contentOffset));
         return;
     }
 }
@@ -245,21 +237,21 @@
 
 #pragma mark -- talbeView的代理方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return [self.delegate numberOfSectionsInTableView:tableView atPage:self.currentPage];
+    return [ self.slideTabBarViewDelegate numberOfSectionsInTableView:tableView atPage:self.currentPage];
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.delegate tableView:tableView numberOfRowsInSection:section atPage:self.currentPage];
+    return [ self.slideTabBarViewDelegate tableView:tableView numberOfRowsInSection:section atPage:self.currentPage];
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [self.delegate tableView:tableView heightForRowAtIndexPath:indexPath atPage:self.currentPage];
+    return [ self.slideTabBarViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath atPage:self.currentPage];
 }
 
 -(UITableViewCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger index = [self.contentPageView indexOfObject:tableView];
 //     NSInteger index = [self indexOfObject:tableView in:self.contentPageView];
-    return [self.delegate tableView:tableView cellForRowAtIndexPath:indexPath atPage:index];
+    return [ self.slideTabBarViewDelegate tableView:tableView cellForRowAtIndexPath:indexPath atPage:index];
 }
 
 #pragma mark -- 内部函数
@@ -274,10 +266,6 @@
 {
     id old = [change objectForKey:@"old"];
     id new = [change objectForKey:@"new"];
-//    NSLog(@"%@",NSStringFromClass([old class]));
-//    NSLog(@"%@",NSStringFromClass([new class]));
-//    NSLog(@"%@", [[new class] superclass]);
-//    NSLog(@"%@", [[old class] superclass]);
     NSString* type = (__bridge NSString*)context;
     if ([type isEqualToString:@"CGPoint"]) {
         CGPoint oldOffset = [old CGPointValue];
