@@ -148,14 +148,17 @@ def authenticate(*, name, passwd):
     sha1.update(user.name.encode("utf-8"))
     sha1.update(b":")
     sha1.update(passwd.encode("utf-8"))
+    logging.info("55555555555555555555555555555555555555555")
     if user.passwd != sha1.hexdigest():
         raise APIValueError("passwd", "Invalid password")
     r = web.Response()
     r.set_cookie(COOKIE_NAME, user2cookie(user, 86400), max_age=86400, httponly=True)
     user.passwd = "*****"
     r.content_type = "application/json"
+    result = True
     # r.body = json.dumps(user, ensure_ascii=False).encode("utf-8")
     r.body = json.dumps(dict(result=result)).encode("utf-8")
+    logging.info(r.body)
     return r
 
 

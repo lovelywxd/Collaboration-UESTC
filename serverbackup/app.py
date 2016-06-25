@@ -75,6 +75,7 @@ def response_factory(app, handler):
         r = yield from handler(request)
         logging.info('r = %s' % str(r))
         if isinstance(r, web.StreamResponse):
+            logging.info('ttttttttttttttttttttttttttt')
             return r
         # 如果响应结果为字节流，则把字节流塞到response的body里，设置响应类型为流类型，返回
         if isinstance(r, bytes):
@@ -138,8 +139,8 @@ def init(loop):
     app = web.Application(loop=loop, middlewares=[logger_factory, auth_factory, response_factory])
     add_routes(app, 'handlers')
     add_static(app)
-    srv = yield from loop.create_server(app.make_handler(), '127.0.0.1', 8000)
-    logging.info('server started at http://127.0.0.1:8000...')
+    srv = yield from loop.create_server(app.make_handler(), '127.0.0.1', 80)
+    logging.info('server started at http://127.0.0.1:80...')
     return srv
 
 loop = asyncio.get_event_loop()

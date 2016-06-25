@@ -1,0 +1,18 @@
+
+
+URL格式
+	服务器均已web-api的格式，向客户端返回数据。 这里API直接返回数据。即客户端直接操作API获得数据。
+	例如： 注册：post /api/register    /api/authenticate  /api/act/list（当前服务端已存在活动列表）
+
+	即客户端相应URL请求数据或发送数据， 服务器端存在专门的处理函数。
+
+	使用REST API 完全封装整个web-App的功能.JSON-API（一个API就是一个URL的处理函数）
+
+返回数据格式：
+	服务器端返回的数据格式都为json格式，具体为：{key:value}的形式。
+
+	具体的数据内容：（需要讨论）
+		API调用错误信息统一格式：error, data="", message=""
+			error： 错误类型
+			data： 错误字段
+			message：错误信息
