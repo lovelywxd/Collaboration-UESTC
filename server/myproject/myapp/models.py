@@ -43,3 +43,4 @@ class BookPrice(models.Model)
 	bookISBN  = models.CharField(max_length=20, primary_key=True)
 	bookSaler = models.CharField(max_length=100)
 	bookPrice = models.CharField(max_length=10)
+
