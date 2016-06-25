@@ -19,6 +19,7 @@
 		588DBF1E1D16D10D008F881D /* home_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 588DBF1D1D16D10D008F881D /* home_icon.png */; };
 		58DB642B1D1E282200C5D4D1 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DB642A1D1E282200C5D4D1 /* Activity.m */; };
 		58DB646B1D1E994200C5D4D1 /* PromotionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DB646A1D1E994200C5D4D1 /* PromotionViewController.m */; };
+		58DB646E1D1EBE4E00C5D4D1 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DB646D1D1EBE4E00C5D4D1 /* WebViewController.m */; };
 		58DE03891D1D8ABC00FF910B /* ActivityListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE03871D1D8ABC00FF910B /* ActivityListCell.m */; };
 		58DE038A1D1D8ABD00FF910B /* ActivityListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58DE03881D1D8ABC00FF910B /* ActivityListCell.xib */; };
 		58DE5C3B1CE071A4000BE711 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C3A1CE071A4000BE711 /* main.m */; };
@@ -168,6 +169,8 @@
 		58DB642A1D1E282200C5D4D1 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		58DB64691D1E994200C5D4D1 /* PromotionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromotionViewController.h; sourceTree = "<group>"; };
 		58DB646A1D1E994200C5D4D1 /* PromotionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromotionViewController.m; sourceTree = "<group>"; };
+		58DB646C1D1EBE4E00C5D4D1 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		58DB646D1D1EBE4E00C5D4D1 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		58DE03861D1D8ABC00FF910B /* ActivityListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListCell.h; sourceTree = "<group>"; };
 		58DE03871D1D8ABC00FF910B /* ActivityListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListCell.m; sourceTree = "<group>"; };
 		58DE03881D1D8ABC00FF910B /* ActivityListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityListCell.xib; sourceTree = "<group>"; };
@@ -422,6 +425,8 @@
 		58DE5C611CE07262000BE711 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				58DB646C1D1EBE4E00C5D4D1 /* WebViewController.h */,
+				58DB646D1D1EBE4E00C5D4D1 /* WebViewController.m */,
 				58DB64691D1E994200C5D4D1 /* PromotionViewController.h */,
 				58DB646A1D1E994200C5D4D1 /* PromotionViewController.m */,
 				587F6C051D1B8CDB00FCCED3 /* ActivitysViewController.h */,
@@ -788,6 +793,7 @@
 				5854A5931D143B5300A65193 /* assistantViewController.m in Sources */,
 				58DE5C711CE072DD000BE711 /* LoginViewController.m in Sources */,
 				58E3B5E81D0BA9CF00B5689F /* AFHTTPRequestOperationManager.m in Sources */,
+				58DB646E1D1EBE4E00C5D4D1 /* WebViewController.m in Sources */,
 				58DE5C411CE071A4000BE711 /* ViewController.m in Sources */,
 				5854A5901D14388300A65193 /* baseViewController.m in Sources */,
 				58DE03891D1D8ABC00FF910B /* ActivityListCell.m in Sources */,

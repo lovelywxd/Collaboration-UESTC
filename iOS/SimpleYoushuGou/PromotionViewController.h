@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PromotionViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UITableView *table;
 
 @end

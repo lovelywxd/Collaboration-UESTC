@@ -114,16 +114,15 @@
         [tableView registerNib:nib forCellReuseIdentifier:@"ActivityListCell"];
         nibsRegistered=YES;
     }
-    
-    
     ActivityListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ActivityListCell"];
     NSString* shop = [self.shopWithActivity objectAtIndex:page];
     NSLog(@"%@,activity amout:%ld",shop,[[self.shopActivitys objectForKey:shop] count]);
-//    NSArray* activitys = [self.shopActivitys objectForKey:shop];
     NSArray* activitys = [NSArray arrayWithArray:[self.shopActivitys objectForKey:shop]];
     cell.activityName.text = [[activitys objectAtIndex:indexPath.row] valueForKey:@"activityName"];
     cell.shopsHead.image = [UIImage imageNamed:@"Amazon"];
+    cell.urlStr = [[activitys objectAtIndex:indexPath.row] valueForKey:@"activityUrl"];
     return cell;
+
 }
 #pragma mark - UISearchControllerDelegate & UISearchResultsDelegate
 

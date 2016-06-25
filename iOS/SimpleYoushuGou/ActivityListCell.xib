@@ -30,13 +30,6 @@
                             <action selector="showActivityDetail:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="eBH-VY-AJd"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ryo-Zn-5wh">
-                        <rect key="frame" x="147" y="57" width="60" height="30"/>
-                        <state key="normal" title="活动首页"/>
-                        <connections>
-                            <action selector="goActivityHomePage:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="67n-gY-3w5"/>
-                        </connections>
-                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>

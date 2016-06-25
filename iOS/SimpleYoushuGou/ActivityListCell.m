@@ -7,6 +7,7 @@
 //
 
 #import "ActivityListCell.h"
+#import "WebViewController.h"
 
 @implementation ActivityListCell
 
@@ -24,5 +25,7 @@
 }
 
 - (IBAction)goActivityHomePage:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    WebViewController* homeVC = [storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
 }
 @end

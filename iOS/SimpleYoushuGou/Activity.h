@@ -11,6 +11,7 @@
 @interface Activity : NSObject
 @property (nonatomic,copy)NSString* activityId;
 @property (nonatomic,copy)NSString* activityName;
+//@property (nonatomic,copy)NSString* detail;
 @property (nonatomic,copy)NSString* activityUrl;
 - (instancetype) init:(NSString*)id withName:(NSString*)name urlString:(NSString*)url;
 @end
