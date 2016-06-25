@@ -19,6 +19,7 @@
     // Override point for customization after application launch.
     self.manager = [AFHTTPRequestOperationManager manager];
     self.OnLineTest = YES;
+    [self initShopList];
     return YES;
 }
 
@@ -124,6 +125,12 @@
             abort();
         }
     }
+}
+
+#pragma mark --内部函数
+- (void)initShopList{
+//    self.shopList = [NSArray arrayWithObjects:@"京东",@"亚马逊",@"当当",@"天猫",@"中图",nil];
+    self.shopList = [NSDictionary dictionaryWithObjectsAndKeys:@"jd.com",@"京东", @"amazon.cn", @"亚马逊", @"dangdang.com",@"当当",@"taobao.com",@"天猫", @"bookschina.com",@"中图",nil];
 }
 
 @end

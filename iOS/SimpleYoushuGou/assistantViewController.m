@@ -7,9 +7,13 @@
 //
 
 #import "assistantViewController.h"
+#import "AppDelegate.h"
+#import "AFURLRequestSerialization.h"
 
 @interface assistantViewController ()
-
+{
+    AppDelegate* appdele;
+}
 @end
 
 @implementation assistantViewController
@@ -34,4 +38,57 @@
 }
 */
 
+- (IBAction)addFavorite:(id)sender {
+}
+
+- (IBAction)getFavorite:(id)sender {
+}
+
+- (IBAction)deleteFavorite:(id)sender {
+}
+- (IBAction)PromotionDetail:(id)sender {
+}
+
+- (IBAction)HomeSearch:(id)sender {
+}
+
+- (IBAction)SearchInPromotion:(id)sender {
+}
+
+- (IBAction)getPromotionList:(id)sender {
+    appdele = [UIApplication sharedApplication].delegate;
+
+    NSString* url = @"http://52.69.162.241:8888/promotion/detail/{promotion_id}";
+    [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];    NSString* tempUrl = @"http://115.159.219.141:80/api/users";
+    [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"seccess");
+     }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"fail");
+     }];
+    
+
+//    [appdele.manager
+//     POST:url
+//     parameters:logindata  // 指定请求参数
+//     // 获取服务器响应成功时激发的代码块
+//     success:^(AFHTTPRequestOperation *operation, id responseObject)
+//     {
+//         NSDictionary *fields= [operation.response allHeaderFields];
+//
+//         
+//         
+//     }
+//     // 获取服务器响应失败时激发的代码块
+//     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+//     {
+//         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"无法获取服务器响应" preferredStyle:UIAlertControllerStyleAlert];
+//         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+//         [alert addAction:defaultAction];
+//         [self presentViewController:alert animated:YES completion:nil];
+//     }];
+
+}
 @end

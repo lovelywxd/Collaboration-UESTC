@@ -141,7 +141,7 @@ NSMutableData* totalData;
     NSString* url;
     
     if (appdele.OnLineTest) {
-        url = @"http://115.159.219.141:80/api/authenticate";
+//        url = @"http://115.159.219.141:80/api/authenticate";
 //        url = @"http://52.69.162.241:8888/login";
     }
     else
@@ -170,8 +170,8 @@ NSMutableData* totalData;
          NSDictionary *fields= [operation.response allHeaderFields];
          NSArray *cookies=[NSHTTPCookie cookiesWithResponseHeaderFields:fields forURL:[NSURL URLWithString:url]];
          requestFields=[NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
-//         [[NSUserDefaults standardUserDefaults] setObject:[requestFields objectForKey:@"Cookie"] forKey:mUserDefaultsCookie];
-         
+         [[NSUserDefaults standardUserDefaults] setObject:[requestFields objectForKey:@"Cookie"] forKey:@"userCookie"];
+         [[NSUserDefaults standardUserDefaults] synchronize];
 
          NSMutableString* login_result = [[NSMutableString alloc] init];
          // 当使用HTTP响应解析器时，服务器响应数据responseObject是一个NSDictionary
@@ -187,8 +187,8 @@ NSMutableData* totalData;
                  homeViewController* homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
 //
                  [self.navigationController pushViewController:homeVC animated:YES];
-               
-                 [appdele.manager.requestSerializer setValue:[requestFields objectForKey:@"Cookie"]forHTTPHeaderField:@"Cookie"];
+                [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
+
                   NSString* tempUrl = @"http://115.159.219.141:80/api/users";
                  [appdele.manager GET:tempUrl parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
                   {

@@ -17,6 +17,10 @@
 		587F6C041D1B8C7F00FCCED3 /* SlideTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 587F6C031D1B8C7F00FCCED3 /* SlideTabBarView.m */; };
 		587F6C071D1B8CDB00FCCED3 /* ActivitysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 587F6C061D1B8CDB00FCCED3 /* ActivitysViewController.m */; };
 		588DBF1E1D16D10D008F881D /* home_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 588DBF1D1D16D10D008F881D /* home_icon.png */; };
+		58DB642B1D1E282200C5D4D1 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DB642A1D1E282200C5D4D1 /* Activity.m */; };
+		58DB646B1D1E994200C5D4D1 /* PromotionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DB646A1D1E994200C5D4D1 /* PromotionViewController.m */; };
+		58DE03891D1D8ABC00FF910B /* ActivityListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE03871D1D8ABC00FF910B /* ActivityListCell.m */; };
+		58DE038A1D1D8ABD00FF910B /* ActivityListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58DE03881D1D8ABC00FF910B /* ActivityListCell.xib */; };
 		58DE5C3B1CE071A4000BE711 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C3A1CE071A4000BE711 /* main.m */; };
 		58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C3D1CE071A4000BE711 /* AppDelegate.m */; };
 		58DE5C411CE071A4000BE711 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C401CE071A4000BE711 /* ViewController.m */; };
@@ -160,6 +164,13 @@
 		587F6C051D1B8CDB00FCCED3 /* ActivitysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitysViewController.h; sourceTree = "<group>"; };
 		587F6C061D1B8CDB00FCCED3 /* ActivitysViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitysViewController.m; sourceTree = "<group>"; };
 		588DBF1D1D16D10D008F881D /* home_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_icon.png; sourceTree = "<group>"; };
+		58DB64291D1E282200C5D4D1 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
+		58DB642A1D1E282200C5D4D1 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
+		58DB64691D1E994200C5D4D1 /* PromotionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromotionViewController.h; sourceTree = "<group>"; };
+		58DB646A1D1E994200C5D4D1 /* PromotionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromotionViewController.m; sourceTree = "<group>"; };
+		58DE03861D1D8ABC00FF910B /* ActivityListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListCell.h; sourceTree = "<group>"; };
+		58DE03871D1D8ABC00FF910B /* ActivityListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListCell.m; sourceTree = "<group>"; };
+		58DE03881D1D8ABC00FF910B /* ActivityListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityListCell.xib; sourceTree = "<group>"; };
 		58DE5C361CE071A4000BE711 /* MyBookRecycle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyBookRecycle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DE5C3A1CE071A4000BE711 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		58DE5C3C1CE071A4000BE711 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -330,9 +341,30 @@
 			name = SlideTabar;
 			sourceTree = "<group>";
 		};
+		58DB64281D1E280E00C5D4D1 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				58DB64291D1E282200C5D4D1 /* Activity.h */,
+				58DB642A1D1E282200C5D4D1 /* Activity.m */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		58DE03851D1D8A8B00FF910B /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				58DE03861D1D8ABC00FF910B /* ActivityListCell.h */,
+				58DE03871D1D8ABC00FF910B /* ActivityListCell.m */,
+				58DE03881D1D8ABC00FF910B /* ActivityListCell.xib */,
+			);
+			name = Table;
+			sourceTree = "<group>";
+		};
 		58DE5C2D1CE071A3000BE711 = {
 			isa = PBXGroup;
 			children = (
+				58DB64281D1E280E00C5D4D1 /* Data */,
+				58DE03851D1D8A8B00FF910B /* Table */,
 				587F6C011D1B8C5A00FCCED3 /* SlideTabar */,
 				5854A5971D14447000A65193 /* Image */,
 				58DE5C651CE0728A000BE711 /* Resource */,
@@ -390,6 +422,8 @@
 		58DE5C611CE07262000BE711 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				58DB64691D1E994200C5D4D1 /* PromotionViewController.h */,
+				58DB646A1D1E994200C5D4D1 /* PromotionViewController.m */,
 				587F6C051D1B8CDB00FCCED3 /* ActivitysViewController.h */,
 				587F6C061D1B8CDB00FCCED3 /* ActivitysViewController.m */,
 				5854A5821D13EE6C00A65193 /* welcomeViewController.h */,
@@ -634,6 +668,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				58DE5CE71CE072F3000BE711 /* forward_qzone.png in Resources */,
+				58DE038A1D1D8ABD00FF910B /* ActivityListCell.xib in Resources */,
 				58DE5CF31CE072F3000BE711 /* icon_close_large.png in Resources */,
 				58DE5D051CE072F3000BE711 /* imageviewer_return.png in Resources */,
 				58DE5D211CE072F3000BE711 /* zoom_out.png in Resources */,
@@ -746,6 +781,7 @@
 				58E3B5EF1D0BA9CF00B5689F /* AFURLSessionManager.m in Sources */,
 				58E3B5EC1D0BA9CF00B5689F /* AFURLConnectionOperation.m in Sources */,
 				5854A5961D143DB700A65193 /* userSettingViewController.m in Sources */,
+				58DB642B1D1E282200C5D4D1 /* Activity.m in Sources */,
 				58E3B5E71D0BA9CF00B5689F /* AFHTTPRequestOperation.m in Sources */,
 				5854A5871D142AEB00A65193 /* homeViewController.m in Sources */,
 				58E1F3071D197DF100E2E3E2 /* tempHomeTableViewController.m in Sources */,
@@ -754,10 +790,12 @@
 				58E3B5E81D0BA9CF00B5689F /* AFHTTPRequestOperationManager.m in Sources */,
 				58DE5C411CE071A4000BE711 /* ViewController.m in Sources */,
 				5854A5901D14388300A65193 /* baseViewController.m in Sources */,
+				58DE03891D1D8ABC00FF910B /* ActivityListCell.m in Sources */,
 				5854A58A1D14344000A65193 /* collectionViewController.m in Sources */,
 				58DE5C6F1CE072DD000BE711 /* HelpViewController.m in Sources */,
 				58E01C791D0D693100D3E259 /* settingViewController.m in Sources */,
 				587F6C071D1B8CDB00FCCED3 /* ActivitysViewController.m in Sources */,
+				58DB646B1D1E994200C5D4D1 /* PromotionViewController.m in Sources */,
 				58E3B5E91D0BA9CF00B5689F /* AFHTTPSessionManager.m in Sources */,
 				587F6C041D1B8C7F00FCCED3 /* SlideTabBarView.m in Sources */,
 				58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */,

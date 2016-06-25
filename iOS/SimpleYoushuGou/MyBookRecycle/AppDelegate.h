@@ -18,6 +18,7 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) AFHTTPRequestOperationManager* manager;
 @property (nonatomic,assign) BOOL OnLineTest;
+@property (nonatomic,copy) NSDictionary* shopList;
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 

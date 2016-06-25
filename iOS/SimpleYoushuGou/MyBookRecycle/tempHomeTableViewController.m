@@ -50,40 +50,22 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger row_amout;
-    switch (section) {
-        case 0:
-            row_amout = 1;
-            break;
-        default:
-            row_amout = [self.promotionList count];
-            break;
-    }
-    return row_amout;
+    return [self.promotionList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell;
-    NSInteger section = indexPath.section;
     static NSString* cellId = @"section0";
-    static NSString* cellId2 = @"otherSection";
-    switch (section) {
-        case 0:
-            cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
-            cell.imageView.image = [UIImage imageNamed:@"promote"];
-            cell.textLabel.text = @"图书促销";
-            break;
-        default:
-            cell = [tableView dequeueReusableCellWithIdentifier:cellId2 forIndexPath:indexPath];
-            cell.imageView.image = [UIImage imageNamed:@"Amazon"];
-            NSString *promotionID = [self.promotionIds objectAtIndex:indexPath.row];
-            cell.textLabel.text = [[self.promotionList objectForKey:promotionID] objectForKey:@"promotionName"];
-    }
+    cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
+    cell.imageView.image = [UIImage imageNamed:@"Amazon"];
+    NSString *promotionID = [self.promotionIds objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[self.promotionList objectForKey:promotionID] objectForKey:@"promotionName"];
     return cell;
 }
 

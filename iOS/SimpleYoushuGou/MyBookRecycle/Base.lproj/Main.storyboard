@@ -443,7 +443,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="Mxb-x7-xSn" kind="relationship" relationship="rootViewController" id="V26-ui-hov"/>
+                        <segue destination="UOc-HL-Zu5" kind="relationship" relationship="rootViewController" id="e07-Uy-nPt"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dpf-tM-l2j" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -669,24 +669,16 @@
         <scene sceneID="uOd-CD-5Bp">
             <objects>
                 <tableViewController id="Mxb-x7-xSn" customClass="tempHomeTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="sxc-Hb-qqx">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="81" sectionHeaderHeight="18" sectionFooterHeight="18" id="sxc-Hb-qqx">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="section0" id="P4x-TW-KyP">
-                                <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="section0" rowHeight="81" id="P4x-TW-KyP">
+                                <rect key="frame" x="0.0" y="50" width="600" height="81"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="P4x-TW-KyP" id="KW6-Pp-lZ8">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="otherSection" id="2gH-z3-4Uo">
-                                <rect key="frame" x="0.0" y="158" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2gH-z3-4Uo" id="WWo-Qd-5wV">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -701,7 +693,25 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ill-Jn-Trq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1012.5" y="689.25"/>
+            <point key="canvasLocation" x="1257" y="665.25"/>
+        </scene>
+        <!--Promotion View Controller-->
+        <scene sceneID="d3C-Js-bYN">
+            <objects>
+                <viewController id="bYw-EK-NEE" customClass="PromotionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="39V-8E-RUi"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfp-dK-X9H"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ett-V6-KpC">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jk8-a8-aHD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="418.5" y="1346.25"/>
         </scene>
         <!--Activitys View Controller-->
         <scene sceneID="wmU-Zd-VhR">
@@ -712,13 +722,15 @@
                         <viewControllerLayoutGuide type="bottom" id="a2l-xa-FXv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="uMi-ui-Nwk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="KsV-WP-6Qy"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xsd-S4-e15" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="957" y="1335.75"/>
+            <point key="canvasLocation" x="1135.5" y="1315.5"/>
         </scene>
         <!--书友助手-->
         <scene sceneID="oxZ-p0-hrg">
@@ -738,25 +750,112 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="111" y="188" width="69" height="21"/>
+                                    <rect key="frame" x="153" y="222" width="69" height="21"/>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ikj-hO-SYq">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="添加收藏"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="87" y="61" width="60" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="addFavorite:" destination="BVY-bH-lgL" eventType="touchUpInside" id="XeD-FW-l78"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aJo-cp-Asz">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="主页搜索"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="82" y="151" width="60" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="HomeSearch:" destination="BVY-bH-lgL" eventType="touchUpInside" id="6n5-Ru-EFr"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QF0-yT-hhq">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="获取优惠活动列表"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="57" y="99" width="120" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="getPromotionList:" destination="BVY-bH-lgL" eventType="touchUpInside" id="DyD-oR-m8f"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1l-Dc-Mr3">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="优惠活动详情"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="243" y="99" width="90" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="PromotionDetail:" destination="BVY-bH-lgL" eventType="touchUpInside" id="h0E-7P-c3N"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uc4-1P-opV">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="获取收藏"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="170" y="61" width="60" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="getFavorite:" destination="BVY-bH-lgL" eventType="touchUpInside" id="bHn-ZZ-BU3"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VPl-iv-2al">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="删除收藏"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="264" y="61" width="60" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="deleteFavorite:" destination="BVY-bH-lgL" eventType="touchUpInside" id="07y-j0-sd9"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79d-Nj-xR3">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="活动下搜索"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="163" y="151" width="75" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="SearchInPromotion:" destination="BVY-bH-lgL" eventType="touchUpInside" id="uJr-Q2-CAb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="jra-UT-wqF"/>
+                                <exclude reference="Ikj-hO-SYq"/>
+                                <exclude reference="aJo-cp-Asz"/>
+                                <exclude reference="QF0-yT-hhq"/>
+                                <exclude reference="m1l-Dc-Mr3"/>
+                                <exclude reference="uc4-1P-opV"/>
+                                <exclude reference="VPl-iv-2al"/>
+                                <exclude reference="79d-Nj-xR3"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="jra-UT-wqF"/>
+                                <include reference="Ikj-hO-SYq"/>
+                                <include reference="aJo-cp-Asz"/>
+                                <include reference="QF0-yT-hhq"/>
+                                <include reference="m1l-Dc-Mr3"/>
+                                <include reference="uc4-1P-opV"/>
+                                <include reference="VPl-iv-2al"/>
+                                <include reference="79d-Nj-xR3"/>
                             </mask>
                         </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="书友助手" image="service" selectedImage="service-sel" id="e5e-gR-PwJ">
                         <offsetWrapper key="titlePositionAdjustment" horizontal="0.0" vertical="-3"/>
                     </tabBarItem>
+                    <connections>
+                        <outlet property="getPromotionList" destination="QF0-yT-hhq" id="icW-T9-Wu9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VON-78-e2m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
