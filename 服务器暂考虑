@@ -1,0 +1,40 @@
+后端的API设计：
+要么借助于Django的用户登录注册模块实现（Django用户登录模块的扩展）
+要么使用自己的方法实现
+(中间有个middleware模块，用户首先经过middleware，或者用户每次请求处理，首先检查用户登录情况：cookie)
+问题是用户打开APP后，期望发送的任何请求，用户登录一次过后，都能识别为改用户的请求。
+cookie&&session的区别。
+
+· 用户注册 POST /user/register
+· 用户登录 POST /user/authenticate
+· 获取优惠活动列表 GET /acts
+· 优惠活动详情 GET /acts/{act_id}
+· 用户主页书籍搜索 GET /acts/{book_name}  或用查询字符串(?acts_all&&book_name)
+· 用户相应活动下书籍搜索 GET /{acts_id}/{book_name} 或用查询字符串(?acts_id&&book_name)
+· 用户添加收藏 POST /favourite/add
+· 用户获取收藏 GET /favourite
+· 用户删除收藏 post /favoutite/delete
+我觉得收藏类别和收藏书籍直接放在一起，或先不管收藏类别，这里先只说收藏书籍。
+		· 最好的方式是用户选择收藏类别，然后在类别下添加书籍（或根据书籍服务器自动记录类别）
+		· 或将收藏类别放在用户个人信息表中（也是关注类别）
+		· 用户获取收藏书籍列表 GET /favourite/booklists
+
+
+
+
+
+后端需要的设计的数据库models：
+· 用户个人信息
+· 用户收藏
+	· 用户id，收藏类别（可以选择多种）
+	· 用户id，收藏书籍（多本收藏书籍：书名)
+· 用户拼单列表(所有订单)
+	· 用户id, 订单信息
+· 优惠活动列表
+  · promotionID(区分GB,PB不同类别活动), promotionName, promotionLink，（或增加活动类别）
+· 某活动详情列表（书籍列表（优先发送用户关注：类别、书籍））
+	· 该活动下的20本书籍信息.
+		· promotionID，promotionBooks
+· 书籍比价信息表
+
+· 书籍信息表
