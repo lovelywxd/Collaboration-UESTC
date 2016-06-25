@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 import os
 import sys
+import logging
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
+
+    logging.basicConfig(filename='mylog.txt', level=logging.DEBUG)
 
     from myapp import crawler
 
