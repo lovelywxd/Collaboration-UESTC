@@ -13,7 +13,7 @@ class News(models.Model):
 	newsName      = models.CharField(max_length=100)
 	newsLink      = models.CharField(max_length=100)
 	newsStarttime = models.CharField(max_length=50)
-	newsDeadline  = models.CharField(max_length=50)
+	newsDeadline  = models.CharField(max_length=50, null=True)
 
 class Promotion(models.Model):
 	promotionID       = models.CharField(max_length=100, primary_key=True)
