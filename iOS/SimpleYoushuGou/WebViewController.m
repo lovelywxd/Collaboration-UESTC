@@ -18,11 +18,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+//     self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
     [ self.webView setDelegate:self];
     NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlStr]];
     [self.view addSubview:  self.webView];
     [ self.webView loadRequest:request];
+    NSLog(@"at webView,url:%@",self.urlStr);
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -34,7 +35,7 @@
 - (void)  webViewDidStartLoad:(UIWebView *) webView
 {
     //创建UIActivityIndicatorView背底半透明View
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
     [view setTag:108];
     [view setBackgroundColor:[UIColor blackColor]];
     [view setAlpha:0.5];

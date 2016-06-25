@@ -9,13 +9,14 @@
 #import "Activity.h"
 
 @implementation Activity
-- (instancetype) init:(NSString*)id withName:(NSString*)name urlString:(NSString*)url
+- (instancetype) init:(NSString*)id withName:(NSString*)name activiType:(ActivityType) type urlString:(NSString*)url
 {
     if (self = [super init])
     {
         self.activityId = id;
         self.activityName = name;
         self.activityUrl = url;
+        self.activityType = type;
     }
     return  self;
 }

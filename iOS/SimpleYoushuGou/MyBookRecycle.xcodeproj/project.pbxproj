@@ -14,6 +14,7 @@
 		5854A5901D14388300A65193 /* baseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A58F1D14388300A65193 /* baseViewController.m */; };
 		5854A5931D143B5300A65193 /* assistantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5921D143B5300A65193 /* assistantViewController.m */; };
 		5854A5961D143DB700A65193 /* userSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5951D143DB700A65193 /* userSettingViewController.m */; };
+		587EC1001D1EED2100438F1C /* PromotionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 587EC0FF1D1EED2100438F1C /* PromotionCell.m */; };
 		587F6C041D1B8C7F00FCCED3 /* SlideTabBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 587F6C031D1B8C7F00FCCED3 /* SlideTabBarView.m */; };
 		587F6C071D1B8CDB00FCCED3 /* ActivitysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 587F6C061D1B8CDB00FCCED3 /* ActivitysViewController.m */; };
 		588DBF1E1D16D10D008F881D /* home_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 588DBF1D1D16D10D008F881D /* home_icon.png */; };
@@ -160,6 +161,8 @@
 		5854A5921D143B5300A65193 /* assistantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = assistantViewController.m; sourceTree = "<group>"; };
 		5854A5941D143DB700A65193 /* userSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userSettingViewController.h; sourceTree = "<group>"; };
 		5854A5951D143DB700A65193 /* userSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userSettingViewController.m; sourceTree = "<group>"; };
+		587EC0FE1D1EED2100438F1C /* PromotionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromotionCell.h; sourceTree = "<group>"; };
+		587EC0FF1D1EED2100438F1C /* PromotionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromotionCell.m; sourceTree = "<group>"; };
 		587F6C021D1B8C7F00FCCED3 /* SlideTabBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideTabBarView.h; sourceTree = "<group>"; };
 		587F6C031D1B8C7F00FCCED3 /* SlideTabBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideTabBarView.m; sourceTree = "<group>"; };
 		587F6C051D1B8CDB00FCCED3 /* ActivitysViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitysViewController.h; sourceTree = "<group>"; };
@@ -356,6 +359,8 @@
 		58DE03851D1D8A8B00FF910B /* Table */ = {
 			isa = PBXGroup;
 			children = (
+				587EC0FE1D1EED2100438F1C /* PromotionCell.h */,
+				587EC0FF1D1EED2100438F1C /* PromotionCell.m */,
 				58DE03861D1D8ABC00FF910B /* ActivityListCell.h */,
 				58DE03871D1D8ABC00FF910B /* ActivityListCell.m */,
 				58DE03881D1D8ABC00FF910B /* ActivityListCell.xib */,
@@ -807,6 +812,7 @@
 				58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */,
 				5854A58D1D14344F00A65193 /* groupBuyViewController.m in Sources */,
 				58DE5C701CE072DD000BE711 /* RegisterViewController.m in Sources */,
+				587EC1001D1EED2100438F1C /* PromotionCell.m in Sources */,
 				58E3B5EB1D0BA9CF00B5689F /* AFSecurityPolicy.m in Sources */,
 				58DE5C471CE071A4000BE711 /* MyBookRecycle.xcdatamodeld in Sources */,
 				58E3B5ED1D0BA9CF00B5689F /* AFURLRequestSerialization.m in Sources */,

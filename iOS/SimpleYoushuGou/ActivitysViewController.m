@@ -170,18 +170,18 @@
 //                          [[NSMutableDictionary alloc] initWithObjectsAndKeys: @"中图万种图书150-70",@"promotionName",@"http://www.bookschina.com/subject/160622myear.aspx",@"link", nil],@"Gb中图1",
 //                          nil];
  
-    self.promotionList = [NSMutableArray arrayWithObjects:
-                          [[Activity alloc] init:@"Gb京东1" withName:@"京东少儿经管原版专场200-100" urlString:@"http://sale.jd.com/act/QRZ4SIHq7PrMh.html?cu=true&utm_source=www.wgmiji.com&utm_medium=tuiguang&utm_campaign=t_4515484_&utm_term=bd6bbadd1701455685fa776b36b34871"]
-                          , [[Activity alloc] init:@"Gb京东2" withName:@"京东二十余万图书每100-30" urlString:@"http://sale.jd.com/act/JIBcYK0CvDUT.html?cu=true&utm_source=www.wgmiji.com&utm_medium=tuiguang&utm_campaign=t_4515484_&utm_term=eb1f2268332042acb57d93f0fff24783"]
-                          ,[[Activity alloc] init:@"Gb亚马逊1" withName:@"亚马逊22万中文书200-50" urlString:@"https://www.amazon.cn/b?tag=dp-23&node=1815993071"]
-                          ,[[Activity alloc] init:@"Gb京东3" withName:@"微信领券满200-80、150-50" urlString:@"https://wqs.jd.com/event/juhui/66top/index.shtml?mktid=131&shopid=333099&enc=S1Is1CcT1Xf3z64JJ70MtXl_1tR1rAYXx6-pze8w_jHfmfLMYYmTiqim_KgWGDwtD35Fn01TZEBffxT6WoWfuM2xY2Eukxe_w4pSxRF5dzI=&tk=08b50c0ab2588709185af5e12eed313a&share=0&fs=1&gt=1466072339&v=1&cu=true&utm_source=kong&utm_medium=tuiguang&utm_campaign=t_2006398888_&utm_term=6844db2b3bf549f68823e99f63c18bdd"]
-                          ,[[Activity alloc] init:@"Gb当当1" withName:@"当当万种图书200-100" urlString:@"http://promo.dangdang.com/subject.php?pm_id=3310662&_ddclickunion=P-295132-121209_64_0__1|ad_type=0|sys_id=1#dd_refer=http%3A%2F%2Fc.duomai.com%2Ftrack.php%3Fsite_id%3D121209%26aid%3D64%26euid%3D%26t%3Dhttp%253a%252f%252fpromo.dangdang.com%252fsubject.php%253fpm_id%253d3310662"]
-                          ,[[Activity alloc] init:@"wwwGb当当2" withName:@"20万图书满100减30 200减60 300减100  " urlString:@"http://book.dangdang.com/20160603_35pz?_ddclickunion=P-295132-121209_64_0__1|ad_type=0|sys_id=1#dd_refer=http%3A%2F%2Fc.duomai.com%2Ftrack.php%3Fsite_id%3D121209%26aid%3D64%26euid%3D%26t%3Dhttp%253a%252f%252fbook.dangdang.com%252f20160603_35pz"]
-                          ,[[Activity alloc] init:@"Gb亚马逊2" withName:@"亚马逊4万原版书满300减150" urlString:@"https://www.amazon.cn/b?tag=dp-23&node=1816777071"]
-                          ,[[Activity alloc] init:@"Pb亚马逊1" withName:@"亚马逊电子书包月服务" urlString:@"https://www.amazon.cn/gp/kindle/ku/sign-up/ref=sr_ku_lm?tag=dp-23&ie=UTF8&qid=1455875453"]
-                          ,[[Activity alloc] init:@"Gb淘宝1" withName:@"武侯区云驭风书店全场满100减50、满200减100 " urlString:@"https://yyf365.taobao.com/shop/view_shop.htm?user_number_id=1117784433&ali_trackid=2%3Amm_32462830_4340057_14662838%3A1466817969_251_1477673269&upsid=4d37913cbc26033287160f6be8a0d226&clk1=4d37913cbc26033287160f6be8a0d226"]
-                          ,[[Activity alloc] init:@"Gb中图1" withName:@"中图万种图书150-70" urlString:@"http://www.bookschina.com/subject/160622myear.aspx"]
-                          ,nil];
+////    self.promotionList = [NSMutableArray arrayWithObjects:
+//                          [[Activity alloc] init:@"Gb京东1" withName:@"京东少儿经管原版专场200-100" urlString:@"http://sale.jd.com/act/QRZ4SIHq7PrMh.html?cu=true&utm_source=www.wgmiji.com&utm_medium=tuiguang&utm_campaign=t_4515484_&utm_term=bd6bbadd1701455685fa776b36b34871"]
+//                          , [[Activity alloc] init:@"Gb京东2" withName:@"京东二十余万图书每100-30" urlString:@"http://sale.jd.com/act/JIBcYK0CvDUT.html?cu=true&utm_source=www.wgmiji.com&utm_medium=tuiguang&utm_campaign=t_4515484_&utm_term=eb1f2268332042acb57d93f0fff24783"]
+//                          ,[[Activity alloc] init:@"Gb亚马逊1" withName:@"亚马逊22万中文书200-50" urlString:@"https://www.amazon.cn/b?tag=dp-23&node=1815993071"]
+//                          ,[[Activity alloc] init:@"Gb京东3" withName:@"微信领券满200-80、150-50" urlString:@"https://wqs.jd.com/event/juhui/66top/index.shtml?mktid=131&shopid=333099&enc=S1Is1CcT1Xf3z64JJ70MtXl_1tR1rAYXx6-pze8w_jHfmfLMYYmTiqim_KgWGDwtD35Fn01TZEBffxT6WoWfuM2xY2Eukxe_w4pSxRF5dzI=&tk=08b50c0ab2588709185af5e12eed313a&share=0&fs=1&gt=1466072339&v=1&cu=true&utm_source=kong&utm_medium=tuiguang&utm_campaign=t_2006398888_&utm_term=6844db2b3bf549f68823e99f63c18bdd"]
+//                          ,[[Activity alloc] init:@"Gb当当1" withName:@"当当万种图书200-100" urlString:@"http://promo.dangdang.com/subject.php?pm_id=3310662&_ddclickunion=P-295132-121209_64_0__1|ad_type=0|sys_id=1#dd_refer=http%3A%2F%2Fc.duomai.com%2Ftrack.php%3Fsite_id%3D121209%26aid%3D64%26euid%3D%26t%3Dhttp%253a%252f%252fpromo.dangdang.com%252fsubject.php%253fpm_id%253d3310662"]
+//                          ,[[Activity alloc] init:@"wwwGb当当2" withName:@"20万图书满100减30 200减60 300减100  " urlString:@"http://book.dangdang.com/20160603_35pz?_ddclickunion=P-295132-121209_64_0__1|ad_type=0|sys_id=1#dd_refer=http%3A%2F%2Fc.duomai.com%2Ftrack.php%3Fsite_id%3D121209%26aid%3D64%26euid%3D%26t%3Dhttp%253a%252f%252fbook.dangdang.com%252f20160603_35pz"]
+//                          ,[[Activity alloc] init:@"Gb亚马逊2" withName:@"亚马逊4万原版书满300减150" urlString:@"https://www.amazon.cn/b?tag=dp-23&node=1816777071"]
+//                          ,[[Activity alloc] init:@"Pb亚马逊1" withName:@"亚马逊电子书包月服务" urlString:@"https://www.amazon.cn/gp/kindle/ku/sign-up/ref=sr_ku_lm?tag=dp-23&ie=UTF8&qid=1455875453"]
+//                          ,[[Activity alloc] init:@"Gb淘宝1" withName:@"武侯区云驭风书店全场满100减50、满200减100 " urlString:@"https://yyf365.taobao.com/shop/view_shop.htm?user_number_id=1117784433&ali_trackid=2%3Amm_32462830_4340057_14662838%3A1466817969_251_1477673269&upsid=4d37913cbc26033287160f6be8a0d226&clk1=4d37913cbc26033287160f6be8a0d226"]
+//                          ,[[Activity alloc] init:@"Gb中图1" withName:@"中图万种图书150-70" urlString:@"http://www.bookschina.com/subject/160622myear.aspx"]
+//                          ,nil];
     [self classifyActivity];
     
 }
