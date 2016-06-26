@@ -7,7 +7,7 @@
 //
 
 #import "searchResultTableViewController.h"
-
+#import "PromotionCell.h"
 @interface searchResultTableViewController ()
 
 @end
@@ -34,19 +34,81 @@ NSMutableArray* historySearch;
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-        return 1;
+        return 2;
+
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 1:
+            return @"网络结果";
+            break;
+        default:
+            return @"";
+            break;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return self.searchResults.count;
+    switch (section) {
+        case 0:
+            return self.searchResults.count;
+            break;
+        case 1:
+            return 2;
+            break;
+        default:
+            return 0;
+            break;
+    }
+    
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchResult" forIndexPath:indexPath];
-    cell.textLabel.text = [self.searchResults objectAtIndex:indexPath.row];
-    return cell;
+    switch (indexPath.section) {
+        case 0:
+        {
+            // 为表格行定义一个静态字符串作为标示符
+            static NSString* cellId = @"cellId";
+            PromotionCell* cell = [tableView
+                                   dequeueReusableCellWithIdentifier:cellId];
+            if (cell == nil) {
+                cell = [[PromotionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+            }
+            
+            cell.activity = [self.searchResults objectAtIndex:indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:@"Amazon"];
+            //    cell.textLabel.text = [[activitys objectAtIndex:indexPath.row] valueForKey:@"activityName"];
+            cell.textLabel.text = [cell.activity valueForKey:@"activityName"];
+            cell.detailTextLabel.text = @"我听过空境的回忆，雨水浇绿孤山岭，听过被没听过你；我抓住散落的欲望，缱绻的馥郁让我紧张，我抓住时间的假想，没抓住你";
+            return cell;
+
+        }
+            break;
+        case 1:
+        {
+            static NSString* cellId = @"searchResult";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
+            UILabel *label = (UILabel*)[cell viewWithTag:1];
+            switch (indexPath.row) {
+                case 0:
+                    label.text = [NSMutableString stringWithFormat:@"搜索书籍:%@",self.searchStr];
+                    break;
+                case 1:
+                    label.text = [NSMutableString stringWithFormat:@"搜索活动:%@",self.searchStr];
+                    break;
+                default:
+                    break;
+            }
+            return cell;
+        }
+        break;
+        default:
+            return nil;
+            break;
+    }
 }
 
 

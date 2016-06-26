@@ -7,7 +7,9 @@
 //
 
 #import "groupBuyViewController.h"
-
+#import "AppDelegate.h"
+#import "AFURLRequestSerialization.h"
+#import "AppDelegate.h"
 @interface groupBuyViewController ()
 
 @end
@@ -34,4 +36,27 @@
 }
 */
 
+- (IBAction)SearchBook:(id)sender {
+    
+    NSString* url = @"https://api.douban.com/v2/book/isbn/:9787302255659";
+    //    [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
+    AppDelegate* appdele;
+    appdele = [UIApplication sharedApplication].delegate;
+    [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"seccess");
+         // 当使用HTTP响应解析器时，服务器响应数据responseObject是一个NSDictionary
+         NSArray* keys = [responseObject allKeys];
+         for (id key in keys) {
+             NSLog(@"key:%@,value:%@",key,[responseObject valueForKey:key]);
+         }
+         
+     }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"fail");
+     }];
+    
+
+}
 @end

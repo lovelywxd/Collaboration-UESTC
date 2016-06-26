@@ -7,7 +7,6 @@
 //
 
 #import "collectionViewController.h"
-#import "homeViewController.h"
 #import "groupBuyViewController.h"
 
 @interface collectionViewController ()

@@ -10,4 +10,5 @@
 
 @interface searchResultTableViewController : UITableViewController
 @property (nonatomic, strong) NSMutableArray *searchResults;
+@property (nonatomic, copy)NSString *searchStr;
 @end

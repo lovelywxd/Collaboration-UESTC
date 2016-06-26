@@ -9,7 +9,6 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "AFURLRequestSerialization.h"
-#import "homeViewController.h"
 
 @interface LoginViewController ()
 {
@@ -184,9 +183,10 @@ NSMutableData* totalData;
 //                 // 获取指定的Storyboard，name填写Storyboard的文件名
                  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                  // 从Storyboard上按照identifier获取指定的界面（VC），identifier必须是唯一的
-                 homeViewController* homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
-//
-                 [self.navigationController pushViewController:homeVC animated:YES];
+                 
+//                 homeViewController* homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
+////
+//                 [self.navigationController pushViewController:homeVC animated:YES];
                 [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
 
                   NSString* tempUrl = @"http://115.159.219.141:80/api/users";

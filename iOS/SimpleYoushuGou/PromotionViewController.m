@@ -7,7 +7,6 @@
 //
 
 #import "PromotionViewController.h"
-#import "ActivitysViewController.h"
 #import "searchResultTableViewController.h"
 #import "ActivityListCell.h"
 #import "Activity.h"
@@ -20,11 +19,11 @@
 @property (nonatomic,strong) UISegmentedControl *ShopsSegment;
 @property (nonatomic,strong) UISearchController *searchController;
 @property (nonatomic, strong) NSMutableArray *searchResults;
-@property (nonatomic,strong) NSArray *promotionList;
-@property (nonatomic, strong) NSMutableDictionary *shopActivitys;
-@property (nonatomic,strong) NSArray *promotionIds;
-@property (nonatomic,strong) NSArray *shopWithActivity;
-@property (nonatomic,copy) NSString *currentShop;
+@property (nonatomic,strong) NSArray *promotionList;//所有促销活动集合
+@property (nonatomic, strong) NSMutableDictionary *shopActivitys;//根据shop对促销活动进行了分类的集合
+@property (nonatomic,strong) NSArray *promotionIds;//所有促销活动ID集合
+@property (nonatomic,strong) NSArray *shopWithActivity;//所有包含有促销活动的商店名
+@property (nonatomic,copy) NSString *currentShop;//当前展示的商店
 @end
 
 @implementation PromotionViewController
@@ -69,6 +68,7 @@
     //    self.definesPresentationContext = YES;
     CGRect frame = [self.view frame];
     self.searchController.searchBar.frame = CGRectMake(0,200,frame.size.width, 44.0);
+    self.searchController.searchBar.placeholder = @"搜索促销活动或者书籍";
     self.definesPresentationContext = YES;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.navigationItem.titleView = self.searchController.searchBar;
@@ -141,6 +141,7 @@
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             WebViewController* webVC = [storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
             webVC.urlStr = cell.activity.activityUrl;
+            webVC.title = cell.activity.activityName;
             [self.navigationController pushViewController:webVC animated:NO];
         }
            
@@ -166,12 +167,19 @@
         // Update searchResults
         [self filteredContentBySubString:searchString];
         vc.searchResults = self.searchResults;
-        //        [self PrintArray:self.searchResults];
+        vc.searchStr = searchString;
         
         // And reload the tableView with the new data
         [vc.tableView reloadData];
     }
 }
+//- (void)searchBar:(UISearchBar *)searchBar
+//    textDidChange:(NSString *)searchText
+//{
+//    NSLog(@"text change");
+//}
+
+
 
 
 #pragma mark -- 内部函数
@@ -227,17 +235,18 @@
 - (void)filteredContentBySubString:(NSString *)subStr
 {
     
-    //    if ([subStr  isEqual: @""]) {
-    //
-    //        // If empty the search results are the same as the original data
-    //        self.searchResults = [self.promotionList mutableCopy];
-    //    } else {
-    //        NSPredicate* pred = [NSPredicate predicateWithFormat:
-    //                             @"SELF CONTAINS[c] %@" , subStr];
-    //        // 使用谓词过滤NSArray
-    //        self.searchResults = [NSMutableArray arrayWithArray:[self.promotionList filteredArrayUsingPredicate:pred]];
-    //        //        [self PrintArray:self.searchResults];
-    //    }
+        if ([subStr  isEqual: @""]) {
+    
+            // If empty the search results are the same as the original data
+            self.searchResults = [self.promotionList mutableCopy];
+        } else {
+//            NSPredicate* pred = [NSPredicate predicateWithFormat:
+//                                 @"%K CONTAINS[c] %@" ,@"activityName",subStr];
+            NSPredicate* pred = [NSPredicate predicateWithFormat:
+                                 @"%K CONTAINS %@" ,@"activityName",subStr];
+            // 使用谓词过滤NSArray
+            self.searchResults = [NSMutableArray arrayWithArray:[self.promotionList filteredArrayUsingPredicate:pred]];
+        }
 }
 
 

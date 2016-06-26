@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "baseViewController.h"
+
 
 //@interface groupBuyViewController : baseViewController
 @interface groupBuyViewController : UIViewController
+- (IBAction)SearchBook:(id)sender;
 
 @end

@@ -9,7 +9,7 @@
 #import "assistantViewController.h"
 #import "AppDelegate.h"
 #import "AFURLRequestSerialization.h"
-
+#import "AppDelegate.h"
 @interface assistantViewController ()
 {
     AppDelegate* appdele;
@@ -58,8 +58,8 @@
 - (IBAction)getPromotionList:(id)sender {
     appdele = [UIApplication sharedApplication].delegate;
 
-    NSString* url = @"http://52.69.162.241:8888/promotion/detail/{promotion_id}";
-    [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];    NSString* tempUrl = @"http://115.159.219.141:80/api/users";
+    NSString* url = @"https://api.douban.com/v2/book/isbn/:9787508647357";
+//    [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];    
     [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"seccess");
