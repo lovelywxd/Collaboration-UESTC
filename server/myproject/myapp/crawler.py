@@ -2,16 +2,26 @@
 import urllib2
 import logging
 import re
+import threading
+import time
 from bs4 import BeautifulSoup
 from apscheduler.schedulers.background import BackgroundScheduler
-from models import News, Promotion, PromotionBookList, BookPriceList
+from models import Promotion, PromotionBookList, BookPriceList
 
-sale_list_link = {}
-def sale_list_find():
+condition = threading.Condition()
+sale_list_link_new = {}
+sale_list_link_old = {}
+
+
+def sale_list_find(): #促销图书列表
+    global sale_list_link_old
+    global sale_list_link_new
     try:
+        if sale_list_link_new == sale_list_link_old:
+            return
         home = "http://www.queshu.com"
 
-        for key, value in sale_list_link.items(): #参加活动图书列表
+        for key, value in sale_list_link_new.items(): #参加活动图书列表
             promotionID = key
             promotionBookSearchLink = value + "?c=" #活动图书检索
 
@@ -57,8 +67,11 @@ def sale_list_find():
                         promotionBookCurrentPrice = promotionBookCurrentPrice,
                         promotionBookSearchLink   = promotionBookSearchLink)
                 result.save()
+        sale_list_link_old = sale_list_link_new
+        sale_list_link_new = {}
     except urllib2.URLError, e:
         print e.reason
+
 
 def news_title_find(): #热门资讯
     try:
@@ -80,7 +93,9 @@ def news_title_find(): #热门资讯
     except urllib2.URLError, e:
         print e.reason
 
+
 def news_sale_title_find(): #图书促销
+    global sale_list_link_new
     try:
         home = "http://www.queshu.com/sale/"
 
@@ -108,18 +123,43 @@ def news_sale_title_find(): #图书促销
 
                 font_13_bold = news_sale_detail.find(href=re.compile("sale_list"))  #参加活动图书列表
                 if font_13_bold:
-                    sale_list_link[promotionID] = home[:-6] + font_13_bold["href"]
+                    sale_list_link_new[promotionID] = home[:-6] + font_13_bold["href"]
     except urllib2.URLError, e:
         print e.reason
 
-def start_crawler():
-    sched = BackgroundScheduler()
-    # sched.add_job(news_title_find, 'interval', seconds=30)
-    sched.add_job(news_sale_title_find, 'interval', seconds=30)
-    sched.add_job(sale_list_find, 'interval', seconds=60)
-    sched.start()
 
-'''
-if __name__ == "__main__":
-    start_crawler()
-'''
+class Producer(threading.Thread):
+    def run(self):
+        while True:
+            if condition.acquire():
+                if sale_list_link_new:
+                    condition.wait()
+                else:
+                    news_sale_title_find()
+                    condition.notify()
+                    condition.release()
+
+
+class Consumer(threading.Thread):
+    def run(self):
+        while True:
+            if condition.acquire():
+                if not sale_list_link_new:
+                    condition.wait()
+                else:
+                    sale_list_find()
+                    condition.notify()
+                    condition.release()
+                    time.sleep(30)
+
+
+def start_crawler():
+    # sched = BackgroundScheduler()
+    # sched.add_job(news_title_find, 'interval', seconds=30)
+    # sched.add_job(news_sale_title_find, 'interval', seconds=30)
+    # sched.add_job(sale_list_find, 'interval', seconds=60)
+    # sched.start()
+    p = Producer()
+    c = Consumer()
+    p.start()
+    c.start()
