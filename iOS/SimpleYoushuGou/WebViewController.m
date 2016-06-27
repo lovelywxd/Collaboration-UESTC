@@ -7,9 +7,11 @@
 //
 
 #import "WebViewController.h"
+#import "MBProgressHUD.h"
 @interface WebViewController()<UIWebViewDelegate>
 {
     UIActivityIndicatorView *activityIndicator;
+    MBProgressHUD *hud;
 }
 
 @end
@@ -34,28 +36,15 @@
 
 - (void)  webViewDidStartLoad:(UIWebView *) webView
 {
-    //创建UIActivityIndicatorView背底半透明View
-    UIView *view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen]bounds]];
-    [view setTag:108];
-    [view setBackgroundColor:[UIColor blackColor]];
-    [view setAlpha:0.5];
-    [self.view addSubview:view];
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
     
-    activityIndicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 32.0f, 32.0f)];
-    [activityIndicator setCenter:view.center];
-    [activityIndicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
-    [view addSubview:activityIndicator];
-    
-    [activityIndicator startAnimating];
-    NSLog(@" self.webViewDidStartLoad");
+    // Set the label text.
+    hud.label.text = NSLocalizedString(@"Loading...", @"HUD loading title");
 }
 - (void)  webViewDidFinishLoad:(UIWebView *) webView
 {
-    [activityIndicator stopAnimating];
-    UIView *view = (UIView*)[self.view viewWithTag:108];
-    [view removeFromSuperview];
-    NSLog(@" self.webViewDidFinishLoad");
-    
+    [hud hideAnimated:YES];
 }
 - (void)  webView:(UIWebView *) webView didFailLoadWithError:(NSError *)error
 {

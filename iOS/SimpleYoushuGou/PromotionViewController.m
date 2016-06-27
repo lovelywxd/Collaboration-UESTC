@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "PromotionCell.h"
 #import "WebViewController.h"
+#import "PromotionDetailViewController.h"
 //#import "PromotionCell.h"
 @interface PromotionViewController ()<UISearchResultsUpdating,UITableViewDataSource,UITableViewDelegate>
 
@@ -92,7 +93,7 @@
     return 40;
 }
 
--(UITableViewCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(PromotionCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 //    BOOL nibsRegistered=NO;
 //    if (!nibsRegistered) {
 //        UINib *nib=[UINib nibWithNibName:@"ActivityListCell" bundle:nil];
@@ -131,9 +132,14 @@
     
     
     switch (type) {
-//        case GroupBuy:
-//            
-//            break;
+        case GroupBuy:
+        {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            PromotionDetailViewController* detailVC = [storyboard instantiateViewControllerWithIdentifier:@"PromotionDetailViewController"];
+            detailVC.promotrion = cell.activity;
+            [self.navigationController pushViewController:detailVC animated:NO];
+        }
+            break;
 //        case PartDiscout:
 //            break;
         default:

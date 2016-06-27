@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Activity.h"
 
-@interface PromotionDetailViewController : UIViewController
-
+@interface PromotionDetailViewController : UITableViewController
+@property (nonatomic,strong) Activity* promotrion;
 @end

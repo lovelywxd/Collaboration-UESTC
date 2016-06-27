@@ -10,15 +10,21 @@
 #import "AppDelegate.h"
 #import "AFURLRequestSerialization.h"
 #import "AppDelegate.h"
+#import "EGOImageView.h"
 @interface groupBuyViewController ()
 
 @end
 
 @implementation groupBuyViewController
-
+NSArray *usrStrs;
+EGOImageView *egoImgView;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+   egoImgView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"home"]];
+    egoImgView.frame = CGRectMake(50,100, 100, 80);
+     usrStrs  = [NSArray arrayWithObjects:@"https://img3.doubanio.com\/lpic\/s27110875.jpg",@"https://img3.doubanio.com\/lpic\/s27401075.jpg",@"https://img1.doubanio.com\/lpic\/s28691087.jpg", nil];
+    //egoImgView.contentMode = UIViewContentModeScaleAspectFill;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,5 +64,11 @@
      }];
     
 
+}
+
+- (IBAction)loadImg:(id)sender {
+    NSInteger index = [self.imgIndex.text integerValue];
+    egoImgView.imageURL = [NSURL URLWithString:[usrStrs objectAtIndex:index]];
+    [self.view addSubview:egoImgView];
 }
 @end

@@ -12,5 +12,7 @@
 //@interface groupBuyViewController : baseViewController
 @interface groupBuyViewController : UIViewController
 - (IBAction)SearchBook:(id)sender;
+- (IBAction)loadImg:(id)sender;
 
+@property (strong, nonatomic) IBOutlet UITextField *imgIndex;
 @end
