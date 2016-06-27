@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from django.db import models
 
 
@@ -37,7 +38,6 @@ class Promotion(models.Model, DataDict):
 
 
 class PromotionBookList(models.Model, DataDict):
-
     promotionID = models.CharField(max_length=100)
     promotionBookISBN = models.CharField(max_length=20)
     promotionBookPrice = models.CharField(max_length=10)

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from YSGApp import views
 from django.conf.urls import patterns, include, url
 
@@ -13,8 +14,8 @@ urlpatterns = [
     url(r'^news/list/', views.promotion_list),
     url(r'^promotion/list/', views.promotion_list),
     url(r'^promotion/detail/', views.promotion_detail),
-    # url(r'^search/promotion/', views.search_promotion),
-    # url(r'^search/home/', views.search_home),
+    url(r'^search/promotion/', views.search_promotion),
+    url(r'^search/home/', views.search_home),
     url(r'^favorite/book/', views.get_favourite),
 
 ]

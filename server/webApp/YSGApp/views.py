@@ -252,7 +252,7 @@ def get_favourite(request):
 
 
 # 添加收藏列表（一本一本的添加和一个列表添加有什么区别？）
-# 若添加列表，则{"booklist":{}}
+# 若添加列表，则{"book_list":{}}
 @require_POST
 def add_favourite(request):
     if not user_auth(request):
@@ -291,3 +291,14 @@ def delete_favourite(request):
         return JsonResponse(result)
     favourite.delete()
     return JsonResponse(result)
+
+
+def search_promotion(request):
+    pass
+
+
+def search_home(request):
+    pass
+
+
+#
