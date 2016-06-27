@@ -1,10 +1,11 @@
 #coding:utf-8
 
 from django.http import HttpResponse
-from models import User
+from models import User, Promotion
+from django.core import serializers
 import json
 
-def login(request):
+def userLogin(request):
 	if 'name' in request.GET and 'passwd' in request.GET:
 		name = request.GET['name']
 		passwd = request.GET['passwd']
@@ -14,12 +15,12 @@ def login(request):
 				result = {'status': '0', 'data': user.values()[0]}
 				return HttpResponse(json.dumps(result)) #登录成功
 			else:
-				result = {'status': '1', 'data': 'invalid username'}
+				result = {'status': '1', 'data': 'invalid username or pwssword'}
 				return HttpResponse(json.dumps(result)) #登录无效
 	result = {'status': '2', 'data': 'invalid parameters'}
 	return HttpResponse(json.dumps(result)) #无效参数
 
-def register(request):
+def userRegister(request):
 	if 'name' in request.GET and request.GET['name']:
 		user = User.objects.filter(name=request.GET['name'])
 		if not user:
@@ -43,8 +44,20 @@ def register(request):
 	result = {'status': '2', 'data': 'invalid parameters'}
 	return HttpResponse(json.dumps(result)) #无效参数
 
-def news(request):
-	return HttpResponse("news")
+def promotionList(request):
+	return HttpResponse(serializers.serialize("json", Promotion.objects.all())[1:-1])
 
-def sale(request):
-	return HttpResponse("sale")
+def promotionDetail():
+	pass
+
+def searchPromotion():
+	pass
+
+def searchHome():
+	pass
+
+def favoriteCategory():
+	pass
+
+def favoriteBook():
+	pass
