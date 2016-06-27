@@ -8,7 +8,6 @@
 
 #import "PromotionViewController.h"
 #import "searchResultTableViewController.h"
-#import "ActivityListCell.h"
 #import "Activity.h"
 #import "AppDelegate.h"
 #import "PromotionCell.h"
