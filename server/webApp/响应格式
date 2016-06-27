@@ -1,0 +1,44 @@
+两种返回格式:
+
+{"username": "12356", "school": "uestc", "studentNo": "1221212121", "gender": true, "phone": "13018260013", "password": "b831ad32e60ba4", "email": "35532@qq.com"}{"username": "12356ddd", "school": "uestc", "studentNo": "1221212121", "gender": true, "phone": "13018260023", "password": "a6aaa4000736f1", "email": "35532e2d@qq.com"}{"username": "123777d", "school": "uestc", "studentNo": "1221212121", "gender": true, "phone": "13017773", "password": "a570759cab15a8c719e5ddf2e8da64bb35d62c6e", "email": "3553772s@qq.com"}{"username": "123asd", "school": "uestc", "studentNo": "1221212121", "gender": true, "phone": "13012223", "password": "8213d5d09cb0e3", "email": "3553222s@qq.com"}{"username": "123ddd", "school": "uestc", "studentNo": "1221212121", "gender": true, "phone": "1301820013", "password": "9b51f6ad93e941", "email": "355322@qq.com"}
+
+
+
+
+{"model": "YSGApp.user", "pk": "123526", "fields": {"password": "3d3e6ab8d3dde4", "phone": "13018220013", "school": "uestc", "email": "3553222@qq.com", "studentNo": "1221212121", "gender": true}}, {"model": "YSGApp.user", "pk": "12356", "fields": {"password": "b831ad32e60ba4", "phone": "13018260013", "school": "uestc", "email": "35532@qq.com", "studentNo": "1221212121", "gender": true}}, {"model": "YSGApp.user", "pk": "12356ddd", "fields": {"password": "a6aaa4000736f1", "phone": "13018260023", "school": "uestc", "email": "35532e2d@qq.com", "studentNo": "1221212121", "gender": true}}, {"model": "YSGApp.user", "pk": "123777d", "fields": {"password": "a570759cab15a8c719e5ddf2e8da64bb35d62c6e", "phone": "13017773", "school": "uestc", "email": "3553772s@qq.com", "studentNo": "1221212121", "gender": true}}, {"model": "YSGApp.user", "pk": "123asd", "fields": {"password": "8213d5d09cb0e3", "phone": "13012223", "school": "uestc", "email": "3553222s@qq.com", "studentNo": "1221212121", "gender": true}}, {"model": "YSGApp.user", "pk": "123ddd", "fields": {"password": "9b51f6ad93e941", "phone": "1301820013", "school": "uestc", "email": "355322@qq.com", "studentNo": "1221212121", "gender": true}}, {"model": "YSGApp.user", "pk": "123ffffdd", "fields": {"password": "040158b526e890", "phone": "1301811113", "school": "uestc", "email": "355322aas@qq.com", "studentNo": "1221212121", "gender": true}}
+
+
+
+促销活动列表：(多条信息)
+[{
+'promotionID': 'PBJD213'
+'promotionCompany': 'jd'
+'promotionName': 'kkkkkkk'
+'promotionDeadline': 'dddd'
+'promotionLink': 'dddfasfa'
+},
+
+{
+	
+}
+]
+
+字典格式与JSON格式（字符串）的有什么区别？
+
+
+促销活动详情：
+
+{
+	'promotionID': 'PBJD213'
+	'book':{
+		{
+		'bookname':
+		'bookISBN':
+		...
+		},
+		{
+		'bookname':
+		'bookISBN':
+		}
+	}
+}

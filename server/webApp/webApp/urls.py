@@ -1,23 +1,26 @@
-"""webApp URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.9/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
-from django.conf.urls import url
-from django.contrib import admin
-
 from YSGApp import views
+from django.conf.urls import patterns, include, url
+
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'', views.get_all_user),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^user/login/', views.user_login),
+    url(r'^user/register/', views.user_register),
+    url(r'^user/logout/', views.user_logout),
+    url(r'^news/list/', views.promotion_list),
+    url(r'^promotion/list/', views.promotion_list),
+    url(r'^promotion/detail/', views.promotion_detail),
+    # url(r'^search/promotion/', views.search_promotion),
+    # url(r'^search/home/', views.search_home),
+    url(r'^favorite/book/', views.get_favourite),
+
 ]
+
+'''
+http://localhost:8000/user/register/?school=uestc&name=shuaihan&studentNo=201421010517&passwd=admin&gender=1&phone=15682017891&email=466629332%40qq.com
+http://localhost:8000/user/login/?passwd=admin&name=shuaihan
+https://api.douban.com/v2/book/isbn/:9787020042494
+'''

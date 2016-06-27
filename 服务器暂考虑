@@ -6,14 +6,14 @@
 cookie&&session的区别。
 
 · 用户注册 POST /user/register
-· 用户登录 POST /user/authenticate
-· 获取优惠活动列表 GET /acts
-· 优惠活动详情 GET /acts/{act_id}
-· 用户主页书籍搜索 GET /acts/{book_name}  或用查询字符串(?acts_all&&book_name)
-· 用户相应活动下书籍搜索 GET /{acts_id}/{book_name} 或用查询字符串(?acts_id&&book_name)
+· 用户登录 POST /user/login
+· 获取优惠活动列表 GET /promotion/list
+· 优惠活动详情 GET /promotion/detail/{promotion_id}
+· 用户主页书籍搜索 GET /search/home/{book_name}  或用查询字符串(?acts_all&&book_name)
+· 用户相应活动下书籍搜索 GET /search/promotion/{promotion_id}+{book_name} 或用查询字符串(?acts_id&&book_name)
 · 用户添加收藏 POST /favourite/add
-· 用户获取收藏 GET /favourite
-· 用户删除收藏 post /favoutite/delete
+· 用户获取收藏 GET /favourite/list
+· 用户删除收藏 post /favoutite/remove
 我觉得收藏类别和收藏书籍直接放在一起，或先不管收藏类别，这里先只说收藏书籍。
 		· 最好的方式是用户选择收藏类别，然后在类别下添加书籍（或根据书籍服务器自动记录类别）
 		· 或将收藏类别放在用户个人信息表中（也是关注类别）

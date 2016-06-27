@@ -80,17 +80,17 @@ DATABASES = {
     'default': {
         # Django default: sqlite
         # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'NAME': os.path.join(2
+        # BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'YSGAPP',
+        'NAME': 'YSGApp',
         'USER': 'root',
-        'password': 'wxd',
+        'PASSWORD': 'wxd',
         'HOST': '115.159.219.141',
         'PORT': '3306',
     }
 }
-
-
+# AUTH_USER_MODEL = 'YSGApp.User'
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 
@@ -128,3 +128,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# AUTHENTICATION_BACKENDS = {
+#     'YSGApp.views.LoginBackend',
+# }
