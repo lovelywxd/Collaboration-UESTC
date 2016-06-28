@@ -13,6 +13,9 @@
 @interface groupBuyViewController : UIViewController
 - (IBAction)SearchBook:(id)sender;
 - (IBAction)loadImg:(id)sender;
+- (IBAction)addFavorite:(id)sender;
 
-@property (strong, nonatomic) IBOutlet UITextField *imgIndex;
+- (IBAction)removeFavorite:(id)sender;
+- (IBAction)getAllFavorite:(id)sender;
+
 @end

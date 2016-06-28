@@ -67,8 +67,55 @@ EGOImageView *egoImgView;
 }
 
 - (IBAction)loadImg:(id)sender {
-    NSInteger index = [self.imgIndex.text integerValue];
-    egoImgView.imageURL = [NSURL URLWithString:[usrStrs objectAtIndex:index]];
-    [self.view addSubview:egoImgView];
+//    NSInteger index = [self.imgIndex.text integerValue];
+//    egoImgView.imageURL = [NSURL URLWithString:[usrStrs objectAtIndex:index]];
+//    [self.view addSubview:egoImgView];
+}
+
+- (IBAction)addFavorite:(id)sender {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = @"http://115.159.219.141:8000/promotion/list/";
+    [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"success in search in addFavorite");
+         
+     }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     
+     {
+         NSLog(@"fail in search in addFavorite");
+     }];
+
+}
+- (IBAction)removeFavorite:(id)sender {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = @"http://115.159.219.141:8000/promotion/list/";
+    [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"success in search in removeFavorite");
+         
+     }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     
+     {
+         NSLog(@"fail in search in removeFavorite");
+     }];
+
+}
+
+- (IBAction)getAllFavorite:(id)sender {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = @"http://115.159.219.141:8000/promotion/list/";
+    [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"success in search in getAllFavorite");
+         
+     }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     
+     {
+         NSLog(@"fail in search in getAllFavorite");
+     }];
+
 }
 @end

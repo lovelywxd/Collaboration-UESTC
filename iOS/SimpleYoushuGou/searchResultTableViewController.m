@@ -8,6 +8,9 @@
 
 #import "searchResultTableViewController.h"
 #import "PromotionCell.h"
+#import "AppDelegate.h"
+#import "AFURLRequestSerialization.h"
+
 @interface searchResultTableViewController ()
 
 @end
@@ -109,6 +112,43 @@ NSMutableArray* historySearch;
             return nil;
             break;
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
+(NSIndexPath *)indexPath
+{
+    switch (indexPath.section) {
+        case 1:
+        {
+            AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+            NSString *url = @"http://115.159.219.141:8000/promotion/list/";
+            [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+             {
+                 NSLog(@"success in search in homePage");
+                 
+             }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error)
+             
+             {
+                 NSLog(@"fail in search in homePage");
+             }];
+
+        }
+            break;
+            
+        default:
+            break;
+    }
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    BookDetailViewController* bookDetailVC = [storyboard instantiateViewControllerWithIdentifier:@"BookDetailViewController"];
+//    if (self.promotrion.activityType == GroupBuy) {
+//        bookDetailVC.IsGroupBuy = YES;
+//    }
+//    else bookDetailVC.IsGroupBuy = NO;
+//    NSString *isbn = [[self.BookList objectAtIndex:indexPath.row] valueForKey:@"PromotionBookISBN"];
+//    BookDetailInfo *info = [self.BookDetailList objectForKey:isbn];
+//    bookDetailVC.bookdetailInfo = info;
+//    [self.navigationController pushViewController:bookDetailVC animated:NO];
 }
 
 

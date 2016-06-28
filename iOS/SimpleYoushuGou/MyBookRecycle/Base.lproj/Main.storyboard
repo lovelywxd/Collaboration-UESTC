@@ -642,7 +642,7 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="302" y="526" width="46" height="30"/>
+                                    <rect key="frame" x="215" y="500" width="46" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="SearchBook:" destination="wp2-gC-hMd" eventType="touchUpInside" id="rao-LL-nTc"/>
@@ -652,53 +652,76 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" title="加载图片"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="52" y="526" width="60" height="30"/>
+                                    <rect key="frame" x="29" y="509" width="60" height="30"/>
                                 </variation>
                                 <connections>
                                     <action selector="loadImg:" destination="wp2-gC-hMd" eventType="touchUpInside" id="5ud-M2-hWM"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tqe-F3-6kZ">
-                                <rect key="frame" x="-25" y="-30" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="109" y="570" width="97" height="30"/>
-                                </variation>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="groupbuy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14j-ez-It6">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="166" y="530" width="74" height="21"/>
+                                    <rect key="frame" x="109" y="509" width="74" height="21"/>
                                 </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vbm-cp-gRZ">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="添加收藏"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="41" y="556" width="60" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="addFavorite:" destination="wp2-gC-hMd" eventType="touchUpInside" id="83y-aN-VUa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0hv-Ad-MZY">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="删除收藏"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="123" y="556" width="60" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="removeFavorite:" destination="wp2-gC-hMd" eventType="touchUpInside" id="QPG-T7-RU6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uho-KL-0eV">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="请求收藏列表"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="193" y="556" width="90" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="getAllFavorite:" destination="wp2-gC-hMd" eventType="touchUpInside" id="Wd2-5b-DLA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="wfv-g3-gvg"/>
                                 <exclude reference="ikS-PT-CdW"/>
-                                <exclude reference="Tqe-F3-6kZ"/>
                                 <exclude reference="14j-ez-It6"/>
+                                <exclude reference="Vbm-cp-gRZ"/>
+                                <exclude reference="0hv-Ad-MZY"/>
+                                <exclude reference="Uho-KL-0eV"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="wfv-g3-gvg"/>
                                 <include reference="ikS-PT-CdW"/>
-                                <include reference="Tqe-F3-6kZ"/>
                                 <include reference="14j-ez-It6"/>
+                                <include reference="Vbm-cp-gRZ"/>
+                                <include reference="0hv-Ad-MZY"/>
+                                <include reference="Uho-KL-0eV"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="LzX-MK-NMK"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="imgIndex" destination="Tqe-F3-6kZ" id="8ue-ye-U8b"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cjw-V1-El4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1322,27 +1345,27 @@
                                                     <exclude reference="Mpm-sT-1Iv"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="l31-Jf-Fk1"/>
-                                                    <exclude reference="xI3-Kg-Jjg"/>
-                                                    <exclude reference="1zv-j9-84i"/>
-                                                    <exclude reference="upC-ma-Rrw"/>
-                                                    <exclude reference="5ns-l6-UaW"/>
-                                                    <exclude reference="f5Y-Si-cB1"/>
-                                                    <exclude reference="jHP-vV-ykj"/>
-                                                    <exclude reference="T2b-EA-e18"/>
+                                                    <exclude reference="4Q4-0W-7Sd"/>
+                                                    <exclude reference="ZmZ-8z-6ge"/>
+                                                    <exclude reference="fGe-jn-qlE"/>
                                                     <exclude reference="0x2-1x-5Js"/>
                                                     <exclude reference="r5J-XO-OWR"/>
+                                                    <exclude reference="1zv-j9-84i"/>
+                                                    <exclude reference="upC-ma-Rrw"/>
                                                     <exclude reference="20c-G8-BhV"/>
                                                     <exclude reference="Y9A-2c-2q2"/>
                                                     <exclude reference="Xx8-kV-nOg"/>
                                                     <exclude reference="e5d-Mx-ASt"/>
-                                                    <exclude reference="LL4-RE-yLb"/>
-                                                    <exclude reference="ZKm-MX-Toh"/>
-                                                    <exclude reference="4Q4-0W-7Sd"/>
-                                                    <exclude reference="ZmZ-8z-6ge"/>
-                                                    <exclude reference="fGe-jn-qlE"/>
+                                                    <exclude reference="T2b-EA-e18"/>
+                                                    <exclude reference="l31-Jf-Fk1"/>
+                                                    <exclude reference="xI3-Kg-Jjg"/>
                                                     <exclude reference="B6M-o3-bvm"/>
                                                     <exclude reference="C4T-sY-M0W"/>
+                                                    <exclude reference="LL4-RE-yLb"/>
+                                                    <exclude reference="ZKm-MX-Toh"/>
+                                                    <exclude reference="5ns-l6-UaW"/>
+                                                    <exclude reference="f5Y-Si-cB1"/>
+                                                    <exclude reference="jHP-vV-ykj"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular-widthClass=compact">
@@ -1359,27 +1382,27 @@
                                                     <include reference="Mpm-sT-1Iv"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="l31-Jf-Fk1"/>
-                                                    <include reference="xI3-Kg-Jjg"/>
-                                                    <include reference="1zv-j9-84i"/>
-                                                    <include reference="upC-ma-Rrw"/>
-                                                    <include reference="5ns-l6-UaW"/>
-                                                    <include reference="f5Y-Si-cB1"/>
-                                                    <include reference="jHP-vV-ykj"/>
-                                                    <include reference="T2b-EA-e18"/>
+                                                    <include reference="4Q4-0W-7Sd"/>
+                                                    <include reference="ZmZ-8z-6ge"/>
+                                                    <include reference="fGe-jn-qlE"/>
                                                     <include reference="0x2-1x-5Js"/>
                                                     <include reference="r5J-XO-OWR"/>
+                                                    <include reference="1zv-j9-84i"/>
+                                                    <include reference="upC-ma-Rrw"/>
                                                     <include reference="20c-G8-BhV"/>
                                                     <include reference="Y9A-2c-2q2"/>
                                                     <include reference="Xx8-kV-nOg"/>
                                                     <include reference="e5d-Mx-ASt"/>
-                                                    <include reference="LL4-RE-yLb"/>
-                                                    <include reference="ZKm-MX-Toh"/>
-                                                    <include reference="4Q4-0W-7Sd"/>
-                                                    <include reference="ZmZ-8z-6ge"/>
-                                                    <include reference="fGe-jn-qlE"/>
+                                                    <include reference="T2b-EA-e18"/>
+                                                    <include reference="l31-Jf-Fk1"/>
+                                                    <include reference="xI3-Kg-Jjg"/>
                                                     <include reference="B6M-o3-bvm"/>
                                                     <include reference="C4T-sY-M0W"/>
+                                                    <include reference="LL4-RE-yLb"/>
+                                                    <include reference="ZKm-MX-Toh"/>
+                                                    <include reference="5ns-l6-UaW"/>
+                                                    <include reference="f5Y-Si-cB1"/>
+                                                    <include reference="jHP-vV-ykj"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
