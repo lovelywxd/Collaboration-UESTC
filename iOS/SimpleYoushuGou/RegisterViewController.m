@@ -41,7 +41,9 @@
     appdele = [UIApplication sharedApplication].delegate;
     NSString* url;
     if (appdele.OnLineTest) {
-        url = @"http://115.159.219.141:80/api/users";
+//        url = @"http://192.168.1.100:8000/user/register/";
+        url = @"http://115.159.219.141:8000/user/register/";
+//        url = @"http://115.159.219.141:80/api/users";
 //        url = @"http://52.69.162.241:8888/register/";
     }
     else
@@ -71,14 +73,15 @@
         {
             usrname = self.name.text;
             email = self.email.text;
+            phone = self.phone.text;
+            
         }
         else
         {
             usrname = @"Slr4";
-            email = @"15528290768@163.com4";
+            email = @"15528290768@163.com";
         }
         passwd = @"1234567";
-        phone = @"15528290768";
         school = @"UESTC";
         studentNo = @"201422010535";
         gender = @"1";

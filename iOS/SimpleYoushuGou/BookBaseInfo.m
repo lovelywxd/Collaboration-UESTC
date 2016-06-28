@@ -20,4 +20,14 @@
     }
     return self;
 }
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    BookBaseInfo *info = [[[self class] alloc] init];
+    info.PromotionBookISBN = self.PromotionBookISBN;
+    info.PromotionID = self.PromotionID;
+    info.PromotionBookPrice = self.PromotionBookPrice;
+    info.PromotionBookCurrentPrice = self.PromotionBookCurrentPrice;
+    return info;
+}
 @end

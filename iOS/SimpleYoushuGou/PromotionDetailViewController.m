@@ -7,6 +7,7 @@
 //
 
 #import "PromotionDetailViewController.h"
+#import "BookDetailViewController.h"
 #import "MJRefresh.h"
 #import "AppDelegate.h"
 #import "AFURLRequestSerialization.h"
@@ -54,9 +55,8 @@
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     NSString *baseUrl = [NSMutableString stringWithString:@"https://api.douban.com/v2/book/isbn/:"];
     NSMutableDictionary *bookDetailList = [[NSMutableDictionary alloc] init];
-    dispatch_group_t group = dispatch_group_create();
 
-    
+    dispatch_group_t group = dispatch_group_create();
     for (id book in baseInfoList)
     {
         NSString *isbn = [book valueForKey:@"PromotionBookISBN"];
@@ -66,7 +66,7 @@
          {
              BookDetailInfo *info = [[BookDetailInfo alloc] initBook:book withImages:[responseObject objectForKey:@"images"] title:[responseObject objectForKey:@"title"] publisher:[responseObject objectForKey:@"publisher"] pubdate:[responseObject objectForKey:@"pubdate"] pages:[responseObject objectForKey:@"pages"] author:[responseObject objectForKey:@"author"] summary:[responseObject objectForKey:@"summary"] author_intro:[responseObject objectForKey:@"author_intro"] rating:[responseObject objectForKey:@"rating"] catalog:[responseObject objectForKey:@"catalog"] tags:[responseObject objectForKey:@"tags"] doubanLink:[responseObject objectForKey:@"url"]];
              [bookDetailList setObject:info forKey:isbn];
-             NSLog(@"dolown image for %@",info.title);
+    
              dispatch_group_leave(group);
          }
                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -82,6 +82,8 @@
         [self.BookDetailList addEntriesFromDictionary:bookDetailList];
         [self.tableView reloadData];
         [self.tableView.mj_footer endRefreshing];
+
+
     });
     
 
@@ -115,6 +117,7 @@
                      [[BookBaseInfo alloc] initBook:@"9787533675950" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
                      nil];
     [self fetchBookDetailInfo:self.BookList];
+//    [self LoadBookDetail];
 }
 - (void) LoadBookDetail
 {
@@ -131,6 +134,9 @@
              BookDetailInfo *info = [[BookDetailInfo alloc] initBook:book withImages:[responseObject objectForKey:@"images"] title:[responseObject objectForKey:@"title"] publisher:[responseObject objectForKey:@"publisher"] pubdate:[responseObject objectForKey:@"pubdate"] pages:[responseObject objectForKey:@"pages"] author:[responseObject objectForKey:@"author"] summary:[responseObject objectForKey:@"summary"] author_intro:[responseObject objectForKey:@"author_intro"] rating:[responseObject objectForKey:@"rating"] catalog:[responseObject objectForKey:@"catalog"] tags:[responseObject objectForKey:@"tags"] doubanLink:[responseObject objectForKey:@"url"]];
              [self.BookDetailList setObject:info forKey:isbn];
              [self.tableView reloadData];
+           
+             
+             
              
          }
         failure:^(AFHTTPRequestOperation *operation, NSError *error)
@@ -156,6 +162,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
 (NSIndexPath *)indexPath
 {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    BookDetailViewController* bookDetailVC = [storyboard instantiateViewControllerWithIdentifier:@"BookDetailViewController"];
+    if (self.promotrion.activityType == GroupBuy) {
+        bookDetailVC.IsGroupBuy = YES;
+    }
+    else bookDetailVC.IsGroupBuy = NO;
+    NSString *isbn = [[self.BookList objectAtIndex:indexPath.row] valueForKey:@"PromotionBookISBN"];
+    BookDetailInfo *info = [self.BookDetailList objectForKey:isbn];
+    bookDetailVC.bookdetailInfo = info;
+    [self.navigationController pushViewController:bookDetailVC animated:NO];
 }
 
 

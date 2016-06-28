@@ -10,5 +10,5 @@
 #import "Activity.h"
 
 @interface PromotionDetailViewController : UITableViewController
-@property (nonatomic,strong) Activity* promotrion;
+@property (nonatomic,strong) Activity* promotrion;//纪录当前促销活动的相关信息
 @end

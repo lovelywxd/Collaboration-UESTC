@@ -24,7 +24,7 @@ NSMutableData* totalData;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-   [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"loginbackground.png"]]];
+//   [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"loginbackground.png"]]];
     self.headview.image = [UIImage imageNamed:@"head_background.png"];
     appdele = [UIApplication sharedApplication].delegate;
     
@@ -140,6 +140,8 @@ NSMutableData* totalData;
     NSString* url;
     
     if (appdele.OnLineTest) {
+        url = @"http://115.159.219.141:8000/user/login/";
+//        url = @"http://192.168.1.100:8000/user/login/";
 //        url = @"http://115.159.219.141:80/api/authenticate";
 //        url = @"http://52.69.162.241:8888/login";
     }
@@ -155,7 +157,7 @@ NSMutableData* totalData;
     }
     else
     {
-        username = @"Slr";
+        username = @"Syr";
         passwd = @"1234567";
     }
     NSDictionary *logindata = [[NSDictionary alloc] initWithObjectsAndKeys:username, @"name",passwd,@"passwd",nil];

@@ -40,6 +40,8 @@
     [self initSegmentCtl];
     self.table.delegate = self;
     self.table.dataSource = self;
+    
+    
 }
 
 //- (void)viewWillAppear:(BOOL)animated
@@ -93,12 +95,7 @@
 }
 
 -(PromotionCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    BOOL nibsRegistered=NO;
-//    if (!nibsRegistered) {
-//        UINib *nib=[UINib nibWithNibName:@"ActivityListCell" bundle:nil];
-//        [tableView registerNib:nib forCellReuseIdentifier:@"ActivityListCell"];
-//        nibsRegistered=YES;
-//    }
+
 //    ActivityListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ActivityListCell"];
 //    NSArray* activitys = [self.shopActivitys objectForKey:self.currentShop];
 //    cell.activityName.text = [[activitys objectAtIndex:indexPath.row] valueForKey:@"activityName"];
@@ -220,6 +217,32 @@
                           ,[[Activity alloc] init:@"Gb淘宝1" withName:@"武侯区云驭风书店全场满100减50、满200减100 " activiType:Other urlString:@"https://yyf365.taobao.com/shop/view_shop.htm?user_number_id=1117784433&ali_trackid=2%3Amm_32462830_4340057_14662838%3A1466817969_251_1477673269&upsid=4d37913cbc26033287160f6be8a0d226&clk1=4d37913cbc26033287160f6be8a0d226"]
                           ,[[Activity alloc] init:@"Gb中图1" withName:@"中图万种图书150-70" activiType:GroupBuy  urlString:@"http://www.bookschina.com/subject/160622myear.aspx"]
                           ,nil];
+    
+    
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *baseUrl = [NSMutableString stringWithString:@"https://api.douban.com/v2/book/isbn/:"];
+    NSMutableDictionary *bookDetailList = [[NSMutableDictionary alloc] init];
+
+    
+//    NSString *url = @"http://115.159.219.141:8000/promotion/list/";
+    
+    NSString *url = @"http://115.159.219.141:8000";
+//      NSString* tempUrl = @"http://115.159.219.141:80/api/users";
+//    NSString *url =  @"https://api.douban.com/v2/book/isbn/:9780316201643";
+//    [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
+    [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"seccess");
+         NSArray *key = [responseObject allKeys];
+         NSLog(@"key amout:%ld",key.count);
+     }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     
+     {
+         NSLog(@"fail");
+     }];
+
+    
     [self classifyActivity];
     
 }
