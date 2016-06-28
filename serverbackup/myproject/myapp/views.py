@@ -1,22 +1,31 @@
-# coding: UTF-8
-from django.http import HttpResponse, JsonResponse
-from models import User, Promotion, PromotionBookList, UserFavourite
-from django.core import serializers
-from django.views.decorators.http import require_POST
+# -*- coding: UTF-8 -*-
 import json
 import re
 import hashlib
 import time
 import logging
 
-from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+from models import User, Promotion, PromotionBookList, UserFavourite
+from django.core import serializers
+from django.views.decorators.http import require_POST
 
+
+from django.views.decorators.csrf import csrf_exempt
+from crawler import search_home_list_find, search_home_detail_find
 # =============================================================
 _COOKIE_KEY = "web_app_for_mobile_client"
 COOKIE_NAME = "app_session"
 _RE_EMAIL = re.compile(r'^[a-zA-Z0-9\.\-_]+@[a-zA-Z0-9\-_]+(\.[a-zA-Z0-9\-_]+){1,4}$')
 _RE_PHONE = re.compile(r'^(1[345678]\d{9})$')
 _RE_SHA1 = re.compile(r'[0-9a-f]{1,40}$')
+
+def JsonResponse(data):
+    return HttpResponse(
+        json.dumps(data, ensure_ascii=False,encoding='utf-8'),
+        content_type="application/json",
+        charset='utf-8'
+        )
 
 
 # Create your views here
@@ -134,19 +143,16 @@ def user_register(request):
     username = request.POST['name']
     password = request.POST['passwd']
     email = request.POST['email']
-    print(username)
-    print(password)
-    print(email)
     result = {"status": '2', "data": "invalid parameters"}
     if not username or not username.strip():
         result["data"] = "invalid username"
-        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json")
+        return JsonResponse(result)
     if not password:
         result["data"] = "invalid password"
-        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json")
+        return JsonResponse(result)
     if not email or not _RE_EMAIL.match(email):
         result["data"] = "invalid email"
-        return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json")
+        return JsonResponse(result)
     user = User.objects.filter(userName=username)
     # need modify
     if not user:
@@ -164,7 +170,7 @@ def user_register(request):
             newuser.save()
             result["status"] = '0'
             result["data"] = "register success"
-            response = HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json")
+            response = JsonResponse(result)
             response.set_cookie(
                 COOKIE_NAME,
                 user2cookie(username, newuser.password, 6220800),
@@ -175,9 +181,9 @@ def user_register(request):
         except Exception as e:
             logging.info(e)
             result['data'] = "exception: %s" % e
-            return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json")
+            return JsonResponse(result)
     result['data'] = "username have been registered"
-    return HttpResponse(json.dumps(result, ensure_ascii=False), content_type="application/json")
+    return JsonResponse(result)
 
 
 @csrf_exempt
@@ -190,22 +196,12 @@ def user_logout(request):
 
 # =============================================================
 def get_all_user(request):
-    # res = HttpResponse(
-    #     serializers.serialize("json", User.objects.all()),
-    #     content_type="application/json",
-    #     charset='utf-8'
-    # )
+    # res = HttpResponse(serializers.serialize("json", User.objects.all()))
     user = User.objects.all()
     l = []
     for u in user:
-        l.append(u.to_dict())
-
-    res3 = HttpResponse(
-        json.dumps(l, ensure_ascii=False, encoding='utf-8'),
-        content_type="application/json"
-    )
-    # a = {u'中': 1, u'为': 2}
-    # return HttpResponse(json.dumps(a, ensure_ascii=False), content_type="application/json")
+         l.append(u.to_dict())
+    res3 = JsonResponse(l)
     return res3
 
 
@@ -213,16 +209,16 @@ def promotion_list(request):
     promotion_set = Promotion.objects.all()
     promotionlist = []
     for promotion in promotion_set:
-        promotionlist.append(json.dumps(promotion.to_dict()))
-    return JsonResponse(promotionlist)
-    # return HttpResponse(serializers.serialize("json", Promotion.objects.all())[1:-1])
+        promotionlist.append(promotion.to_dict())
+    # return JsonResponse(promotionlist)
+    return HttpResponse(serializers.serialize("json", Promotion.objects.all()))
 
 
 def promotion_detail(request):
     """
     首先获得收藏，然后首先查找收藏，若没有收藏，直接根据promotionID从数据库中查找相应书籍
     """
-    promotion_id = request.GET["promotionID"]
+    promotion_id = request.GET["promotionID"].encode('utf-8')
     res = {'promotionID': promotion_id, 'book': 'invalid promotionID or empty book list'}
     book_list = PromotionBookList.objects.filter(promotionID=promotion_id)
     promotionbooklist = []
@@ -231,13 +227,17 @@ def promotion_detail(request):
     else:
         for book in book_list:
             temp_dict = book.to_dict()
+            # 不返回promotionID，id
             del temp_dict["promotionID"]
-            promotionbooklist.append(json.dumps(temp_dict))
-        res['book'] = ','.join(promotionbooklist)
+            del temp_dict["id"]
+            promotionbooklist.append(temp_dict)
+        res['book'] = promotionbooklist
         return JsonResponse(res)
 
 
+#===============================================================================================
 # just return bookName
+# problem: request.user.  to be solve.
 def get_favourite(request):
     favourite_list = []
     if not user_auth(request):
@@ -254,7 +254,7 @@ def get_favourite(request):
 
 
 # 添加收藏列表（一本一本的添加和一个列表添加有什么区别？）
-# 若添加列表，则{"book_list":{}
+# 若添加列表，则{"book_list":{}}
 @require_POST
 def add_favourite(request):
     if not user_auth(request):
@@ -293,18 +293,20 @@ def delete_favourite(request):
         return JsonResponse(result)
     favourite.delete()
     return JsonResponse(result)
+#===============================================================================================
+
+
+def search_home_list(request):
+    bookName = request.GET["bookName"].encode("utf-8") #中文搜索
+    return HttpResponse(search_home_list_find(bookName), content_type="application/json")
+
+
+def search_home_detail(request):
+    bookSubject = request.GET["bookSubject"]
+    return HttpResponse(search_home_detail_find(bookSubject), content_type="application/json")
 
 
 def search_promotion(request):
-    pass
-
-
-def search_home(request):
-    pass
-
-
-@require_POST
-def add_shopping_list(request):
     pass
 
 

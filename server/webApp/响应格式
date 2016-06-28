@@ -42,3 +42,61 @@
 		}
 	}
 }
+
+
+result = dict(rating={"max": 10, "numRaters": 375, "average": "9.4", "min": 0},
+                  subtitle=u"中文书籍".encode("utf-8"),
+                  author=["Doug Dorst", "J.J. Abrams"],
+                  pubdate="2013-10-29",
+                  tags=[{"count": 231, "name": "J.J.Abrams", "title": "J.J.Abrams"},
+                        {"count": 221, "name": "小说", "title": "小说"}, {"count": 176, "name": "奇妙构思", "title": "奇妙构思"},
+                        {"count": 145, "name": "美国", "title": "美国"},
+                        {"count": 98, "name": "DougDorst", "title": "DougDorst"},
+                        {"count": 86, "name": "英文版", "title": "英文版"}, {"count": 67, "name": "外国文学", "title": "外国文学"},
+                        {"count": 52, "name": "文学", "title": "文学"}],
+                  origin_title="",
+                  image="https://img3.doubanio.com\/mpic\/s27110875.jpg",
+                  binding="Hardcover",
+                  translator=[],
+                  catalog="",
+                  pages="472",
+                  images={"small": "https://img3.doubanio.com\/spic\/s27110875.jpg",
+                          "large": "https://img3.doubanio.com\/lpic\/s27110875.jpg",
+                          "medium": "https://img3.doubanio.com\/mpic\/s27110875.jpg"},
+                  alt="https:\/\/book.douban.com\/subject\/24538213\/", id="24538213", publisher="Mulholland Books",
+                  isbn10="0316201642", isbn13="9780316201643", title="S.",
+                  url="https:\/\/api.douban.com\/v2\/book\/24538213", alt_title="",
+                  author_intro="J.J. Abrams is the multiple Emmy Award-winning producer, writer, "
+                               "and director of Lost, Star Trek, Alias, "
+                               "The Fringe, Cloverfield, Armageddon, Super 8, and more. This is his debut novel."
+                               "\nDoug Dorst teaches creative writing at Texas State "
+                               "University-San Marcos. His work has appeared in McSweeney's, "
+                               "Ploughshares, Epoch, and other journals, "
+                               "as well as in the anthology Politically Inspired. "
+                               "He is also a former Jeopardy champion.",
+                  summary="One book. Two readers. "
+                          "A world of mystery, menace, and desire.\n"
+                          "A young woman picks up a book left behind by a stranger. "
+                          "Inside it are his margin notes, "
+                          "which reveal a reader entranced "
+                          "by the story and by its mysterious author. "
+                          "She responds with notes of her own, leaving the book for the stranger, "
+                          "and so begins an unlikely conversation that plunges them both into the unknown.\n"
+                          "The book: Ship of Theseus, the final novel "
+                          "by a prolific but enigmatic writer named V.M. Straka, "
+                          "in which a man with no past is shanghaied "
+                          "onto a strange ship with a monstrous crew and "
+                          "launched onto a disorienting and perilous journey.\n"
+                          "The writer: Straka, the incendiary "
+                          "and secretive subject of one of the world's greatest mysteries, "
+                          "a revolutionary about whom the world knows nothing apart from the words he wrote "
+                          "and the rumors that swirl around him.\n The readers: Jennifer and Eric, "
+                          "a college senior and a disgraced grad student, "
+                          "both facing crucial decisions about who they are, who they might become, "
+                          "and how much they're willing to trust another person with their passions, hurts, "
+                          "and fears.\nS., conceived by filmmaker "
+                          "J. J. Abrams and written by award-winning novelist Doug Dorst, "
+                          "is the chronicle of two readers finding each other in the margins of a book "
+                          "and enmeshing themselves in a deadly struggle between forces they don't understand, "
+                          "and it is also Abrams and Dorst's love letter to the written word.",
+                  price="USD 35.00")

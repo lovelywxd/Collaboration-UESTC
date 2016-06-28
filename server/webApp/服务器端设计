@@ -115,19 +115,5 @@ session 属性，这是一个字典型的对象
 
 
 
-后端的API设计： RESTful API学习设计
-
-· 用户注册 POST /api/register
-· 用户登录 POST /api/authenticate
-· 获取优惠活动列表 GET /api/acts_all
-· 优惠活动详情 GET /api/acts/{act_id}
-· 用户主页书籍搜索 GET /api/acts/{book_name}  或用查询字符串(?acts_all&&book_name)
-· 用户相应活动下书籍搜索 GET /api/{acts_id}/{book_name} 或用查询字符串(?acts_id&&book_name)
-
-我觉得收藏类别和收藏书籍直放在一起，或先不管收藏类别，这里先只说收藏书籍。
-		· 最好的方式是用户选择收藏类别，然后在类别下添加书籍
-		· 或将收藏类别放在用户个人信息表中（也是关注类别）
-		· 用户获取收藏书籍列表 GET /api/favourite/booklists
-· 用户添加收藏 POST /api/favourite/add
-· 用户获取收藏 GET /api/favourite
-· 用户删除收藏 post /api/favoutite/delete
+拼单车：下单，书名，书的信息，数量  add, delete, get, compute
+确认下单，拼单成功，拼单失败，团长等等拼单业务，计算

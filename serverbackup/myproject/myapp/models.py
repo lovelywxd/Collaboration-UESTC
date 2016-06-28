@@ -30,7 +30,7 @@ class UserFavourite(models.Model, DataDict):
 
 
 class Promotion(models.Model, DataDict):
-    promotionID = models.CharField(max_length=100, primary_key=True)
+    promotionID = models.CharField(max_length=100,primary_key=True)
     promotionCompany = models.CharField(max_length=100)
     promotionName = models.CharField(max_length=100)
     promotionDeadline = models.CharField(max_length=50, null=True)
@@ -49,4 +49,3 @@ class BookPriceList(models.Model, DataDict):
     bookISBN = models.CharField(max_length=20, primary_key=True)
     bookSaler = models.CharField(max_length=100)
     bookCurrentPrice = models.CharField(max_length=10)
-
