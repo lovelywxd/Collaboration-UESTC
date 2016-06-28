@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "8C0FFF9ACCCC3E623C487EA438B65049253F75F3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "97890E26408A9C3B0F38BCF8F1D9C7F539D2DD3E" : 0,
+    "8C0FFF9ACCCC3E623C487EA438B65049253F75F3" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "DE29A08B-65CD-4D96-AD42-F26B9566F406",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "97890E26408A9C3B0F38BCF8F1D9C7F539D2DD3E" : "MobileContest\/",
+    "8C0FFF9ACCCC3E623C487EA438B65049253F75F3" : "MyApp\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "YouShuGou",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SimpleYoushuGou\/YouShuGou.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:rainyslr\/MyApp.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8C0FFF9ACCCC3E623C487EA438B65049253F75F3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "222.197.180.140:sulirong\/MobileContest.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "97890E26408A9C3B0F38BCF8F1D9C7F539D2DD3E"
+    }
+  ]
+}
