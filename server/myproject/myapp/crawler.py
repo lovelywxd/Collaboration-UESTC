@@ -79,13 +79,20 @@ def sale_list_find(): #促销图书列表
 	global sale_list_link_new
 	home = "http://www.queshu.com"
 	try:
-		if sale_list_link_new == sale_list_link_old:
-			return
-		for key, value in sale_list_link_new.items(): #参加活动图书列表
-			promotionID = key
-			promotionBookSearchLink = value + "?c=" #活动图书检索
+		sale_list_link_diff = set(sale_list_link_old) - set(sale_list_link_new) #从列表中删除旧活动
+		for item in set(sale_list_link_diff):
+			result = Promotion.objects.filter(promotionID=item)
+			result.delete()
+			result = PromotionID.objects.filter(promotionID=item)
+			result.delete()
 
-			response = urllib2.urlopen(urllib2.Request(value))
+		sale_list_link_diff = set(sale_list_link_new) - set(sale_list_link_old) #添加新活动到列表
+		for item in set(sale_list_link_diff):
+			promotionID = item
+			sale_list_link = sale_list_link_new[item]
+			promotionBookSearchLink = sale_list_link + "?c=" #活动图书检索链接
+
+			response = urllib2.urlopen(urllib2.Request(sale_list_link))
 			soup = BeautifulSoup(response, "html.parser")
 			for jinalou_book_right in soup.find_all(id="jinalou_book_right"):
 				xianjia = jinalou_book_right.find(class_="xianjia")
@@ -195,6 +202,7 @@ class Producer(threading.Thread):
 					news_sale_title_find()
 					condition.notify()
 					condition.release()
+					time.sleep(30)
 
 
 class Consumer(threading.Thread):
@@ -207,7 +215,6 @@ class Consumer(threading.Thread):
 					sale_list_find()
 					condition.notify()
 					condition.release()
-					time.sleep(30)
 
 
 def start_crawler():
@@ -218,5 +225,7 @@ def start_crawler():
 	# sched.start()
 	p = Producer()
 	c = Consumer()
+	p.setDaemon(True)
+	c.setDaemon(True)
 	p.start()
 	c.start()
