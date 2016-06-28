@@ -29,6 +29,6 @@ class PromotionBookList(models.Model):
 	promotionBookSearchLink   = models.URLField()
 
 class BookPriceList(models.Model):
-	bookISBN  = models.CharField(max_length=20, primary_key=True)
+	bookISBN  = models.CharField(max_length=20)
 	bookSaler = models.CharField(max_length=100)
 	bookCurrentPrice = models.CharField(max_length=10)

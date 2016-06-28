@@ -56,27 +56,27 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'app',
-#         'USER': 'root',
-#         'PASSWORD': 'admin',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'shuaihan',
+        'NAME': 'mydatabase',
         'USER': 'root',
-        'PASSWORD': 'wxd',
-        'HOST': '115.159.219.141',
+        'PASSWORD': 'admin',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'shuaihan',
+#         'USER': 'root',
+#         'PASSWORD': 'wxd',
+#         'HOST': '115.159.219.141',
+#         'PORT': '3306',
+#     }
+# }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
