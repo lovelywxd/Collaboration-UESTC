@@ -1,4 +1,5 @@
 #coding=utf-8
+
 import urllib2
 import logging
 import re
@@ -63,11 +64,13 @@ def search_home_detail_find(subject): #主页图书搜索，图书价格信息
 				for td in tr[1:]: #价格表项
 					bookSaler = td.contents[1].contents[0]["src"]
 					bookSaler = bookSaler[bookSaler.rfind(r"/") + 1:] #电商图像
-					bookCurrentPrice = td.contents[5].contents[1].string #图书价格
+					bookLink = td.contents[3].contents[1]["href"] #电商图书直达
+					bookCurrentPrice = td.contents[5].contents[1].string #电商图书价格
 					
 					d = {"bookISBN": bookISBN, 
 					"bookSaler": bookSaler, 
-					"bookCurrentPrice": bookCurrentPrice}
+					"bookCurrentPrice": bookCurrentPrice, 
+					"bookLink": bookLink}
 					searchRerult.append(d)
 
 		return json.dumps(searchRerult, ensure_ascii=False, encoding="utf-8")
@@ -121,18 +124,23 @@ def search_promotion_detail_find(promotionBookDetailLink): #活动图书搜索�
 		book_info = soup.find(class_="book_info")
 		bookISBN = book_info.find(text=re.compile(r"\d{13}")) #图书ISBN
 		for price_item in soup.find_all(class_="price_item"): #图书价格列表
-			book_site = home + price_item.find(class_="book_site").contents[0].contents[0]["src"]
 			book_price = price_item.find(class_="book_price_price")
 			if not book_price: #可能为空
 				continue
 
-			bookSaler = book_site
+			book_site = price_item.find(class_="book_site")
+			bookLink = home + book_site.contents[0]["href"]
+			bookSaler = home + book_site.contents[0].contents[0]["src"]
+			bookSaler = bookSaler[bookSaler.rfind(r"/") + 1:] #电商图像
 			bookCurrentPrice = book_price.contents[0]
 			if repr(bookCurrentPrice)[0] != 'u': #无规则数据
 				continue
 			bookCurrentPrice = bookCurrentPrice + book_price.contents[1].string
 
-			d = {"bookISBN": bookISBN, "bookSaler": bookSaler, "bookCurrentPrice": bookCurrentPrice}
+			d = {"bookISBN": bookISBN, 
+			"bookSaler": bookSaler, 
+			"bookCurrentPrice": bookCurrentPrice, 
+			"bookLink": bookLink}
 			searchRerult.append(d)
 		return json.dumps(searchRerult, ensure_ascii=False, encoding="utf-8")
 	except urllib2.URLError, e:
@@ -164,21 +172,20 @@ def sale_list_find(): #活动图书列表
 				bookName = img120["alt"] #图书名称
 				book_right_line = jianlou_book.find_all(class_="book_right_line")
 				bookDetailLink = home + book_right_line[0].contents[0]["href"] #图书详情页链接
-				bookISBN = book_right_line[2].find(class_="right") #图书ISBN
-				if not bookISBN: #图书ISBN可能为空
-					continue
-				bookISBN = bookISBN.string[-13:]
 				bookPrice = book_right_line[3].find(class_="xianjia").string #图书价格
 				
 				response = urllib2.urlopen(urllib2.Request(bookDetailLink))
 				soup = BeautifulSoup(response, "html.parser")
+				book_info = soup.find(class_="book_info")
+				bookISBN = book_info.find(text=re.compile(r"\d{13}")) #图书ISBN
 				for price_item in soup.find_all(class_="price_item"): #图书价格列表
-					book_site = home + price_item.find(class_="book_site").contents[0].contents[0]["src"]
 					book_price = price_item.find(class_="book_price_price")
 					if not book_price: #可能为空
 						continue
 
-					bookSaler = book_site
+					book_site = price_item.find(class_="book_site")
+					bookLink = home + book_site.contents[0]["href"]
+					bookSaler = home + book_site.contents[0].contents[0]["src"]
 					bookCurrentPrice = book_price.contents[0]
 					if repr(bookCurrentPrice)[0] != 'u': #无规则数据
 						continue
@@ -187,7 +194,8 @@ def sale_list_find(): #活动图书列表
 					result = BookPriceList(
 						bookISBN         = bookISBN,
 						bookSaler        = bookSaler,
-						bookCurrentPrice = bookCurrentPrice)
+						bookCurrentPrice = bookCurrentPrice,
+						bookLink         = bookLink)
 					result.save()
 
 				result = PromotionBookList(
@@ -201,6 +209,7 @@ def sale_list_find(): #活动图书列表
 		sale_list_link_new = {}
 	except urllib2.URLError, e:
 		print e.reason
+
 
 def news_title_find(): #热门资讯
 	home = "http://www.queshu.com"

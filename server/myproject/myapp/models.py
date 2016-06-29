@@ -1,3 +1,5 @@
+#coding=utf-8
+
 from django.db import models
 
 class User(models.Model):
@@ -33,3 +35,4 @@ class BookPriceList(models.Model):
 	bookISBN         = models.CharField(max_length=20)
 	bookSaler        = models.CharField(max_length=100)
 	bookCurrentPrice = models.CharField(max_length=10)
+	bookLink         = models.URLField() #电商图书直达链接
