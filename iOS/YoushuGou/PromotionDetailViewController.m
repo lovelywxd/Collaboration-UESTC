@@ -15,9 +15,18 @@
 #import "BookDetailInfo.h"
 #import "EGOImageView.h"
 
+#define ITEM_AMOUT_PER_PAGE 20
+
 @interface PromotionDetailViewController ()
+@property (nonatomic ,strong) NSMutableArray *BookDataBase;//json  格式的 Array。包含所有书的基本信息
+@property (nonatomic ,strong) NSMutableDictionary *BookDetailDB;//json格式的bookDetailList,本地测试使用，［key 为 isbn，值为json数组（包含豆瓣网上返回的所有信息），本地测试使用］
+@property (nonatomic ,assign) NSInteger totalPage;//指示当前已经获取的promotionList的页数（每页显示8本书）
+@property (nonatomic ,strong) NSString* promotionID;
 @property (nonatomic,strong) NSMutableArray *BookList;//所有书籍BaseInfo集合
-@property (nonatomic,strong) NSMutableDictionary *BookDetailList;//当前活动下书籍DetailInfo集合
+@property (nonatomic ,strong) NSMutableSet *localAllBookIsbns;
+@property (nonatomic,strong) NSMutableDictionary *BookDetailInfoDic;//当前活动下书籍DetailInfo集合
+@property (nonatomic,strong) NSMutableDictionary *BookBaseInfoDic;//当前活动下书籍base集合
+
 @end
 
 @implementation PromotionDetailViewController
@@ -32,7 +41,7 @@
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [weakSelf loadMoreData];
     }];
-    [self loadPromotionDetailFormLocalFile];
+    [self loadPromotionDetailLocally];
     
 //    [self loadPromotionDetail];
 }
@@ -40,8 +49,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma --获取Promotion中的bookList
+#pragma mark --从服务器获取信息
 - (void) loadPromotionDetail
 {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
@@ -52,7 +60,9 @@
     [appdele.manager GET:url2 parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"get promotion detail sucess");
-         [self AppendBookListWithJsonArray:responseObject];
+         NSArray* JsonArr = [responseObject objectForKey:@"book"];
+         NSArray *bookNeedLoadDetailInfo = [self formPromotionDetailWithJsonList:JsonArr];
+         [self fetchBookDetailInfo:bookNeedLoadDetailInfo];
      }
     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
@@ -60,136 +70,174 @@
      }];
 }
 
-- (void) loadPromotionDetailFormLocalFile {
-    //    // 获取JSON文件所在的路径
-    //    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"promotionList"
-    //                                                         ofType:@"json"];
-    //    // 读取jsonPath对应文件的数据
-    //    NSData* data = [NSData dataWithContentsOfFile:jsonPath];
-    //    // 调用JSONKit为NSData扩展的objectFromJSONData方法解析JSON数据
-    //
-    //    NSArray *parseResult = [NSJSONSerialization JSONObjectWithData:data
-    //                                                           options:0 error:nil];
-    //    [self AppendBookListWithJsonArray:parseResult];
-    
-    self.BookList = [NSMutableArray arrayWithObjects:
-                     [[BookBaseInfo alloc] initBook:@"9780316201643" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9787543697485" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9787506078221" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9781409570202" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9780375865312" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9787500791362" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9787533675950" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     nil];
-    [self fetchBookDetailInfo:self.BookList];
-}
-
-- (void) AppendBookListWithJsonArray:(NSArray*)aList {
-    
-}
-
-
-#pragma mark --根据书本基本信息表获取书籍详细信息
 -(void)fetchBookDetailInfo:(NSArray*)baseInfoList
 {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     NSString *baseUrl = [NSMutableString stringWithString:@"https://api.douban.com/v2/book/isbn/:"];
-    NSMutableDictionary *bookDetailList = [[NSMutableDictionary alloc] init];
-
     dispatch_group_t group = dispatch_group_create();
     for (id book in baseInfoList)
     {
         NSString *isbn = [book valueForKey:@"PromotionBookISBN"];
+        NSLog(@"%@",isbn);
         NSString *url = [NSString stringWithFormat:@"%@%@",baseUrl,isbn];
         dispatch_group_enter(group);
         [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
-             BookDetailInfo *info = [[BookDetailInfo alloc] initBook:book withImages:[responseObject objectForKey:@"images"] title:[responseObject objectForKey:@"title"] publisher:[responseObject objectForKey:@"publisher"] pubdate:[responseObject objectForKey:@"pubdate"] pages:[responseObject objectForKey:@"pages"] author:[responseObject objectForKey:@"author"] summary:[responseObject objectForKey:@"summary"] author_intro:[responseObject objectForKey:@"author_intro"] rating:[responseObject objectForKey:@"rating"] catalog:[responseObject objectForKey:@"catalog"] tags:[responseObject objectForKey:@"tags"] doubanLink:[responseObject objectForKey:@"url"]];
-//             [bookDetailList setObject:info forKey:isbn];
-             [self.BookDetailList setObject:info forKey:isbn];
-            [self.tableView reloadData];
+             [self formBookDetailInfo:responseObject];
              dispatch_group_leave(group);
          }
                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
-             NSLog(@"fail");
+             NSLog(@"fetch bookdetail fail");
              dispatch_group_leave(group);
          }];
     }
     dispatch_group_notify(group,dispatch_get_main_queue(),^{
         // Won't get here until everything has finished
-        NSLog(@"group notify");
-        // 合并图片
-//        [self.BookDetailList addEntriesFromDictionary:bookDetailList];
-       
         [self.tableView.mj_footer endRefreshing];
     });
 }
+
+#pragma mark --从本地文件更新PromotionDetail
+- (void) loadPromotionDetailLocally {
+    [self initBookDataBase];
+    [self initLocalBookDetailDataBase];
+    NSArray* JsonArr = [self FetchBookListForPageLocally:self.totalPage];
+    NSArray *bookNeedLoadDetailInfo = [self formPromotionDetailWithJsonList:JsonArr];
+    [self fetchBookDetailInfoLocaly:bookNeedLoadDetailInfo];
+}
+
+- (void) initBookDataBase {
+    // 获取JSON文件所在的路径
+    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"promotionDetail"
+                                                         ofType:@"json"];
+    // 读取jsonPath对应文件的数据
+    NSData* data = [NSData dataWithContentsOfFile:jsonPath];
+    // 调用JSONKit为NSData扩展的objectFromJSONData方法解析JSON数据
+    
+    NSDictionary *parseResult = [NSJSONSerialization JSONObjectWithData:data
+                                                                options:0 error:nil];
+    self.promotionID = [parseResult objectForKey:@"promotionID"];
+    [self.BookDataBase addObjectsFromArray:[parseResult valueForKey:@"book"]];//存储最原始的Json形式的书籍列表数组。
+    [self GetAllIsbnLocally];
+}
+
+- (NSArray*)FetchBookListForPageLocally:(NSInteger)page
+{
+    //每一页装20条数据。page的标号从0开始
+    //测试时从数据库获取，联网时请求获得
+    //返回的是Json形式的Array（Array中每个元素是用Json dictionary来表示
+    NSLog(@"fetch list for page:%ld",page);
+    NSMutableArray* result = [[NSMutableArray alloc] init];
+    NSInteger start_index = page * ITEM_AMOUT_PER_PAGE;
+    NSInteger end_index = start_index + ITEM_AMOUT_PER_PAGE;
+    for (NSInteger i = start_index; i < end_index; ++ i) {
+        [result addObject:self.BookDataBase[i]];
+    }
+    self.totalPage ++;
+    return [result copy];
+}
+
+#pragma mark --从本地文件获取BookDetailInfoList
+- (void) initLocalBookDetailDataBase {
+    // 获取JSON文件所在的路径
+    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"bookDetail"
+                                                         ofType:@"json"];
+    // 读取jsonPath对应文件的数据
+    NSData* data = [NSData dataWithContentsOfFile:jsonPath];
+    // 调用JSONKit为NSData扩展的objectFromJSONData方法解析JSON数据
+    NSDictionary *parseResult = [NSJSONSerialization JSONObjectWithData:data
+                                                        options:0 error:nil];
+    for (id JsonInfo in parseResult) {
+        //键值对，键为ISBN，值为Json数组形式的书籍信息（最原始的）
+        [self.BookDetailDB setObject:JsonInfo forKey:[JsonInfo objectForKey:@"isbn13"]];
+        }
+}
+
+-(void)fetchBookDetailInfoLocaly:(NSArray*)baseInfoList{
+    
+    [self.BookList addObjectsFromArray:baseInfoList];
+    for (id book in baseInfoList)
+    {
+        NSString *isbn = [book valueForKey:@"PromotionBookISBN"];
+        NSDictionary *detailInfo = [self GetBookDetailInfoLocaly:isbn];
+        [self formBookDetailInfo:detailInfo];
+    }
+}
+ //返回NSDictionary表示的书籍所有详细信息列表
+- (NSDictionary *)GetBookDetailInfoLocaly:(NSString*)bookISBN {
+    return [self.BookDetailDB objectForKey:bookISBN];
+}
+
+
+- (void)GetAllIsbnLocally
+{
+    for (id obj in self.BookDataBase) {
+        [self.localAllBookIsbns addObject:[obj objectForKey:@"promotionBookISBN"]];
+    }
+    //    NSEnumerator *enumerator = [self.localAllBookIsbns objectEnumerator];
+    //    id value;
+    //    while ((value = [enumerator nextObject])) {
+    //        NSLog(@",%@",value);
+    //    }
+    
+}
+
+#pragma mark --数据解析共有部分
+//输入包含若干本书的NSArray，其中每本书的表示形式为Dictionary格式
+//返回值：需要载入detail infomation的BookbaseInfo array
+- (NSArray*)formPromotionDetailWithJsonList:(NSArray*)arr {
+    NSMutableArray *BookNeedLoadDetail = [[NSMutableArray alloc] init];
+    NSArray *currentBookISBN = [self.BookBaseInfoDic allKeys];
+
+    for (id book in arr)
+    {
+        NSString* bookISBN = [book objectForKey:@"promotionBookISBN"];
+        if (![currentBookISBN containsObject:bookISBN]) {
+            BookBaseInfo *info = [[BookBaseInfo alloc] initBook:bookISBN withOriginalPrice:[book objectForKey:@"promotionBookPrice"] currentPrice:[book objectForKey:@"promotionBookCurrentPrice"] searchLink:[book objectForKey:@"promotionBookSearchLink"]];
+            [BookNeedLoadDetail addObject:info];
+            [self.BookBaseInfoDic setObject:info forKey:bookISBN];
+        }
+    }
+    return BookNeedLoadDetail;
+}
+
+- (void)formBookDetailInfo:(NSDictionary*)detailInfoDic {
+    NSString *isbn = [detailInfoDic objectForKey:@"isbn13"];
+    BookBaseInfo *book = [self.BookBaseInfoDic objectForKey:isbn];
+    BookDetailInfo *info = [[BookDetailInfo alloc] initBook:book withImages:[detailInfoDic objectForKey:@"images"] title:[detailInfoDic objectForKey:@"title"] publisher:[detailInfoDic objectForKey:@"publisher"] pubdate:[detailInfoDic objectForKey:@"pubdate"] pages:[detailInfoDic objectForKey:@"pages"] author:[detailInfoDic objectForKey:@"author"] summary:[detailInfoDic objectForKey:@"summary"] author_intro:[detailInfoDic objectForKey:@"author_intro"] rating:[detailInfoDic objectForKey:@"rating"] catalog:[detailInfoDic objectForKey:@"catalog"] tags:[detailInfoDic objectForKey:@"tags"] doubanLink:[detailInfoDic objectForKey:@"url"]];
+    [self.BookDetailInfoDic setObject:info forKey:isbn];
+    [self.tableView reloadData];
+}
+
+
 #pragma mark --上拉加载更多
 - (void)loadMoreData
 {
-    [self fetchMoreBook];
-}
-- (void)fetchMoreBook{
-    NSArray *List = [NSArray arrayWithObjects:
-                     [[BookBaseInfo alloc] initBook:@"9780698116498" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9780375827785" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9780689835681" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9787500789093" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9780547238739" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9780689853494" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     [[BookBaseInfo alloc] initBook:@"9787539770024" withOriginalPrice:@"30" currentPrice:@"25" inPromotion:@"Gb京东1"],
-                     nil];
-    [self.BookList addObjectsFromArray:List];
-    [self fetchBookDetailInfo:List];
+    NSArray* JsonArr = [self FetchBookListForPageLocally:self.totalPage];
+    [self formPromotionDetailWithJsonList:JsonArr];
 }
 
 #pragma mark --内部函数
 - (void) prepareProperty
 {
-    self.BookDetailList = [[NSMutableDictionary alloc] init];
+    self.BookDataBase = [[NSMutableArray alloc] init];
+    self.totalPage = 0;
+    self.BookDetailInfoDic = [[NSMutableDictionary alloc] init];
+    self.BookBaseInfoDic = [[NSMutableDictionary alloc] init];
     self.BookList = [[NSMutableArray alloc] init];
+    self.localAllBookIsbns = [[NSMutableSet alloc] init];
+    self.BookDetailDB = [[NSMutableDictionary alloc] init];
 }
 
 
-- (void) LoadBookDetail
-{
-    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-    NSString *baseUrl = [NSMutableString stringWithString:@"https://api.douban.com/v2/book/isbn/:"];
-    for (id book in self.BookList)
-    {
-        NSString *isbn = [book valueForKey:@"PromotionBookISBN"];
-        NSString *url = [NSString stringWithFormat:@"%@%@",baseUrl,isbn];
-        [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
-         {
-             NSLog(@"seccess");
-             
-             BookDetailInfo *info = [[BookDetailInfo alloc] initBook:book withImages:[responseObject objectForKey:@"images"] title:[responseObject objectForKey:@"title"] publisher:[responseObject objectForKey:@"publisher"] pubdate:[responseObject objectForKey:@"pubdate"] pages:[responseObject objectForKey:@"pages"] author:[responseObject objectForKey:@"author"] summary:[responseObject objectForKey:@"summary"] author_intro:[responseObject objectForKey:@"author_intro"] rating:[responseObject objectForKey:@"rating"] catalog:[responseObject objectForKey:@"catalog"] tags:[responseObject objectForKey:@"tags"] doubanLink:[responseObject objectForKey:@"url"]];
-             [self.BookDetailList setObject:info forKey:isbn];
-             [self.tableView reloadData];
-           
-             
-             
-             
-         }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error)
-         {
-             NSLog(@"fail");
-//             [self.tableView.mj_footer endRefreshing];
-         }];
-    }
-   
-
-    
-
-}
 #pragma mark -- talbeView的代理方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.BookDetailList.count;
+    return self.BookDetailInfoDic.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
@@ -202,7 +250,7 @@
     }
     else bookDetailVC.IsGroupBuy = NO;
     NSString *isbn = [[self.BookList objectAtIndex:indexPath.row] valueForKey:@"PromotionBookISBN"];
-    BookDetailInfo *info = [self.BookDetailList objectForKey:isbn];
+    BookDetailInfo *info = [self.BookDetailInfoDic objectForKey:isbn];
     bookDetailVC.bookdetailInfo = info;
     [self.navigationController pushViewController:bookDetailVC animated:NO];
 }
@@ -210,9 +258,6 @@
 
 
 -(UITableViewCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    static NSString *CellId = @"Cell1";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId];
-    
     static NSString *CellId = @"PromotionDetailCell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
@@ -221,7 +266,7 @@
     }
     
     NSString *isbn = [[self.BookList objectAtIndex:indexPath.row] valueForKey:@"PromotionBookISBN"];
-    BookDetailInfo *info = [self.BookDetailList objectForKey:isbn];
+    BookDetailInfo *info = [self.BookDetailInfoDic objectForKey:isbn];
     if (info) {
         EGOImageView *imgView = (EGOImageView*)[cell viewWithTag:1];
         NSString *bookImgUrl = [info.images objectForKey:@"large"];

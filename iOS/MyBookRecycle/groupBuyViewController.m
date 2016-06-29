@@ -74,16 +74,20 @@ EGOImageView *egoImgView;
 
 - (IBAction)addFavorite:(id)sender {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-     NSString *url = @"http://115.159.219.141:8000/favop urite/add/";
+//     NSString *url = @"http://115.159.219.141:8000/favourite/add/";
+     NSString *url = @"http://192.168.1.100:8000/favourite/add/";
+    
     [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:@"book1",@"bookname",nil];
 //    NSArray *books = [NSArray arrayWithObjects:@"book1",@"book2",nil];
     [appdele.manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"success in search in addFavorite");
+         NSArray *keys = [responseObject allKeys];
+         NSLog(@"%@",[keys count]);
          
      }
-                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
+    failure:^(AFHTTPRequestOperation *operation, NSError *error)
      
      {
          NSLog(@"fail in search in addFavorite");

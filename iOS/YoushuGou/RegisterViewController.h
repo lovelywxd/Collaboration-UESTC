@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RegisterViewController : UIViewController
+@interface RegisterViewController : UITableViewController
 @property (strong, nonatomic) IBOutlet UITextField *name;
-- (IBAction)Register:(id)sender;
 @property (strong, nonatomic) IBOutlet UITextField *passwd;
 @property (strong, nonatomic) IBOutlet UITextField *phone;
 @property (strong, nonatomic) IBOutlet UITextField *school;
@@ -19,5 +18,8 @@
 @property (strong, nonatomic) IBOutlet UITextField *gender;
 @property (strong, nonatomic) IBOutlet UISwitch *enableNameEmail;
 @property (strong, nonatomic) IBOutlet UISwitch *enableAllInput;
+- (IBAction)Register:(id)sender;
+
+
 
 @end

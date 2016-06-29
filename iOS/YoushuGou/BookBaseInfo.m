@@ -9,12 +9,12 @@
 #import "BookBaseInfo.h"
 
 @implementation BookBaseInfo
-- (instancetype)initBook:(NSString*)Isbn withOriginalPrice:(NSString*)oPrice currentPrice:(NSString*)cPrice inPromotion:(NSString*)promotionId
+- (instancetype)initBook:(NSString*)Isbn withOriginalPrice:(NSString*)oPrice currentPrice:(NSString*)cPrice searchLink:(NSString*)link
 {
     self = [super init];
     if (self) {
         self.PromotionBookISBN = Isbn;
-//        self.PromotionID = promotionId;
+        self.PromotionBookSearchLink = link;
         self.PromotionBookPrice = oPrice;
         self.PromotionBookCurrentPrice = cPrice;
     }

@@ -16,5 +16,5 @@
 @property (nonatomic,copy) NSString* PromotionBookPrice;//书籍定价，OK
 @property (nonatomic,copy) NSString* PromotionBookCurrentPrice;//书籍在此活动的价格，OK
 @property (nonatomic ,copy) NSString *PromotionBookSearchLink;//搜索书籍时使用的链接，OK
-- (instancetype)initBook:(NSString*)Isbn withOriginalPrice:(NSString*)oPrice currentPrice:(NSString*)cPrice inPromotion:(NSString*)promotionId;
+-(instancetype)initBook:(NSString*)Isbn withOriginalPrice:(NSString*)oPrice currentPrice:(NSString*)cPrice searchLink:(NSString*)link;
 @end

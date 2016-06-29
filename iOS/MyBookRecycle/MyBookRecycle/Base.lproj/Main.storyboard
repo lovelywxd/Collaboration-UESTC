@@ -100,6 +100,13 @@
                                     <segue destination="zLf-Ej-dab" kind="show" id="wRz-iT-LCK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ukw-r6-g1D">
+                                <rect key="frame" x="278" y="139" width="81" height="30"/>
+                                <state key="normal" title="welcomeVC"/>
+                                <connections>
+                                    <segue destination="h9i-ST-eAt" kind="show" id="Cy7-J2-WW3"/>
+                                </connections>
+                            </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="c42-Tz-38c">
                                 <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
@@ -2047,6 +2054,13 @@
                                     <segue destination="WN1-mR-hzt" kind="show" id="RKi-It-vmg"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="osX-tb-qrI">
+                                <rect key="frame" x="261" y="590" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="Eli-j8-crE" kind="show" id="ET6-p9-eO4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <variation key="default">
@@ -2124,7 +2138,8 @@
         <image name="user-sel" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="vsd-up-87d"/>
+        <segue reference="aAN-jK-elc"/>
         <segue reference="YJ2-ww-VsI"/>
+        <segue reference="wRz-iT-LCK"/>
     </inferredMetricsTieBreakers>
 </document>

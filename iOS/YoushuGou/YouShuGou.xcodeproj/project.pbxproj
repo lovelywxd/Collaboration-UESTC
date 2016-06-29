@@ -70,6 +70,9 @@
 		58E43D481D22B7C600B40FE9 /* Promotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E43D471D22B7C600B40FE9 /* Promotion.m */; };
 		58E43D7E1D22DA6C00B40FE9 /* promotionList.json in Resources */ = {isa = PBXBuildFile; fileRef = 58E43D7D1D22DA6C00B40FE9 /* promotionList.json */; };
 		58E43D801D22E84900B40FE9 /* promotionDetail.json in Resources */ = {isa = PBXBuildFile; fileRef = 58E43D7F1D22E84900B40FE9 /* promotionDetail.json */; };
+		58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F301D234D5C002B2B80 /* newLoginViewController.m */; };
+		58E83F341D235C53002B2B80 /* NewRegisterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F331D235C53002B2B80 /* NewRegisterTableViewController.m */; };
+		58E83F361D23A9E2002B2B80 /* bookDetail.json in Resources */ = {isa = PBXBuildFile; fileRef = 58E83F351D23A9E2002B2B80 /* bookDetail.json */; };
 		58E91F511D20D793000CCC5C /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F441D20D793000CCC5C /* EGOCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		58E91F521D20D793000CCC5C /* README.mdown in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F451D20D793000CCC5C /* README.mdown */; };
 		58E91F531D20D793000CCC5C /* EGOImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F481D20D793000CCC5C /* EGOImageButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -214,6 +217,11 @@
 		58E43D471D22B7C600B40FE9 /* Promotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Promotion.m; sourceTree = "<group>"; };
 		58E43D7D1D22DA6C00B40FE9 /* promotionList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = promotionList.json; sourceTree = "<group>"; };
 		58E43D7F1D22E84900B40FE9 /* promotionDetail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = promotionDetail.json; sourceTree = "<group>"; };
+		58E83F2F1D234D5C002B2B80 /* newLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newLoginViewController.h; sourceTree = "<group>"; };
+		58E83F301D234D5C002B2B80 /* newLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newLoginViewController.m; sourceTree = "<group>"; };
+		58E83F321D235C53002B2B80 /* NewRegisterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRegisterTableViewController.h; sourceTree = "<group>"; };
+		58E83F331D235C53002B2B80 /* NewRegisterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewRegisterTableViewController.m; sourceTree = "<group>"; };
+		58E83F351D23A9E2002B2B80 /* bookDetail.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bookDetail.json; sourceTree = "<group>"; };
 		58E91F431D20D793000CCC5C /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		58E91F441D20D793000CCC5C /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
 		58E91F451D20D793000CCC5C /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.mdown; sourceTree = "<group>"; };
@@ -460,6 +468,7 @@
 		58DE5C391CE071A4000BE711 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				58E83F351D23A9E2002B2B80 /* bookDetail.json */,
 				58E43D7D1D22DA6C00B40FE9 /* promotionList.json */,
 				58E43D7F1D22E84900B40FE9 /* promotionDetail.json */,
 				58DE5C3A1CE071A4000BE711 /* main.m */,
@@ -479,6 +488,10 @@
 		58DE5C611CE07262000BE711 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				58E83F321D235C53002B2B80 /* NewRegisterTableViewController.h */,
+				58E83F331D235C53002B2B80 /* NewRegisterTableViewController.m */,
+				58E83F2F1D234D5C002B2B80 /* newLoginViewController.h */,
+				58E83F301D234D5C002B2B80 /* newLoginViewController.m */,
 				58E91F5C1D21225B000CCC5C /* BookDetailViewController.h */,
 				58E91F5D1D21225B000CCC5C /* BookDetailViewController.m */,
 				5859825A1D1F7DEB009A6A72 /* PromotionDetailViewController.h */,
@@ -680,6 +693,7 @@
 				58E43D801D22E84900B40FE9 /* promotionDetail.json in Resources */,
 				58E43D7E1D22DA6C00B40FE9 /* promotionList.json in Resources */,
 				58DE5C4C1CE071A4000BE711 /* LaunchScreen.storyboard in Resources */,
+				58E83F361D23A9E2002B2B80 /* bookDetail.json in Resources */,
 				588DBF1E1D16D10D008F881D /* home_icon.png in Resources */,
 				58E91F631D2123FD000CCC5C /* BookDetailCell.xib in Resources */,
 				58DE5C491CE071A4000BE711 /* Assets.xcassets in Resources */,
@@ -716,6 +730,7 @@
 				58DE5C711CE072DD000BE711 /* LoginViewController.m in Sources */,
 				585983A01D201C42009A6A72 /* MJRefreshAutoFooter.m in Sources */,
 				58E3B5E81D0BA9CF00B5689F /* AFHTTPRequestOperationManager.m in Sources */,
+				58E83F341D235C53002B2B80 /* NewRegisterTableViewController.m in Sources */,
 				58DB646E1D1EBE4E00C5D4D1 /* WebViewController.m in Sources */,
 				58DE5C411CE071A4000BE711 /* ViewController.m in Sources */,
 				58E91F5E1D21225B000CCC5C /* BookDetailViewController.m in Sources */,
@@ -755,6 +770,7 @@
 				58E3B5EB1D0BA9CF00B5689F /* AFSecurityPolicy.m in Sources */,
 				585983A21D201C42009A6A72 /* MJRefreshComponent.m in Sources */,
 				58DE5C471CE071A4000BE711 /* MyBookRecycle.xcdatamodeld in Sources */,
+				58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */,
 				58E91F621D2123FD000CCC5C /* BookDetailCell.m in Sources */,
 				585983A81D201C42009A6A72 /* MJRefreshBackGifFooter.m in Sources */,
 				58E3B5ED1D0BA9CF00B5689F /* AFURLRequestSerialization.m in Sources */,
