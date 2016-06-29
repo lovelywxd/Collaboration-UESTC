@@ -65,8 +65,8 @@
     [self.view addSubview:segmentedControl];
 }
 
-- (void)initSearchBar{
-    UINavigationController* searchResultVC = [[self storyboard] instantiateViewControllerWithIdentifier:@"TableSearchResultsNavController"];
+- (void)initSearchBar {
+    UINavigationController* searchResultVC = [[self storyboard] instantiateViewControllerWithIdentifier:@"navSearchResultTableViewController"];
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultVC];
     self.searchController.searchResultsUpdater = self;
     self.searchController.hidesNavigationBarDuringPresentation = YES;
@@ -78,6 +78,7 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.navigationItem.titleView = self.searchController.searchBar;
 }
+
 #pragma mark -- UISegmentedControl响应函数
 -(void)selectShop:(UISegmentedControl *)Seg{
     NSInteger Index = Seg.selectedSegmentIndex;
@@ -151,16 +152,14 @@
 // Called when the search bar becomes first responder
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
+    
     // Set searchString equal to what's typed into the searchbar
     NSString *searchString = self.searchController.searchBar.text;
-    // If searchResultsController
     if (self.searchController.searchResultsController) {
-        
         UINavigationController *navController = (UINavigationController *)self.searchController.searchResultsController;
         
         // Present SearchResultsTableViewController as the topViewController
         searchResultTableViewController* vc = (searchResultTableViewController *)navController.topViewController;
-        // Update searchResults
         [self filteredContentBySubString:searchString];
         vc.searchResults = self.searchResults;
         vc.searchStr = searchString;
@@ -169,21 +168,9 @@
         [vc.tableView reloadData];
     }
 }
-//- (void)searchBar:(UISearchBar *)searchBar
-//    textDidChange:(NSString *)searchText
-//{
-//    NSLog(@"text change");
-//}
-
-
 
 
 #pragma mark -- 内部函数
-//- (NSArray*)getActivityName
-//{
-//    return [NSArray arrayWithObjects:@"全部", @"京东", @"当当", nil];
-//}
-
 - (void)PrepareProperty
 {
     self.shopActivitys = [[NSMutableDictionary alloc] init];
@@ -220,10 +207,7 @@
 - (void)GetPromotrion
 {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-//    NSString *baseUrl = [NSMutableString stringWithString:@"https://api.douban.com/v2/book/isbn/:"];
- 
-    
-    NSString *url = @"http://115.159.219.141:8000/promotion/list/";
+    NSString *url = [NSString stringWithFormat:@"%@/promotion/list/",appdele.baseUrl];
     [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"seccess");
@@ -265,9 +249,9 @@
 //            NSPredicate* pred = [NSPredicate predicateWithFormat:
 //                                 @"%K CONTAINS[c] %@" ,@"activityName",subStr];
             NSPredicate* pred = [NSPredicate predicateWithFormat:
-                                 @"%K CONTAINS %@" ,@"activityName",subStr];
-            // 使用谓词过滤NSArray
-            self.searchResults = [NSMutableArray arrayWithArray:[self.promotionList filteredArrayUsingPredicate:pred]];
+                                 @"%K CONTAINS %@" ,@"promotionName",subStr];
+            NSArray *tempArr = [[self.promotionList copy] filteredArrayUsingPredicate:pred];
+            self.searchResults = [NSMutableArray arrayWithArray:tempArr];
         }
 }
 

@@ -10,6 +10,7 @@
 #import "PromotionCell.h"
 #import "AppDelegate.h"
 #import "AFURLRequestSerialization.h"
+#import "HomeSearchResultListController.h"
 
 @interface searchResultTableViewController ()
 
@@ -33,6 +34,8 @@ NSMutableArray* historySearch;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
 
 #pragma mark - Table view data source
 
@@ -117,38 +120,58 @@ NSMutableArray* historySearch;
 (NSIndexPath *)indexPath
 {
     switch (indexPath.section) {
+        case 0:
+        {
+            Promotion *pro = [self.searchResults objectAtIndex:indexPath.row];
+            NSLog(@"selected promotion:%@",pro);
+            
+        }
+            break;
         case 1:
         {
-            AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-            NSString *bookName = @"深入浅出";
-            NSString *url1 = @"http://localhost:8000/search/home/list/";
-            NSDictionary *parameters = [[NSDictionary alloc] initWithObjectsAndKeys:bookName,@"bookName",nil];
-            [appdele.manager GET:url1 parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject)
-             {
-                 NSLog(@"success in search in homePage step 1");
-                 NSString *subjectUrl = @"https://book.douban.com/subject/2130190/";
-                  NSDictionary *paras = [[NSDictionary alloc] initWithObjectsAndKeys:subjectUrl,@"bookSubject",nil];
-                  NSString *url2 = @"http://localhost:8000/search/home/detail/";
-                 [appdele.manager GET:url2 parameters:paras success:^(AFHTTPRequestOperation *operation, id responseObject)
-                  {
-                       NSLog(@"success in search in homePage step 2");
-                  }
-                failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                  
-                  {
-                      NSLog(@"fail in search in homePage  step 2");
-                  }];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            UINavigationController *navController = [storyboard instantiateViewControllerWithIdentifier:@"NavHomeSearchResultListController"];;
+            
+         
 
+            HomeSearchResultListController* homeSearchListVC = (HomeSearchResultListController *)navController.topViewController;
 
-                 
-                 
-                 
-             }
-            failure:^(AFHTTPRequestOperation *operation, NSError *error)
-             
-             {
-                 NSLog(@"fail in search in homePage");
-             }];
+            homeSearchListVC.searchBookName = self.searchStr;
+            
+//            [self.navigationController pushViewController:navController animated:YES];
+            [self presentViewController:navController animated:YES completion:nil];
+            
+//            AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+//            NSString *bookName = @"深入浅出";
+//            NSString *url1 = @"http://localhost:8000/search/home/list/";
+//            NSDictionary *parameters = [[NSDictionary alloc] initWithObjectsAndKeys:bookName,@"bookName",nil];
+//            [appdele.manager GET:url1 parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject)
+//             {
+//                 NSLog(@"success in search in homePage step 1");
+//                 NSString *subjectUrl = @"https://book.douban.com/subject/2130190/";
+//                  NSDictionary *paras = [[NSDictionary alloc] initWithObjectsAndKeys:subjectUrl,@"bookSubject",nil];
+//                  NSString *url2 = @"http://localhost:8000/search/home/detail/";
+//                 [appdele.manager GET:url2 parameters:paras success:^(AFHTTPRequestOperation *operation, id responseObject)
+//                  {
+//                       NSLog(@"success in search in homePage step 2");
+//                  }
+//                failure:^(AFHTTPRequestOperation *operation, NSError *error)
+//                  
+//                  {
+//                      NSLog(@"fail in search in homePage  step 2");
+//                  }];
+//
+//
+//                 
+//                 
+//                 
+//             }
+//            failure:^(AFHTTPRequestOperation *operation, NSError *error)
+//             
+//             {
+//                 NSLog(@"fail in search in homePage");
+//             }];
+            
 
         }
             break;

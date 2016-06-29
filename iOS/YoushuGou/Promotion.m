@@ -33,6 +33,10 @@
     return info;
 }
 
+- (NSString*)description {
+    NSString *result = [[NSString alloc] initWithFormat:@"promotionID:%@,promotionName:%@,promotionCompany:%@",self.promotionID,self.promotionName,self.promotionCompany];
+    return result;
+}
 
 
 @end

@@ -12,7 +12,6 @@
 
 @interface BookBaseInfo : NSObject<NSCopying>
 @property (nonatomic,copy) NSString *PromotionBookISBN;//书籍所ISBN，OK
-//@property (nonatomic,copy) NSString *PromotionID;//书籍所在的活动ID
 @property (nonatomic,copy) NSString* PromotionBookPrice;//书籍定价，OK
 @property (nonatomic,copy) NSString* PromotionBookCurrentPrice;//书籍在此活动的价格，OK
 @property (nonatomic ,copy) NSString *PromotionBookSearchLink;//搜索书籍时使用的链接，OK

@@ -20,6 +20,9 @@
     self.manager = [AFHTTPRequestOperationManager manager];
     self.OnLineTest = YES;
     [self initShopList];
+    self.baseUrl = @"http://192.168.1.100:8000";
+//    self.baseUrl = @"http://115.159.219.141:8000";
+
     return YES;
 }
 

@@ -53,11 +53,12 @@
 - (void) loadPromotionDetail
 {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-    NSString *url2 = @"http://115.159.219.141:8000/promotion/detail/";
+    NSString *url = [NSString stringWithFormat:@"%@/promotion/detail/",appdele.baseUrl];
+
 //    NSString *promotionKey = @"4081/";
     NSString* promotionKey = self.promotion.promotionID;
     NSDictionary *parameters = [[NSDictionary alloc] initWithObjectsAndKeys:promotionKey,@"promotionID",nil];
-    [appdele.manager GET:url2 parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject)
+    [appdele.manager GET:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSLog(@"get promotion detail sucess");
          NSArray* JsonArr = [responseObject objectForKey:@"book"];
@@ -99,6 +100,18 @@
 }
 
 #pragma mark --从本地文件更新PromotionDetail
+- (NSArray*) arrayFromSet:(NSSet*)aSet {
+
+        NSEnumerator *enumerator = [aSet objectEnumerator];
+        id value;
+    
+        NSMutableArray* tempArr = [[NSMutableArray alloc] init];
+        while ((value = [enumerator nextObject])) {
+            [tempArr addObject:value];
+        }
+    return [tempArr copy];
+}
+
 - (void) loadPromotionDetailLocally {
     [self initBookDataBase];
     [self initLocalBookDetailDataBase];
@@ -118,7 +131,10 @@
     NSDictionary *parseResult = [NSJSONSerialization JSONObjectWithData:data
                                                                 options:0 error:nil];
     self.promotionID = [parseResult objectForKey:@"promotionID"];
-    [self.BookDataBase addObjectsFromArray:[parseResult valueForKey:@"book"]];//存储最原始的Json形式的书籍列表数组。
+    NSArray* rawBookArray = [parseResult valueForKey:@"book"];
+    NSSet *BookSet = [NSSet setWithArray:rawBookArray];
+    NSArray *arr = [self arrayFromSet:BookSet];
+    [self.BookDataBase addObjectsFromArray:arr];//存储最原始的Json形式的书籍列表数组。
     [self GetAllIsbnLocally];
 }
 
@@ -131,6 +147,13 @@
     NSMutableArray* result = [[NSMutableArray alloc] init];
     NSInteger start_index = page * ITEM_AMOUT_PER_PAGE;
     NSInteger end_index = start_index + ITEM_AMOUT_PER_PAGE;
+    if (start_index >= self.BookDataBase.count) {
+        return nil;
+    }
+    else if (end_index > self.BookDataBase.count)
+    {
+        end_index = self.BookDataBase.count;
+    }
     for (NSInteger i = start_index; i < end_index; ++ i) {
         [result addObject:self.BookDataBase[i]];
     }
@@ -163,6 +186,7 @@
         NSDictionary *detailInfo = [self GetBookDetailInfoLocaly:isbn];
         [self formBookDetailInfo:detailInfo];
     }
+    [self.tableView.mj_footer endRefreshing];
 }
  //返回NSDictionary表示的书籍所有详细信息列表
 - (NSDictionary *)GetBookDetailInfoLocaly:(NSString*)bookISBN {
@@ -215,7 +239,8 @@
 - (void)loadMoreData
 {
     NSArray* JsonArr = [self FetchBookListForPageLocally:self.totalPage];
-    [self formPromotionDetailWithJsonList:JsonArr];
+    NSArray *bookNeedLoadDetailInfo = [self formPromotionDetailWithJsonList:JsonArr];
+    [self fetchBookDetailInfoLocaly:bookNeedLoadDetailInfo];
 }
 
 #pragma mark --内部函数

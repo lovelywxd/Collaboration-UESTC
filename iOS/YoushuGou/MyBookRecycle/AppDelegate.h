@@ -19,6 +19,7 @@
 @property (nonatomic, strong) AFHTTPRequestOperationManager* manager;
 @property (nonatomic,assign) BOOL OnLineTest;
 @property (nonatomic,copy) NSDictionary* shopList;
+@property (nonatomic,copy) NSString* baseUrl;
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 

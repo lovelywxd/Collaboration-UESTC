@@ -45,15 +45,8 @@
     NSLog(@"usrname:%@",self.usrname.text);
     NSLog(@"password:%@",self.password.text);
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-      NSString* url;
-    if (appdele.OnLineTest) {
-        url = @"http://115.159.219.141:8000/user/login/";
-        //        url = @"http://192.168.1.100:8000/user/login/";
-    }
-    else
-    {
-        url = @"http://127.0.0.1:8000/api/authenticate";
-    }
+    appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/user/login/",appdele.baseUrl];
     NSString* username;
     NSString* passwd;
     if (self.enableInput.on) {
