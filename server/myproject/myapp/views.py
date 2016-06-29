@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from models import User, Promotion, UserFavourite
 from crawler import search_home_list_find, search_home_detail_find
+from crawler import search_promotion_list_find, search_promotion_detail_find
 
 #=============================================================
 
@@ -207,11 +208,17 @@ def promotionList(request):
 def promotionDetail(request):
 	pass
 
-def searchPromotion(request):
-	pass
+def search_promotion_list(request):
+	bookName = request.GET["bookName"] #支持中文搜索
+	promotionID = request.GET["promotionID"]
+	return HttpResponse(search_promotion_list_find(bookName, promotionID))
+
+def search_promotion_detail(request):
+	promotionBookDetailLink = request.GET["promotionBookDetailLink"]
+	return HttpResponse(search_promotion_detail_find(promotionBookDetailLink))
 
 def search_home_list(request):
-	bookName = request.GET["bookName"].encode("utf-8") #中文搜索
+	bookName = request.GET["bookName"].encode("utf-8") #支持中文搜索
 	return HttpResponse(search_home_list_find(bookName))
 
 def search_home_detail(request):

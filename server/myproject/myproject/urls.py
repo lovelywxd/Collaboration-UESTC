@@ -12,12 +12,12 @@ urlpatterns = patterns('',
     url(r'^news/list/', views.promotionList),
     url(r'^promotion/list/', views.promotionList),
     url(r'^promotion/detail/', views.promotionDetail),
-    url(r'^search/promotion/', views.searchPromotion),
-
-    url(r'^search/home/list', views.search_home_list),
-    url(r'^search/home/detail', views.search_home_detail),
-    
     url(r'^favorite/book/', views.get_favourite),
+
+    url(r'^search/promotion/list/', views.search_promotion_list),
+    url(r'^search/promotion/detail/', views.search_promotion_detail),
+    url(r'^search/home/list/', views.search_home_list),
+    url(r'^search/home/detail/', views.search_home_detail),
 )
 
 '''
