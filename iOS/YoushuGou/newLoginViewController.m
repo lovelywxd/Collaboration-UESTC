@@ -73,9 +73,11 @@
          if ([loginStatus isEqualToString:@"0"]) {
              UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Login result" message:@"Login success" preferredStyle:UIAlertControllerStyleAlert];
              UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                 
                  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                  UIViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
-                 [self.navigationController pushViewController:homeVC animated:YES];
+//                 [self.navigationController pushViewController:homeVC animated:YES];
+                 appdele.window.rootViewController = homeVC;
              }];
              [alert addAction:defaultAction];
              [self presentViewController:alert animated:YES completion:nil];

@@ -12,8 +12,15 @@
 
 @interface BookBaseInfo : NSObject<NSCopying>
 @property (nonatomic,copy) NSString *PromotionBookISBN;//书籍所ISBN，OK
-@property (nonatomic,copy) NSString* PromotionBookPrice;//书籍定价，OK
-@property (nonatomic,copy) NSString* PromotionBookCurrentPrice;//书籍在此活动的价格，OK
-@property (nonatomic ,copy) NSString *PromotionBookSearchLink;//搜索书籍时使用的链接，OK
+@property (nonatomic,copy) NSString *promotionBookName;//书籍名称，OK
+@property (nonatomic,copy) NSString *PromotionBookCurrentPrice;//书籍在此活动的价格，OK
+@property (nonatomic ,copy) NSString *promotionBookImageLink;//书籍图片链接，OK
+
+@property (nonatomic ,copy) NSString *promotionBookDetailLink;//促销图书详情页链接（请求图书价格列表时的body内容）
+@property (nonatomic,copy) NSString *PromotionBookPrice;//书籍定价
+@property (nonatomic ,copy) NSString *PromotionBookSearchLink;//搜索书籍时使用的链接
+
 -(instancetype)initBook:(NSString*)Isbn withOriginalPrice:(NSString*)oPrice currentPrice:(NSString*)cPrice searchLink:(NSString*)link;
+-(instancetype)initBook:(NSString*)Isbn withName:(NSString*)name currentPrice:(NSString*)cPrice imageLink:(NSString*)link searchLink:(NSString*)link;
+
 @end

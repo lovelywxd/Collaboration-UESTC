@@ -63,8 +63,9 @@
      {
          NSLog(@"get promotion detail sucess");
          NSArray* JsonArr = [responseObject objectForKey:@"book"];
-         NSArray *bookNeedLoadDetailInfo = [self formPromotionDetailWithJsonList:JsonArr];
-         [self fetchBookDetailInfo:bookNeedLoadDetailInfo];
+         NSArray *bookBaseInfos = [self formPromotionDetailWithJsonList:JsonArr];
+         [self.BookList addObjectsFromArray:bookBaseInfos];
+         [self.tableView reloadData];
      }
     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
@@ -72,33 +73,6 @@
      }];
 }
 
--(void)fetchBookDetailInfo:(NSArray*)baseInfoList
-{
-    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-    NSString *baseUrl = [NSMutableString stringWithString:@"https://api.douban.com/v2/book/isbn/:"];
-    dispatch_group_t group = dispatch_group_create();
-    for (id book in baseInfoList)
-    {
-        NSString *isbn = [book valueForKey:@"PromotionBookISBN"];
-        NSLog(@"%@",isbn);
-        NSString *url = [NSString stringWithFormat:@"%@%@",baseUrl,isbn];
-        dispatch_group_enter(group);
-        [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
-         {
-             [self formBookDetailInfo:responseObject];
-             dispatch_group_leave(group);
-         }
-                     failure:^(AFHTTPRequestOperation *operation, NSError *error)
-         {
-             NSLog(@"fetch bookdetail fail");
-             dispatch_group_leave(group);
-         }];
-    }
-    dispatch_group_notify(group,dispatch_get_main_queue(),^{
-        // Won't get here until everything has finished
-        [self.tableView.mj_footer endRefreshing];
-    });
-}
 
 #pragma mark --从本地文件更新PromotionDetail
 - (NSArray*) arrayFromSet:(NSSet*)aSet {
@@ -212,14 +186,17 @@
 //输入包含若干本书的NSArray，其中每本书的表示形式为Dictionary格式
 //返回值：需要载入detail infomation的BookbaseInfo array
 - (NSArray*)formPromotionDetailWithJsonList:(NSArray*)arr {
+    NSSet *tempSet = [NSSet setWithArray:arr];
     NSMutableArray *BookNeedLoadDetail = [[NSMutableArray alloc] init];
     NSArray *currentBookISBN = [self.BookBaseInfoDic allKeys];
-
-    for (id book in arr)
-    {
+    
+    NSEnumerator *enumerator = [tempSet objectEnumerator];
+    id book;
+    while ((book = [enumerator nextObject])) {
         NSString* bookISBN = [book objectForKey:@"promotionBookISBN"];
         if (![currentBookISBN containsObject:bookISBN]) {
-            BookBaseInfo *info = [[BookBaseInfo alloc] initBook:bookISBN withOriginalPrice:[book objectForKey:@"promotionBookPrice"] currentPrice:[book objectForKey:@"promotionBookCurrentPrice"] searchLink:[book objectForKey:@"promotionBookSearchLink"]];
+            BookBaseInfo *info = [[BookBaseInfo alloc] initBook:bookISBN withName:[book objectForKey:@"promotionBookName"] currentPrice:[book objectForKey:@"promotionBookPrice"] imageLink:[book objectForKey:@"promotionBookImageLink"] searchLink:[book objectForKey:@"promotionBookDetailLink"]];
+            
             [BookNeedLoadDetail addObject:info];
             [self.BookBaseInfoDic setObject:info forKey:bookISBN];
         }
@@ -263,7 +240,7 @@
 }
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.BookDetailInfoDic.count;
+    return self.BookList.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
@@ -276,8 +253,7 @@
     }
     else bookDetailVC.IsGroupBuy = NO;
     NSString *isbn = [[self.BookList objectAtIndex:indexPath.row] valueForKey:@"PromotionBookISBN"];
-    BookDetailInfo *info = [self.BookDetailInfoDic objectForKey:isbn];
-    bookDetailVC.bookdetailInfo = info;
+    bookDetailVC.bookBaseInfo = [self.BookList objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:bookDetailVC animated:NO];
 }
 
@@ -291,36 +267,49 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellId];
     }
     
-    NSString *isbn = [[self.BookList objectAtIndex:indexPath.row] valueForKey:@"PromotionBookISBN"];
-    BookDetailInfo *info = [self.BookDetailInfoDic objectForKey:isbn];
-    if (info) {
-        EGOImageView *imgView = (EGOImageView*)[cell viewWithTag:1];
-        NSString *bookImgUrl = [info.images objectForKey:@"large"];
-        imgView.imageURL = [NSURL URLWithString:bookImgUrl];
-        
-        UILabel *label;
-        label = (UILabel*)[cell viewWithTag:2];
-        label.text = [info valueForKey:@"title"];
-        
-        label = (UILabel*)[cell viewWithTag:3];
-        label.text = info.baseInfo.PromotionBookCurrentPrice;
-        
-        label = (UILabel*)[cell viewWithTag:4];
-        NSArray * author_array = [info valueForKey:@"author"];
-        NSMutableString *authors;
-        if (author_array.count) {
-            authors = [[NSMutableString alloc] initWithString:[author_array objectAtIndex:0]];
-            for (int i = 1; i < author_array.count; ++ i) {
-                [authors appendString:[NSString stringWithFormat:@",%@",[author_array objectAtIndex:i]]];
-            }
-       
-        }
-        label.text = authors;
-        
-        label = (UILabel*)[cell viewWithTag:5];
-        label.text = [info.rating objectForKey:@"average"];
-    }
+    BookBaseInfo *baseInfo = [self.BookList objectAtIndex:indexPath.row];
+    EGOImageView *imgView = (EGOImageView*)[cell viewWithTag:1];
+    imgView.imageURL = [NSURL URLWithString:baseInfo.promotionBookImageLink];
+    UILabel *label;
+    label = (UILabel*)[cell viewWithTag:2];
+    label.text = baseInfo.promotionBookName;
+    label = (UILabel*)[cell viewWithTag:3];
+    label.text = baseInfo.PromotionBookISBN;
+    label = (UILabel*)[cell viewWithTag:3];
+    label.text = baseInfo.PromotionBookCurrentPrice;
     
+    
+    
+    
+//    BookDetailInfo *info = [self.BookDetailInfoDic objectForKey:isbn];
+//    if (info) {
+//        EGOImageView *imgView = (EGOImageView*)[cell viewWithTag:1];
+//        NSString *bookImgUrl = [info.images objectForKey:@"large"];
+//        imgView.imageURL = [NSURL URLWithString:bookImgUrl];
+//        
+//        UILabel *label;
+//        label = (UILabel*)[cell viewWithTag:2];
+//        label.text = [info valueForKey:@"title"];
+//        
+//        label = (UILabel*)[cell viewWithTag:3];
+//        label.text = info.baseInfo.PromotionBookCurrentPrice;
+//        
+//        label = (UILabel*)[cell viewWithTag:4];
+//        NSArray * author_array = [info valueForKey:@"author"];
+//        NSMutableString *authors;
+//        if (author_array.count) {
+//            authors = [[NSMutableString alloc] initWithString:[author_array objectAtIndex:0]];
+//            for (int i = 1; i < author_array.count; ++ i) {
+//                [authors appendString:[NSString stringWithFormat:@",%@",[author_array objectAtIndex:i]]];
+//            }
+//       
+//        }
+//        label.text = authors;
+//        
+//        label = (UILabel*)[cell viewWithTag:5];
+//        label.text = [info.rating objectForKey:@"average"];
+//    }
+//    
     return cell;
 }
 

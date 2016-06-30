@@ -90,8 +90,11 @@
 
 #pragma mark - 在主页搜索
 - (void) searInHome {
-    NSArray *JsonData = [self fetHomeSearchResultLocaly];
-    [self fetchSearchItemList:JsonData];
+    
+    
+//    NSArray *JsonData = [self fetHomeSearchResultLocaly];
+//    [self fetchSearchItemList:JsonData];
+    [self fetHomeSearchResult];
     
 }
 
@@ -109,6 +112,7 @@
      success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          [self fetchSearchItemList:responseObject];
+         [self.tableView reloadData];
      }
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {

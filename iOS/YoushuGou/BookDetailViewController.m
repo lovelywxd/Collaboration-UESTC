@@ -8,19 +8,22 @@
 
 #import "BookDetailViewController.h"
 #import "BookDetailCell.h"
+#import "AppDelegate.h"
 
 @interface BookDetailViewController ()<EGOImageButtonDelegate>
-
+@property (nonatomic ,copy) BookDetailInfo *bookDetailInfo;
 @end
 
 @implementation BookDetailViewController
-BookDetailInfo *detailInfoInBookDetailViewController;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-       BookDetailInfo *detailInfo = self.bookdetailInfo;
-    detailInfoInBookDetailViewController = detailInfo;
-    self.bookNameLabel.text = detailInfo.title;
-    NSArray * author_array = detailInfo.author;
+    [self loadBookDetailInfo:self.bookBaseInfo];
+}
+
+- (void)fillContent {
+    self.bookNameLabel.text = self.bookDetailInfo.title;
+    NSArray * author_array = self.bookDetailInfo.author;
     NSMutableString *bookAuthors;
     if (author_array.count) {
         bookAuthors = [[NSMutableString alloc] initWithString:[author_array objectAtIndex:0]];
@@ -30,27 +33,27 @@ BookDetailInfo *detailInfoInBookDetailViewController;
         
     }
     self.bookAuthorLabel.text = bookAuthors;
-    self.publisherLabel.text = detailInfo.publisher;
-    self.pubDateLabel.text = detailInfo.pubdate;
-    self.rateLabel.text = [NSString stringWithFormat:@"%@",[detailInfo.rating objectForKey:@"average"]];
-    NSNumber *aver_score = [detailInfo.rating objectForKey:@"numRaters"];
-     NSMutableString* numRaters = [NSMutableString stringWithFormat:@"%@人评价",aver_score];
+    self.publisherLabel.text = self.bookDetailInfo.publisher;
+    self.pubDateLabel.text = self.bookDetailInfo.pubdate;
+    self.rateLabel.text = [NSString stringWithFormat:@"%@",[self.bookDetailInfo.rating objectForKey:@"average"]];
+    NSNumber *aver_score = [self.bookDetailInfo.rating objectForKey:@"numRaters"];
+    NSMutableString* numRaters = [NSMutableString stringWithFormat:@"%@人评价",aver_score];
     self.numRatersLabel.text = numRaters;
     [self.bookCoverBtn setPlaceholderImage:[UIImage imageNamed:@"home"]];
-    NSString *tmpURl = [detailInfo.images valueForKey:@"large"];
+    NSString *tmpURl = [self.bookDetailInfo.images valueForKey:@"large"];
     [self.bookCoverBtn setImageURL:[NSURL URLWithString:tmpURl]];
     [self imageButtonLoadedImage:self.bookCoverBtn];
-    self.originalPrice.text = detailInfo.baseInfo.PromotionBookPrice;
-    self.currentPrice.text = detailInfo.baseInfo.PromotionBookCurrentPrice;
+    self.originalPrice.text = self.bookDetailInfo.baseInfo.PromotionBookPrice;
+    self.currentPrice.text = self.bookDetailInfo.baseInfo.PromotionBookCurrentPrice;
     self.discount.text = @"75";
-//    self.tableView.backgroundColor = [UIColor yellowColor];
     self.summaryText.superview.backgroundColor = [UIColor yellowColor];
-
+    
     self.summaryText.superview.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bookDetailTvBg"]];
     
-//    bookDetailTvBg@2x
-    self.summaryText.text = detailInfo.summary;
+    //    bookDetailTvBg@2x
+    self.summaryText.text = self.bookDetailInfo.summary;
 }
+
 - (void)imageButtonLoadedImage:(EGOImageButton*)imageButton
 {
     NSLog(@"imageButtonLoadedImage");
@@ -61,75 +64,33 @@ BookDetailInfo *detailInfoInBookDetailViewController;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark --从服务器获取BookDetail
+-(void)loadBookDetailInfo:(BookBaseInfo*)baseInfo
+{
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *baseUrl = [NSMutableString stringWithString:@"https://api.douban.com/v2/book/isbn/:"];
+    NSString *isbn = baseInfo.PromotionBookISBN;
+    NSString *url = [NSString stringWithFormat:@"%@%@",baseUrl,isbn];
+    [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         [self formBookDetailInfo:responseObject];
+         [self fillContent];
+//         [self.view ]
+     }
+                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"fetch bookdetail fail");
+     }];
 
-#pragma mark - Table view data source
-
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return 1;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return 6;
-//}
-
-
-//- (BookDetailCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//        BOOL nibsRegistered=NO;
-//    static NSString *cellID = @"BookDetailCell";
-//        if (!nibsRegistered) {
-//            UINib *nib=[UINib nibWithNibName:@"BookDetailCell" bundle:nil];
-//            [tableView registerNib:nib forCellReuseIdentifier:cellID];
-//            nibsRegistered=YES;
-//        }
-//    BookDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-//    return cell;
-    
-//}
-
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+//    [self.tableView.mj_footer endRefreshing];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void)formBookDetailInfo:(NSDictionary*)detailInfoDic {
+    BookBaseInfo *book = self.bookBaseInfo;
+    BookDetailInfo *info = [[BookDetailInfo alloc] initBook:book withImages:[detailInfoDic objectForKey:@"images"] title:[detailInfoDic objectForKey:@"title"] publisher:[detailInfoDic objectForKey:@"publisher"] pubdate:[detailInfoDic objectForKey:@"pubdate"] pages:[detailInfoDic objectForKey:@"pages"] author:[detailInfoDic objectForKey:@"author"] summary:[detailInfoDic objectForKey:@"summary"] author_intro:[detailInfoDic objectForKey:@"author_intro"] rating:[detailInfoDic objectForKey:@"rating"] catalog:[detailInfoDic objectForKey:@"catalog"] tags:[detailInfoDic objectForKey:@"tags"] doubanLink:[detailInfoDic objectForKey:@"url"]];
+    self.bookDetailInfo = info;
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 - (IBAction)GoDouBan:(id)sender {
     NSLog(@"clcked");
@@ -141,15 +102,14 @@ BookDetailInfo *detailInfoInBookDetailViewController;
 - (IBAction)changeTextContent:(id)sender {
     switch ([sender selectedSegmentIndex]) {
         case 0:
-             self.summaryText.text = detailInfoInBookDetailViewController.summary;
+             self.summaryText.text = self.bookDetailInfo.summary;
             break;
         case 1:
-            self.summaryText.text = detailInfoInBookDetailViewController.author_intro;
+            self.summaryText.text = self.bookDetailInfo.author_intro;
             break;
         case 2:
-            self.summaryText.text = detailInfoInBookDetailViewController.catalog;
+            self.summaryText.text = self.bookDetailInfo.catalog;
             break;
-
     }
 }
 @end

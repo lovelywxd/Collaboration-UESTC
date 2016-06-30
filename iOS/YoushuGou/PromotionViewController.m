@@ -38,6 +38,8 @@
     //    self.automaticallyAdjustsScrollViewInsets = NO;
     [self PrepareProperty];
     [self GetPromotrion];
+//    [self initSearchBar];
+//    [self initSegmentCtl];
 //    [self GetPromotrionFromLocal];
     self.table.delegate = self;
     self.table.dataSource = self;

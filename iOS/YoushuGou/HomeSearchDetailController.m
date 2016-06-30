@@ -60,6 +60,29 @@
         [self.PriceList addObject:[NSDictionary dictionaryWithObjectsAndKeys:saler,@"bookSaler",[item objectForKey:@"bookCurrentPrice"],@"bookCurrentPrice", nil]];
     }
 }
+
+#pragma mark - 从服务器获取数据
+- (void)loadHomeSearchDetail {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/search/home/list/",appdele.baseUrl];
+    
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.targetItem.booSubject, @"booSubject",nil];
+    [appdele.manager
+     POST:url
+     parameters:param  // 指定请求参数
+     // 获取服务器响应成功时激发的代码块
+     success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         [self formPriceList:responseObject];
+         [self.tableView reloadData];
+     }
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"fail search in homepage");
+     }];
+
+}
+
 #pragma mark - Table view data source
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
