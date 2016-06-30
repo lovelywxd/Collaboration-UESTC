@@ -10,6 +10,8 @@
 #import "HomeSearchDetailController.h"
 #import "HomeSearchListItem.h"
 #import "EGOImageView.h"
+#import "AppDelegate.h"
+
 @interface HomeSearchResultListController ()
 @property (nonatomic ,strong) NSMutableArray *searchItemList;
 @end
@@ -91,6 +93,27 @@
     NSArray *JsonData = [self fetHomeSearchResultLocaly];
     [self fetchSearchItemList:JsonData];
     
+}
+
+#pragma mark - 根据本地文件更新数据
+
+// 网络请求，获取Home搜索结果
+- (void)fetHomeSearchResult{
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/search/home/list/",appdele.baseUrl];
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.searchBookName, @"bookName",nil];
+    [appdele.manager
+     POST:url
+     parameters:param  // 指定请求参数
+     // 获取服务器响应成功时激发的代码块
+     success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         [self fetchSearchItemList:responseObject];
+     }
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"fail search in homepage");
+     }];
 }
 
 #pragma mark - 根据本地文件更新数据

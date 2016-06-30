@@ -7,6 +7,7 @@
 //
 
 #import "NewRegisterTableViewController.h"
+#import "AppDelegate.h"
 
 @interface NewRegisterTableViewController ()
 
@@ -39,58 +40,90 @@
     return 9;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+- (IBAction)Register:(id)sender {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/user/register/",appdele.baseUrl];
     
-    // Configure the cell...
     
-    return cell;
+    NSString* usrname;
+    NSString* passwd;
+    NSString* phone;
+    NSString* school;
+    NSString* studentNo;
+    NSString* email;
+    NSString* gender;
+    
+    if (self.enableAllInput.on) {
+        usrname = self.name.text;
+        passwd = self.passwd.text;
+        phone = self.phone.text;
+        school = self.school.text;
+        studentNo = self.studentNo.text;
+        email = self.email.text;
+        gender = self.gender.text;
+    }
+    else
+    {
+        if (self.enableNameEmail.on)
+        {
+            usrname = self.name.text;
+            email = self.email.text;
+            phone = self.phone.text;
+            
+        }
+        else
+        {
+            usrname = @"Slr";
+            email = @"15528290768@163.com";
+            phone =@"15528290768";
+        }
+        passwd = @"1234567";
+        school = @"UESTC";
+        studentNo = @"201422010535";
+        gender = @"1";
+        
+    }
+
+    NSDictionary *register_data = [[NSDictionary alloc] initWithObjectsAndKeys:usrname, @"name",passwd,@"passwd",phone,@"phone",school,@"school",studentNo,@"studentNo",email,@"email",gender,@"gender",nil];
+
+    [appdele.manager
+     POST:url
+     parameters:register_data  // 指定请求参数
+     success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSDictionary *fields= [operation.response allHeaderFields];
+         NSArray *cookies=[NSHTTPCookie cookiesWithResponseHeaderFields:fields forURL:[NSURL URLWithString:url]];
+         [[NSUserDefaults standardUserDefaults] setObject:[[NSHTTPCookie requestHeaderFieldsWithCookies:cookies] objectForKey:@"Cookie"] forKey:@"userCookie"];
+         [[NSUserDefaults standardUserDefaults] synchronize];
+         
+         NSString *loginStatus = [responseObject objectForKey:@"status"];
+         if ([loginStatus isEqualToString:@"0"]) {
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"register result" message:@"register success" preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                 UIViewController *registerVC = [storyboard instantiateViewControllerWithIdentifier:@"newLoginViewController"];
+                 [self.navigationController pushViewController:registerVC animated:YES];
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
+         else {
+             NSString *result = [NSString stringWithFormat:@"login fail.info:%@",[responseObject objectForKey:@"data"]];
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Login result" message:result preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
+     }
+     // 获取服务器响应失败时激发的代码块
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"无法获取服务器响应" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+         [alert addAction:defaultAction];
+         [self presentViewController:alert animated:YES completion:nil];
+     }];
+
 }
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 @end

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Eli-j8-crE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vyb-rU-4fL">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -108,7 +108,7 @@
         <!--Root View Controller-->
         <scene sceneID="M41-5f-QFB">
             <objects>
-                <tableViewController id="0w2-HE-ceE" customClass="newLoginViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="newLoginViewController" id="0w2-HE-ceE" customClass="newLoginViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="evE-4I-tWd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2135,6 +2135,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Tr-ER-0hL">
                                                     <rect key="frame" x="172" y="8" width="30" height="30"/>
                                                     <state key="normal" title="注册"/>
+                                                    <connections>
+                                                        <action selector="Register:" destination="w28-4D-eDr" eventType="touchUpInside" id="Tzl-ob-G96"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -2161,7 +2164,7 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="edy-gs-F0v">
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="edy-gs-F0v">
                                                     <rect key="frame" x="284" y="8" width="51" height="31"/>
                                                 </switch>
                                             </subviews>
@@ -2175,6 +2178,17 @@
                             <outlet property="delegate" destination="w28-4D-eDr" id="cRd-ez-bNN"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="email" destination="Gqp-tW-MHT" id="gaQ-Uh-Cgm"/>
+                        <outlet property="enableAllInput" destination="edy-gs-F0v" id="98a-7f-bgG"/>
+                        <outlet property="enableNameEmail" destination="GqF-Oc-i5g" id="00W-Dn-XOk"/>
+                        <outlet property="gender" destination="R92-Yo-XJ6" id="xRB-aQ-iwn"/>
+                        <outlet property="name" destination="OYk-IO-p9C" id="7li-gB-WWP"/>
+                        <outlet property="passwd" destination="tIJ-7n-QKf" id="foU-aI-Cuq"/>
+                        <outlet property="phone" destination="j3Y-wg-7Zf" id="jYt-0V-jRi"/>
+                        <outlet property="school" destination="Gqp-tW-MHT" id="7Tl-SG-boJ"/>
+                        <outlet property="studentNo" destination="1Un-1o-9JS" id="WP0-Da-kCz"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jXn-wl-oe3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2228,6 +2242,6 @@
         <image name="user-sel" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XOZ-Bm-rmp"/>
+        <segue reference="Hyv-Xs-xO2"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -9,6 +9,7 @@
 #import "HomeSearchDetailController.h"
 #import "EGOImageView.h"
 #import "WebViewController.h"
+#import "AppDelegate.h"
 
 @interface HomeSearchDetailController ()
 @property (nonatomic ,strong) NSMutableArray *PriceList;

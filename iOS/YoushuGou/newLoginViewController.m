@@ -38,14 +38,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 5;
 }
 
 - (IBAction)Login:(id)sender {
     NSLog(@"usrname:%@",self.usrname.text);
     NSLog(@"password:%@",self.password.text);
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-    appdele = [UIApplication sharedApplication].delegate;
     NSString *url = [NSString stringWithFormat:@"%@/user/login/",appdele.baseUrl];
     NSString* username;
     NSString* passwd;
@@ -55,8 +54,8 @@
     }
     else
     {
-        username = @"wxd";
-        passwd = @"123456dd";
+        username = @"Slr";
+        passwd = @"1234567";
     }
     NSDictionary *logindata = [[NSDictionary alloc] initWithObjectsAndKeys:username, @"name",passwd,@"passwd",nil];
     [appdele.manager
@@ -70,19 +69,28 @@
          [[NSUserDefaults standardUserDefaults] setObject:[[NSHTTPCookie requestHeaderFieldsWithCookies:cookies] objectForKey:@"Cookie"] forKey:@"userCookie"];
          [[NSUserDefaults standardUserDefaults] synchronize];
          
-         NSMutableString* login_result = [[NSMutableString alloc] init];
-        [login_result appendString:@"Login success"];
-         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Login result" message:login_result preferredStyle:UIAlertControllerStyleAlert];
-         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-             
-             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-             UIViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
-             [self.navigationController pushViewController:homeVC animated:YES];
-         }];
-         [alert addAction:defaultAction];
-         [self presentViewController:alert animated:YES completion:nil];
+         NSString *loginStatus = [responseObject objectForKey:@"status"];
+         if ([loginStatus isEqualToString:@"0"]) {
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Login result" message:@"Login success" preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                 UIViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
+                 [self.navigationController pushViewController:homeVC animated:YES];
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
+         else {
+             NSString *result = [NSString stringWithFormat:@"login fail.info:%@",[responseObject objectForKey:@"data"]];
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Login result" message:result preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
+
          
-              }
+    }
      // 获取服务器响应失败时激发的代码块
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {

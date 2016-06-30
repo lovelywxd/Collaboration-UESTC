@@ -41,7 +41,8 @@
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [weakSelf loadMoreData];
     }];
-    [self loadPromotionDetailLocally];
+//    [self loadPromotionDetailLocally];
+    [self loadPromotionDetail];
     
 //    [self loadPromotionDetail];
 }

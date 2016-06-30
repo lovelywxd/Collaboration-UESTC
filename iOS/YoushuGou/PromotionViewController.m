@@ -37,11 +37,8 @@
     // Do any additional setup after loading the view.
     //    self.automaticallyAdjustsScrollViewInsets = NO;
     [self PrepareProperty];
-//    [self GetPromotrion];
-    [self GetPromotrionFromLocal];
-
-    [self initSearchBar];
-    [self initSegmentCtl];
+    [self GetPromotrion];
+//    [self GetPromotrionFromLocal];
     self.table.delegate = self;
     self.table.dataSource = self;
 
@@ -54,7 +51,6 @@
 
 - (void)initSegmentCtl{
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc]initWithItems:self.shopWithActivity];
-//    [segmentedControl insertSegmentWithTitle:@"全部“" atIndex:0 animated:NO];
     segmentedControl.frame = CGRectMake(10.0, 74.0, 355, 20.0);
     NSInteger defaultSeletedIndex = [self.shopWithActivity indexOfObject:@"全部"];
     segmentedControl.selectedSegmentIndex = defaultSeletedIndex;//设置默认选择项索引
@@ -186,6 +182,7 @@
 #pragma mark -- 内部函数
 - (void)PrepareProperty
 {
+    self.shopWithActivity = [[NSMutableArray alloc] init];
     self.shopActivitys = [[NSMutableDictionary alloc] init];
     self.searchResults = [[NSMutableArray alloc] init];
     self.promotionList = [[NSMutableArray alloc] init];
@@ -200,6 +197,8 @@
         [self.promotionList addObject:pro];
     }
     [self classifyActivity];
+    [self initSearchBar];
+    [self initSegmentCtl];
     
 }
 
@@ -223,7 +222,7 @@
     NSString *url = [NSString stringWithFormat:@"%@/promotion/list/",appdele.baseUrl];
     [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         NSLog(@"seccess");
+         NSLog(@"seccess in PromotionViewController,GetPromotrion");
          
          //here returns NSArray/
          [self GetProMotionListFormJsonArray:responseObject];

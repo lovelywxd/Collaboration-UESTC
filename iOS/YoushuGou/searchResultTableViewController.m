@@ -88,7 +88,7 @@ NSMutableArray* historySearch;
             cell.imageView.image = [UIImage imageNamed:@"Amazon"];
             
             cell.textLabel.text = [cell.promotion valueForKey:@"promotionName"];
-            cell.detailTextLabel.text = @"我听过空境的回忆，雨水浇绿孤山岭，听过被没听过你；我抓住散落的欲望，缱绻的馥郁让我紧张，我抓住时间的假想，没抓住你";
+//            cell.detailTextLabel.text = @"我听过空境的回忆，雨水浇绿孤山岭，听过被没听过你；我抓住散落的欲望，缱绻的馥郁让我紧张，我抓住时间的假想，没抓住你";
             return cell;
 
         }
