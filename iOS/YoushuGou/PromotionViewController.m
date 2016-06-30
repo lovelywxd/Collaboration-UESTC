@@ -44,14 +44,11 @@
     [self initSegmentCtl];
     self.table.delegate = self;
     self.table.dataSource = self;
+
     
     
 }
 
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [self.table reloadData];
-//}
 #pragma mark -- 初始化相关子视图
 
 - (void)initSegmentCtl{
@@ -79,6 +76,13 @@
     self.navigationItem.titleView = self.searchController.searchBar;
 }
 
+- (void)adjustTable {
+    CGRect frame = self.table.frame;
+    frame.origin.y = 124;
+    NSLog(@"%@",NSStringFromCGRect(frame));
+    self.view.frame = frame;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+}
 #pragma mark -- UISegmentedControl响应函数
 -(void)selectShop:(UISegmentedControl *)Seg{
     NSInteger Index = Seg.selectedSegmentIndex;
@@ -94,24 +98,31 @@
     return [[self.shopActivitys objectForKey:self.currentShop] count];
 }
 
--(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 40;
-}
+//-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return 40;
+//}
 
 -(PromotionCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 
     // 为表格行定义一个静态字符串作为标示符
-    static NSString* cellId = @"cellId";
-    PromotionCell* cell = [tableView
-                             dequeueReusableCellWithIdentifier:cellId];
+    static NSString* cellId = @"PromotionCell";
+    PromotionCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
+//    PromotionCell* cell = [tableView
+//                             dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil) {
         cell = [[PromotionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
     NSArray* promotions = [self.shopActivitys objectForKey:self.currentShop];
     cell.promotion = [promotions objectAtIndex:indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:@"Amazon"];
-    cell.textLabel.text = [cell.promotion valueForKey:@"promotionName"];
-    cell.detailTextLabel.text = @"我听过空境的回忆，雨水浇绿孤山岭，听过被没听过你；我抓住散落的欲望，缱绻的馥郁让我紧张，我抓住时间的假想，没抓住你";
+    UIImageView *imgView = (UIImageView*)[cell viewWithTag:1];
+    imgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",cell.promotion.promotionCompany]];
+    imgView.contentMode = UIViewContentModeScaleAspectFit;
+    
+    UILabel *label = (UILabel*)[cell viewWithTag:2];
+    label.text = cell.promotion.promotionName;
+
+//    cell.textLabel.text = [cell.promotion valueForKey:@"promotionName"];
+//    cell.detailTextLabel.text = @"我听过空境的回忆，雨水浇绿孤山岭，听过被没听过你；我抓住散落的欲望，缱绻的馥郁让我紧张，我抓住时间的假想，没抓住你";
     return cell;
 }
 
