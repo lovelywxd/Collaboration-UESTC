@@ -45,6 +45,7 @@
     self.table.delegate = self;
     self.table.dataSource = self;
 
+
     
     
 }
@@ -60,19 +61,19 @@
     self.currentShop = [self.shopWithActivity objectAtIndex:segmentedControl.selectedSegmentIndex];//同时设置对应的表格数据
     [segmentedControl addTarget:self action:@selector(selectShop:)  forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:segmentedControl];
+//    self.navigationItem.titleView = segmentedControl;
 }
 
 - (void)initSearchBar {
     UINavigationController* searchResultVC = [[self storyboard] instantiateViewControllerWithIdentifier:@"navSearchResultTableViewController"];
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultVC];
     self.searchController.searchResultsUpdater = self;
-    self.searchController.hidesNavigationBarDuringPresentation = YES;
-    //    self.definesPresentationContext = YES;
     CGRect frame = [self.view frame];
     self.searchController.searchBar.frame = CGRectMake(0,200,frame.size.width, 44.0);
     self.searchController.searchBar.placeholder = @"搜索促销活动或者书籍";
     self.definesPresentationContext = YES;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
+//    self.table.tableHeaderView = self.searchController.searchBar;
     self.navigationItem.titleView = self.searchController.searchBar;
 }
 
@@ -177,6 +178,7 @@
         
         // And reload the tableView with the new data
         [vc.tableView reloadData];
+
     }
 }
 

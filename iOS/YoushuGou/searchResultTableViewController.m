@@ -28,6 +28,7 @@ NSMutableArray* historySearch;
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     historySearch = [NSMutableArray arrayWithObjects:@"history1",@"history2",@"history3", nil];
 //    self.navigationController.navigationBar.hidden = YES;
+//    self.definesPresentationContext = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -135,10 +136,12 @@ NSMutableArray* historySearch;
          
 
             HomeSearchResultListController* homeSearchListVC = (HomeSearchResultListController *)navController.topViewController;
+//            HomeSearchResultListController* homeSearchListVC = [storyboard instantiateViewControllerWithIdentifier:@"HomeSearchResultListController"];;
 
+            
             homeSearchListVC.searchBookName = self.searchStr;
             
-//            [self.navigationController pushViewController:navController animated:YES];
+//            [self.navigationController pushViewController:homeSearchListVC animated:YES];
             [self presentViewController:navController animated:YES completion:nil];
             
 //            AppDelegate *appdele = [UIApplication sharedApplication].delegate;

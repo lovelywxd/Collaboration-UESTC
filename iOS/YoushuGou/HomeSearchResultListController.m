@@ -87,6 +87,7 @@
     HomeSearchDetailController *detailVC = (HomeSearchDetailController*)navVC.topViewController;
     detailVC.targetItem = item;
     [self.navigationController pushViewController:detailVC animated:YES];
+   
 }
 
 #pragma mark - 在主页搜索
@@ -181,6 +182,14 @@
 - (void) prepareProperty {
     self.searchItemList = [[NSMutableArray alloc] init];
 }
-- (IBAction)GoHomePage:(id)sender {
+
+- (IBAction)goHomePage:(id)sender {
+  //  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    UINavigationController *navController = [storyboard instantiateViewControllerWithIdentifier:@"NavPromotionViewController"];
+  //  UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
+    
+//    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 @end

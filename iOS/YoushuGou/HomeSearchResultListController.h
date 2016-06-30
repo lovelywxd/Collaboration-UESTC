@@ -10,6 +10,7 @@
 
 @interface HomeSearchResultListController : UITableViewController
 @property (nonatomic ,copy) NSString *searchBookName;
+- (IBAction)goHomePage:(id)sender;
 
 
 @end

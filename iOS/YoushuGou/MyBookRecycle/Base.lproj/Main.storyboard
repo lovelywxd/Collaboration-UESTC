@@ -286,7 +286,7 @@
         <!--Home-->
         <scene sceneID="Pb0-z5-C6r">
             <objects>
-                <navigationController id="h7T-wN-uB2" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavPromotionViewController" id="h7T-wN-uB2" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="home" selectedImage="home-sel" id="Lbs-1s-Z4H"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VN9-UG-FGt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -412,6 +412,7 @@
         <!--Navigation Controller-->
         <scene sceneID="uML-C5-GIF">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="urp-bz-nbH" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController storyboardIdentifier="NavHomeSearchResultListController" id="emT-19-ScZ" sceneMemberID="viewController">
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="c5U-xK-kMX">
@@ -422,7 +423,6 @@
                         <segue destination="Jj9-PZ-vk0" kind="relationship" relationship="rootViewController" id="Q5D-Bi-fzm"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="urp-bz-nbH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-753.5" y="123.5"/>
         </scene>
@@ -478,9 +478,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="B7m-lY-lNe">
-                        <barButtonItem key="leftBarButtonItem" title="返回主页" id="lne-tT-EWW">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="lne-tT-EWW">
                             <connections>
-                                <segue destination="Eli-j8-crE" kind="show" id="jE0-y4-eQP"/>
+                                <action selector="goHomePage:" destination="Jj9-PZ-vk0" id="HqI-Hn-xuI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -672,13 +672,7 @@
                             <outlet property="delegate" destination="Dcs-ll-sz5" id="bKM-Nx-eGw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="cBS-fG-DPA">
-                        <barButtonItem key="rightBarButtonItem" title="返回主页" id="4oP-tI-EbE">
-                            <connections>
-                                <segue destination="Eli-j8-crE" kind="show" id="4NE-cM-6iu"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="cBS-fG-DPA"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ki2-eK-MbX" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2240,6 +2234,5 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="XOZ-Bm-rmp"/>
-        <segue reference="jE0-y4-eQP"/>
     </inferredMetricsTieBreakers>
 </document>
