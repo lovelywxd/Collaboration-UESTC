@@ -37,10 +37,10 @@
     // Do any additional setup after loading the view.
     //    self.automaticallyAdjustsScrollViewInsets = NO;
     [self PrepareProperty];
-    [self GetPromotrion];
-//    [self initSearchBar];
-//    [self initSegmentCtl];
-//    [self GetPromotrionFromLocal];
+//    [self GetPromotrion];
+    [self GetPromotrionFromLocal];
+
+
     self.table.delegate = self;
     self.table.dataSource = self;
 

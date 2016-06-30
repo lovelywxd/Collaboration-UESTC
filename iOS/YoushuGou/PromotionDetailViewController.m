@@ -19,7 +19,7 @@
 
 @interface PromotionDetailViewController ()
 @property (nonatomic ,strong) NSMutableArray *BookDataBase;//json  格式的 Array。包含所有书的基本信息
-@property (nonatomic ,strong) NSMutableDictionary *BookDetailDB;//json格式的bookDetailList,本地测试使用，［key 为 isbn，值为json数组（包含豆瓣网上返回的所有信息），本地测试使用］
+
 @property (nonatomic ,assign) NSInteger totalPage;//指示当前已经获取的promotionList的页数（每页显示8本书）
 @property (nonatomic ,strong) NSString* promotionID;
 @property (nonatomic,strong) NSMutableArray *BookList;//所有书籍BaseInfo集合
@@ -41,16 +41,14 @@
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [weakSelf loadMoreData];
     }];
-//    [self loadPromotionDetailLocally];
-    [self loadPromotionDetail];
-    
+    [self loadPromotionDetailLocally];
 //    [self loadPromotionDetail];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark --从服务器获取信息
+#pragma mark --从服务器获取PromotionDetail
 - (void) loadPromotionDetail
 {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
@@ -89,15 +87,15 @@
 
 - (void) loadPromotionDetailLocally {
     [self initBookDataBase];
-    [self initLocalBookDetailDataBase];
     NSArray* JsonArr = [self FetchBookListForPageLocally:self.totalPage];
-    NSArray *bookNeedLoadDetailInfo = [self formPromotionDetailWithJsonList:JsonArr];
-    [self fetchBookDetailInfoLocaly:bookNeedLoadDetailInfo];
+    NSArray *bookBaseInfos = [self formPromotionDetailWithJsonList:JsonArr];
+    [self.BookList addObjectsFromArray:bookBaseInfos];
+    [self.tableView reloadData];
 }
 
 - (void) initBookDataBase {
     // 获取JSON文件所在的路径
-    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"promotionDetail"
+    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"promotionDetail2"
                                                          ofType:@"json"];
     // 读取jsonPath对应文件的数据
     NSData* data = [NSData dataWithContentsOfFile:jsonPath];
@@ -110,7 +108,6 @@
     NSSet *BookSet = [NSSet setWithArray:rawBookArray];
     NSArray *arr = [self arrayFromSet:BookSet];
     [self.BookDataBase addObjectsFromArray:arr];//存储最原始的Json形式的书籍列表数组。
-    [self GetAllIsbnLocally];
 }
 
 - (NSArray*)FetchBookListForPageLocally:(NSInteger)page
@@ -136,51 +133,18 @@
     return [result copy];
 }
 
-#pragma mark --从本地文件获取BookDetailInfoList
-- (void) initLocalBookDetailDataBase {
-    // 获取JSON文件所在的路径
-    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"bookDetail"
-                                                         ofType:@"json"];
-    // 读取jsonPath对应文件的数据
-    NSData* data = [NSData dataWithContentsOfFile:jsonPath];
-    // 调用JSONKit为NSData扩展的objectFromJSONData方法解析JSON数据
-    NSDictionary *parseResult = [NSJSONSerialization JSONObjectWithData:data
-                                                        options:0 error:nil];
-    for (id JsonInfo in parseResult) {
-        //键值对，键为ISBN，值为Json数组形式的书籍信息（最原始的）
-        [self.BookDetailDB setObject:JsonInfo forKey:[JsonInfo objectForKey:@"isbn13"]];
-        }
-}
-
--(void)fetchBookDetailInfoLocaly:(NSArray*)baseInfoList{
-    
-    [self.BookList addObjectsFromArray:baseInfoList];
-    for (id book in baseInfoList)
-    {
-        NSString *isbn = [book valueForKey:@"PromotionBookISBN"];
-        NSDictionary *detailInfo = [self GetBookDetailInfoLocaly:isbn];
-        [self formBookDetailInfo:detailInfo];
-    }
-    [self.tableView.mj_footer endRefreshing];
-}
- //返回NSDictionary表示的书籍所有详细信息列表
-- (NSDictionary *)GetBookDetailInfoLocaly:(NSString*)bookISBN {
-    return [self.BookDetailDB objectForKey:bookISBN];
-}
-
-
-- (void)GetAllIsbnLocally
-{
-    for (id obj in self.BookDataBase) {
-        [self.localAllBookIsbns addObject:[obj objectForKey:@"promotionBookISBN"]];
-    }
-    //    NSEnumerator *enumerator = [self.localAllBookIsbns objectEnumerator];
-    //    id value;
-    //    while ((value = [enumerator nextObject])) {
-    //        NSLog(@",%@",value);
-    //    }
-    
-}
+//- (void)GetAllIsbnLocally
+//{
+//    for (id obj in self.BookDataBase) {
+//        [self.localAllBookIsbns addObject:[obj objectForKey:@"promotionBookISBN"]];
+//    }
+//    //    NSEnumerator *enumerator = [self.localAllBookIsbns objectEnumerator];
+//    //    id value;
+//    //    while ((value = [enumerator nextObject])) {
+//    //        NSLog(@",%@",value);
+//    //    }
+//    
+//}
 
 #pragma mark --数据解析共有部分
 //输入包含若干本书的NSArray，其中每本书的表示形式为Dictionary格式
@@ -217,49 +181,46 @@
 - (void)loadMoreData
 {
     NSArray* JsonArr = [self FetchBookListForPageLocally:self.totalPage];
-    NSArray *bookNeedLoadDetailInfo = [self formPromotionDetailWithJsonList:JsonArr];
-    [self fetchBookDetailInfoLocaly:bookNeedLoadDetailInfo];
+    NSArray *bookBaseInfos = [self formPromotionDetailWithJsonList:JsonArr];
+    [self.BookList addObjectsFromArray:bookBaseInfos];
+    [self.tableView reloadData];
 }
 
 #pragma mark --内部函数
-- (void) prepareProperty
-{
+- (void) prepareProperty {
     self.BookDataBase = [[NSMutableArray alloc] init];
     self.totalPage = 0;
     self.BookDetailInfoDic = [[NSMutableDictionary alloc] init];
     self.BookBaseInfoDic = [[NSMutableDictionary alloc] init];
     self.BookList = [[NSMutableArray alloc] init];
     self.localAllBookIsbns = [[NSMutableSet alloc] init];
-    self.BookDetailDB = [[NSMutableDictionary alloc] init];
 }
 
 
 #pragma mark -- talbeView的代理方法
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
--(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+-(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.BookList.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
-(NSIndexPath *)indexPath
-{
+(NSIndexPath *)indexPath {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     BookDetailViewController* bookDetailVC = [storyboard instantiateViewControllerWithIdentifier:@"BookDetailViewController"];
     if (self.promotion.promotionType == GroupBuy) {
         bookDetailVC.IsGroupBuy = YES;
     }
     else bookDetailVC.IsGroupBuy = NO;
-    NSString *isbn = [[self.BookList objectAtIndex:indexPath.row] valueForKey:@"PromotionBookISBN"];
     bookDetailVC.bookBaseInfo = [self.BookList objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:bookDetailVC animated:NO];
 }
 
 
 
--(UITableViewCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(UITableViewCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellId = @"PromotionDetailCell";
 
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
@@ -277,39 +238,6 @@
     label.text = baseInfo.PromotionBookISBN;
     label = (UILabel*)[cell viewWithTag:3];
     label.text = baseInfo.PromotionBookCurrentPrice;
-    
-    
-    
-    
-//    BookDetailInfo *info = [self.BookDetailInfoDic objectForKey:isbn];
-//    if (info) {
-//        EGOImageView *imgView = (EGOImageView*)[cell viewWithTag:1];
-//        NSString *bookImgUrl = [info.images objectForKey:@"large"];
-//        imgView.imageURL = [NSURL URLWithString:bookImgUrl];
-//        
-//        UILabel *label;
-//        label = (UILabel*)[cell viewWithTag:2];
-//        label.text = [info valueForKey:@"title"];
-//        
-//        label = (UILabel*)[cell viewWithTag:3];
-//        label.text = info.baseInfo.PromotionBookCurrentPrice;
-//        
-//        label = (UILabel*)[cell viewWithTag:4];
-//        NSArray * author_array = [info valueForKey:@"author"];
-//        NSMutableString *authors;
-//        if (author_array.count) {
-//            authors = [[NSMutableString alloc] initWithString:[author_array objectAtIndex:0]];
-//            for (int i = 1; i < author_array.count; ++ i) {
-//                [authors appendString:[NSString stringWithFormat:@",%@",[author_array objectAtIndex:i]]];
-//            }
-//       
-//        }
-//        label.text = authors;
-//        
-//        label = (UILabel*)[cell viewWithTag:5];
-//        label.text = [info.rating objectForKey:@"average"];
-//    }
-//    
     return cell;
 }
 

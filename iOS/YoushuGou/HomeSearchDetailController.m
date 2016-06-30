@@ -20,15 +20,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self prepareProperty];
-    NSArray *detailData = [self fetHomeSearchDetailLoacally];
-    [self formPriceList:detailData];
-    self.priceTable.delegate = self;
-    self.priceTable.dataSource = self;
+    [self searInHomeDetail];
+    self.title = self.targetItem.bookName;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void) searInHomeDetail {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    if (appdele.OnLineTest) {
+        [self loadHomeSearchDetail];
+    }
+    else {
+        NSArray *detailData = [self loadHomeSearchDetailLocally];
+        [self formPriceList:detailData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,7 +49,7 @@
     self.PriceList = [[NSMutableArray alloc] init];
 }
 #pragma mark - 从本地获取数据并处理
-- (NSArray*)fetHomeSearchDetailLoacally {
+- (NSArray*)loadHomeSearchDetailLocally {
     NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"homeSearchDetail" ofType:@"json"];
     // 读取jsonPath对应文件的数据
     NSData* data = [NSData dataWithContentsOfFile:jsonPath];
@@ -51,17 +60,7 @@
     return parseResult;
 }
 
-- (void)formPriceList:(NSArray*)arr {
-    for (id item in arr) {
-        NSString *tempName = [item objectForKey:@"bookSaler"];
-        NSRange range = [tempName rangeOfString:@"."];//获取$file/的位置
-        NSString *saler = [tempName substringToIndex:range.location];//开始截取
-        
-        [self.PriceList addObject:[NSDictionary dictionaryWithObjectsAndKeys:saler,@"bookSaler",[item objectForKey:@"bookCurrentPrice"],@"bookCurrentPrice", nil]];
-    }
-}
-
-#pragma mark - 从服务器获取数据
+#pragma mark - 网络请求，从服务器获取数据
 - (void)loadHomeSearchDetail {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     NSString *url = [NSString stringWithFormat:@"%@/search/home/list/",appdele.baseUrl];
@@ -74,13 +73,24 @@
      success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          [self formPriceList:responseObject];
-         [self.tableView reloadData];
      }
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"fail search in homepage");
      }];
 
+}
+
+#pragma mark -－公用解析函数
+- (void)formPriceList:(NSArray*)arr {
+    for (id item in arr) {
+        NSString *tempName = [item objectForKey:@"bookSaler"];
+        NSRange range = [tempName rangeOfString:@"."];//获取$file/的位置
+        NSString *saler = [tempName substringToIndex:range.location];//开始截取
+        
+        [self.PriceList addObject:[NSDictionary dictionaryWithObjectsAndKeys:saler,@"bookSaler",[item objectForKey:@"bookCurrentPrice"],@"bookCurrentPrice", nil]];
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Table view data source
@@ -154,7 +164,8 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     WebViewController* webVC = [storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
     webVC.urlStr = url;
-    webVC.title = self.targetItem.bookName;
+    NSString *vcTitle = [NSString stringWithFormat:@"《%@》",self.targetItem.bookName];
+    webVC.title = vcTitle;
     [self.navigationController pushViewController:webVC animated:NO];
     NSLog(@"clicked GoDouBan Btn");
 }

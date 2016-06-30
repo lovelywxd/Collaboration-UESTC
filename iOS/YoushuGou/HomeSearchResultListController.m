@@ -90,18 +90,20 @@
 
 #pragma mark - 在主页搜索
 - (void) searInHome {
-    
-    
-//    NSArray *JsonData = [self fetHomeSearchResultLocaly];
-//    [self fetchSearchItemList:JsonData];
-    [self fetHomeSearchResult];
-    
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    if (appdele.OnLineTest) {
+        [self loadHomeSearchResult];
+    }
+    else {
+        NSArray *JsonData = [self loadHomeSearchResultLocally];
+        [self fetchSearchItemList:JsonData];
+    }
 }
 
-#pragma mark - 根据本地文件更新数据
+#pragma mark -  网络请求，请求服务器返回主页搜索结果
 
 // 网络请求，获取Home搜索结果
-- (void)fetHomeSearchResult{
+- (void)loadHomeSearchResult{
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     NSString *url = [NSString stringWithFormat:@"%@/search/home/list/",appdele.baseUrl];
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.searchBookName, @"bookName",nil];
@@ -112,7 +114,6 @@
      success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          [self fetchSearchItemList:responseObject];
-         [self.tableView reloadData];
      }
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
@@ -122,23 +123,23 @@
 
 #pragma mark - 根据本地文件更新数据
 // 模拟网络请求，返回的是Home搜索后得到的json Array
-- (NSArray*)fetHomeSearchResultLocaly {
+- (NSArray*)loadHomeSearchResultLocally {
     NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"homeSearchList"
                                                          ofType:@"json"];
     // 读取jsonPath对应文件的数据
     NSData* data = [NSData dataWithContentsOfFile:jsonPath];
     // 调用JSONKit为NSData扩展的objectFromJSONData方法解析JSON数据
-    
     NSArray *parseResult = [NSJSONSerialization JSONObjectWithData:data
-                                                           options:0 error:nil];
+                                                        options:0 error:nil];
     return parseResult;
 }
 
-#pragma mark - 根据Json数据生成HomeSearchListItem
+#pragma mark - 公用解析函数，根据Json数据生成HomeSearchListItem
 - (void)fetchSearchItemList:(NSArray*)arr {
     for (id obj in arr) {
         HomeSearchListItem *item = [[HomeSearchListItem alloc] initBook:[obj objectForKey:@"bookName"] doubanLink:[obj objectForKey:@"booSubject"] imgLink:[obj objectForKey:@"bookImageLink"] detail:[obj objectForKey:@"bookDetail"] lowestPrice:[obj objectForKey:@"bookLowestPrice"]];
         [self.searchItemList addObject:item];
+        [self.tableView reloadData];
     }
 }
 #pragma mark - 响应事件
