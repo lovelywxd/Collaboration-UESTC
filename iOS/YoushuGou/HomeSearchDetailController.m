@@ -8,16 +8,21 @@
 
 #import "HomeSearchDetailController.h"
 #import "EGOImageView.h"
+#import "WebViewController.h"
 
 @interface HomeSearchDetailController ()
-
+@property (nonatomic ,strong) NSMutableArray *PriceList;
 @end
 
 @implementation HomeSearchDetailController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self prepareProperty];
+    NSArray *detailData = [self fetHomeSearchDetailLoacally];
+    [self formPriceList:detailData];
+    self.priceTable.delegate = self;
+    self.priceTable.dataSource = self;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -30,46 +35,62 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareProperty {
+    self.PriceList = [[NSMutableArray alloc] init];
+}
+#pragma mark - 从本地获取数据并处理
+- (NSArray*)fetHomeSearchDetailLoacally {
+    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"homeSearchDetail" ofType:@"json"];
+    // 读取jsonPath对应文件的数据
+    NSData* data = [NSData dataWithContentsOfFile:jsonPath];
+    // 调用JSONKit为NSData扩展的objectFromJSONData方法解析JSON数据
+    
+    NSArray *parseResult = [NSJSONSerialization JSONObjectWithData:data
+                                                           options:0 error:nil];
+    return parseResult;
+}
+
+- (void)formPriceList:(NSArray*)arr {
+    for (id item in arr) {
+        NSString *tempName = [item objectForKey:@"bookSaler"];
+        NSRange range = [tempName rangeOfString:@"."];//获取$file/的位置
+        NSString *saler = [tempName substringToIndex:range.location];//开始截取
+        
+        [self.PriceList addObject:[NSDictionary dictionaryWithObjectsAndKeys:saler,@"bookSaler",[item objectForKey:@"bookCurrentPrice"],@"bookCurrentPrice", nil]];
+    }
+}
 #pragma mark - Table view data source
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            return 123;
+            break;
+            
+        default:
+            return 49;
+            break;
+    }
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-    return 2;
+    switch (section) {
+        case 0:
+            return 1;
+            break;
+        default:
+            return self.PriceList.count;
+            break;
+    }
 }
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
-//(NSIndexPath *)indexPath
-//{
-//switch (indexPath.section) {
-//    case 0:
-//    {
-//        Promotion *pro = [self.searchResults objectAtIndex:indexPath.row];
-//        NSLog(@"selected promotion:%@",pro);
-//        
-//    }
-//        break;
-//    case 1:
-//    {
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//        UINavigationController *navController = [storyboard instantiateViewControllerWithIdentifier:@"NavHomeSearchResultListController"];;
-//        
-//        
-//        
-//        HomeSearchResultListController* homeSearchListVC = (HomeSearchResultListController *)navController.topViewController;
-//        
-//        homeSearchListVC.searchBookName = self.searchStr;
-//    }
-//        break;
-//}
-//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
-    switch (indexPath.row) {
+    
+    switch (indexPath.section) {
         case 0:
         {
             static NSString *CellId = @"BaseCell";
@@ -84,18 +105,19 @@
             label.text = self.targetItem.bookDetail;
             UIButton *btn = (UIButton*)[cell viewWithTag:4];
             [btn addTarget:self action:@selector(GoDouBan:) forControlEvents:UIControlEventTouchUpInside];
-    
         }
             break;
-        case 1:
+            
+        default:
         {
             static NSString *CellId = @"PriceCell";
             cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
             UIImageView *imgView = (UIImageView*)[cell viewWithTag:1];
-            imgView.image = [UIImage imageNamed:@"cart"];
-//            UILabel *label;
-//            label = (UILabel*)[cell viewWithTag:2];
-//            label.text = self.targetItem.bookName;
+            NSString *name = [[self.PriceList objectAtIndex:indexPath.row] objectForKey:@"bookSaler"];
+            imgView.image = [UIImage imageNamed:name];
+            UILabel *label = (UILabel*)[cell viewWithTag:2];
+            label.text = [[self.PriceList objectAtIndex:indexPath.row] objectForKey:@"bookCurrentPrice"];
+
         }
             break;
     }
@@ -104,6 +126,12 @@
 
 #pragma mark - 响应事件
 - (void)GoDouBan:(id)sender {
+    NSString *url = self.targetItem.booSubject;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    WebViewController* webVC = [storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
+    webVC.urlStr = url;
+    webVC.title = self.targetItem.bookName;
+    [self.navigationController pushViewController:webVC animated:NO];
     NSLog(@"clicked GoDouBan Btn");
 }
 

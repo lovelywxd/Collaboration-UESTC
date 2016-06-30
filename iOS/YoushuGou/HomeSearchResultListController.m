@@ -67,10 +67,6 @@
         
         label = (UILabel*)[cell viewWithTag:4];
         label.text = item.bookLowestPrice;
-        
-        UIButton *btn = (UIButton*)[cell viewWithTag:5];
-        [btn addTarget:self action:@selector(GoDouBan:) forControlEvents:UIControlEventTouchUpInside];
-        
       }
     return cell;
 
