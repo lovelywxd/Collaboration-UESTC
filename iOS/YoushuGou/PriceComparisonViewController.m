@@ -100,6 +100,7 @@
             label.text = item.bookCurrentPrice;
             
             BookInShopButton *btn = (BookInShopButton*)[cell viewWithTag:3];
+            btn.shopLink = item.bookLink;
             [btn addTarget:self action:@selector(goBookPageInShop:)forControlEvents:UIControlEventTouchUpInside];
             return cell;
         }

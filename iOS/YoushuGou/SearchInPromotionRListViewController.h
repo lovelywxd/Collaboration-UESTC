@@ -11,5 +11,6 @@
 @interface SearchInPromotionRListViewController : UITableViewController
 
 @property (nonatomic ,copy) NSString *bookName;
+- (IBAction)Back:(id)sender;
 @property (nonatomic ,copy) NSString *promotionID;
 @end
