@@ -17,7 +17,7 @@ class UserFavourite(models.Model):
 	ISBN     = models.CharField(max_length=100)
 
 class Promotion(models.Model):
-	promotionID         = models.CharField(max_length=100, primary_key=True)
+	promotionID         = models.CharField(max_length=10, primary_key=True)
 	promotionCompany    = models.CharField(max_length=100)
 	promotionName       = models.CharField(max_length=100)
 	promotionDeadline   = models.CharField(max_length=50, null=True)
@@ -25,14 +25,15 @@ class Promotion(models.Model):
 	promotionSearchLink = models.URLField()
 
 class PromotionBookList(models.Model):
-	promotionID            = models.CharField(max_length=100)
+	promotionID            = models.CharField(max_length=10)
 	promotionBookName      = models.CharField(max_length=100)
 	promotionBookImageLink = models.URLField()
 	promotionBookISBN      = models.CharField(max_length=20)
 	promotionBookPrice     = models.CharField(max_length=10)
 
 class BookPriceList(models.Model):
+	promotionID      = models.CharField(max_length=20) #同一本书可能在不同活动里面
 	bookISBN         = models.CharField(max_length=20)
-	bookSaler        = models.CharField(max_length=100)
+	bookSaler        = models.CharField(max_length=50)
 	bookCurrentPrice = models.CharField(max_length=10)
 	bookLink         = models.URLField() #电商图书直达链接

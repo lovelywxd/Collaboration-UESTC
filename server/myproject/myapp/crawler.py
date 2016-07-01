@@ -33,7 +33,8 @@ def search_home_list_find(book_name):  #主页图书搜索，结果列表
 			bookName = info.contents[1].contents[1]["title"] #图书名称
 			bookDetail = info.contents[3].string.strip() #图书详细信息
 
-			d = {"booSubject": booSubject, 
+			d = {
+			"booSubject": booSubject, 
 			"bookName": bookName, 
 			"bookImageLink": bookImageLink,
 			"bookDetail": bookDetail,
@@ -62,12 +63,13 @@ def search_home_detail_find(subject): #主页图书搜索，图书价格信息
 			tr = buylink_able.find_all("tr")
 			if tr:
 				for td in tr[1:]: #价格表项
-					bookSaler = td.contents[1].contents[0]["src"]
-					bookSaler = bookSaler[bookSaler.rfind(r"/") + 1:] #电商图像
+					bookSaler = td.contents[1].contents[0]["src"] #电商图像
+					# bookSaler = bookSaler[bookSaler.rfind(r"/") + 1:] 
 					bookLink = td.contents[3].contents[1]["href"] #电商图书直达
 					bookCurrentPrice = td.contents[5].contents[1].string #电商图书价格
 					
-					d = {"bookISBN": bookISBN, 
+					d = {
+					"bookISBN": bookISBN, 
 					"bookSaler": bookSaler, 
 					"bookCurrentPrice": bookCurrentPrice, 
 					"bookLink": bookLink}
@@ -103,7 +105,8 @@ def search_promotion_list_find(bookName, promotionID): #活动图书搜索，结
 			bookISBN = book_right_line[2].find(class_="right").string[-13:] #图书ISBN
 			bookPrice = book_right_line[3].find(class_="xianjia").string #图书价格
 
-			d = {"promotionBookName": bookName, 
+			d = {
+			"promotionBookName": bookName, 
 			"promotionBookISBN": bookISBN,
 			"promotionBookImageLink": bookImageLink,
 			"promotionBookPrice": bookPrice, 
@@ -130,14 +133,15 @@ def search_promotion_detail_find(promotionBookDetailLink): #活动图书搜索�
 
 			book_site = price_item.find(class_="book_site")
 			bookLink = home + book_site.contents[0]["href"]
-			bookSaler = home + book_site.contents[0].contents[0]["src"]
-			bookSaler = bookSaler[bookSaler.rfind(r"/") + 1:] #电商图像
+			bookSaler = home + book_site.contents[0].contents[0]["src"] #电商图像
+			# bookSaler = bookSaler[bookSaler.rfind(r"/") + 1:] 
 			bookCurrentPrice = book_price.contents[0]
 			if repr(bookCurrentPrice)[0] != 'u': #无规则数据
 				continue
 			bookCurrentPrice = bookCurrentPrice + book_price.contents[1].string
 
-			d = {"bookISBN": bookISBN, 
+			d = {
+			"bookISBN": bookISBN, 
 			"bookSaler": bookSaler, 
 			"bookCurrentPrice": bookCurrentPrice, 
 			"bookLink": bookLink}
@@ -152,11 +156,13 @@ def sale_list_find(): #活动图书列表
 	global sale_list_link_new
 	home = "http://www.queshu.com"
 	try:
-		sale_list_link_diff = set(sale_list_link_old) - set(sale_list_link_new) #从列表中删除旧活动
+		sale_list_link_diff = set(sale_list_link_old) - set(sale_list_link_new) #从活动列表及活动图书中删除旧记录
 		for item in set(sale_list_link_diff):
-			result = Promotion.objects.filter(promotionID=item)
+			result = Promotion.objects.filter(promotionID=item) #FIX 改成外键约束
 			result.delete()
-			result = PromotionID.objects.filter(promotionID=item)
+			result = PromotionBookList.objects.filter(promotionID=item)
+			result.delete()
+			result = BookPriceList.objects.filter(promotionID=item)
 			result.delete()
 
 		sale_list_link_diff = set(sale_list_link_new) - set(sale_list_link_old) #添加新活动到列表
@@ -192,6 +198,7 @@ def sale_list_find(): #活动图书列表
 					bookCurrentPrice = bookCurrentPrice + book_price.contents[1].string
 
 					result = BookPriceList(
+						promotionID      = promotionID,
 						bookISBN         = bookISBN,
 						bookSaler        = bookSaler,
 						bookCurrentPrice = bookCurrentPrice,
@@ -207,26 +214,6 @@ def sale_list_find(): #活动图书列表
 				result.save()
 		sale_list_link_old = sale_list_link_new
 		sale_list_link_new = {}
-	except urllib2.URLError, e:
-		print e.reason
-
-
-def news_title_find(): #热门资讯
-	home = "http://www.queshu.com"
-	try:
-		response = urllib2.urlopen(urllib2.Request(home))
-		soup = BeautifulSoup(response, "html.parser")
-		for news_book in soup.find_all(class_="news_book"):
-			news_title = news_book.contents[0]
-			news_left_line1 = news_book.contents[1]
-
-			name = news_title.contents[0].contents[0] #活动名称
-			link = home + "/link" + news_title.contents[0]["href"] #活动链接
-			start = news_left_line1.contents[0].contents[0] #活动开始时间
-			end = news_left_line1.contents[0].contents[2] #活动结束时间
-
-			result = News(name=name, link=link, start=start, end=end)
-			result.save()
 	except urllib2.URLError, e:
 		print e.reason
 
@@ -256,11 +243,11 @@ def news_sale_title_find(): #活动列表
 					sale_list_link_new[promotionID] = promotionSearchLink
 
 				result = Promotion(
-					promotionID		= promotionID.encode('utf-8'),
-					promotionCompany  = promotionCompany.encode('utf-8'), 
-					promotionName	 = promotionName.encode('utf-8'), 
-					promotionDeadline = promotionDeadline, 
-					promotionLink	 = promotionLink.encode('utf-8'),
+					promotionID         = promotionID.encode('utf-8'),
+					promotionCompany    = promotionCompany.encode('utf-8'), 
+					promotionName       = promotionName.encode('utf-8'), 
+					promotionDeadline   = promotionDeadline, 
+					promotionLink       = promotionLink.encode('utf-8'),
 					promotionSearchLink = promotionSearchLink)
 				result.save()
 	except urllib2.URLError, e:

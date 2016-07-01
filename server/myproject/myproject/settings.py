@@ -70,7 +70,7 @@ DATABASES = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'shuaihan',
+#         'NAME': 'YSGwebApp',
 #         'USER': 'root',
 #         'PASSWORD': 'wxd',
 #         'HOST': '115.159.219.141',
