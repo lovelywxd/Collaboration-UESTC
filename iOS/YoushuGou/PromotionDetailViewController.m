@@ -199,7 +199,7 @@
         [self filteredContentBySubString:searchString];
         vc.searchResults = self.searchResults;
         vc.searchStr = searchString;
-        
+        vc.promotionID = self.promotion.promotionID;
         // And reload the tableView with the new data
         [vc.tableView reloadData];
         

@@ -9,5 +9,13 @@
 #import "PriceComparisonItem.h"
 
 @implementation PriceComparisonItem
-
+- (instancetype)initSaler:(NSString*)saler withPrice:(NSString*)price link:(NSString*)aLink {
+    self = [super init];
+    if (self) {
+        self.bookSaler = saler;
+        self.bookCurrentPrice = price;
+        self.bookLink = aLink;
+    }
+    return  self;
+}
 @end

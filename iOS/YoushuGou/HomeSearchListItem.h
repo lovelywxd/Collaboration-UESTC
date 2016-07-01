@@ -10,7 +10,7 @@
 
 @interface HomeSearchListItem : NSObject <NSCopying>
 @property (nonatomic, copy) NSString *bookName;//书籍名字
-@property (nonatomic, copy) NSString *booSubject;//书籍在豆瓣上的链接
+@property (nonatomic, copy) NSString *booSubject;//书籍在豆瓣上的链接, 此内容用于主页搜索是请求头部的查询字段
 @property (nonatomic, copy) NSString *bookImageLink;//书籍图片链接
 @property (nonatomic, copy) NSString *bookDetail;//书籍简介
 @property (nonatomic, copy) NSString *bookLowestPrice;//书籍最低价格

@@ -111,7 +111,8 @@
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             UINavigationController *navController = [storyboard instantiateViewControllerWithIdentifier:@"NavSearchInPromotionRListViewController"];
             SearchInPromotionRListViewController* rListVC = (SearchInPromotionRListViewController *)navController.topViewController;
-            rListVC.targetBookDetailLink = self.searchStr;
+            rListVC.bookName = self.searchStr;
+            rListVC.promotionID = self.promotionID;
             [self presentViewController:navController animated:YES completion:nil];
         }
             break;

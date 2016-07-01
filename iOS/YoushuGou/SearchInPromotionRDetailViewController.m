@@ -7,9 +7,12 @@
 //
 
 #import "SearchInPromotionRDetailViewController.h"
+#import "EGOImageView.h"
+#import "PriceComparisonItem.h"
+#import "AppDelegate.h"
 
 @interface SearchInPromotionRDetailViewController ()
-
+@property (nonatomic ,strong) NSMutableArray *PriceList;
 @end
 
 @implementation SearchInPromotionRDetailViewController
@@ -23,76 +26,78 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+- (void)prepareProperty {
+    self.PriceList = [[NSMutableArray alloc] init];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - 在活动页搜索获取价格比价表相关
+- (void)loadSearchInPromotionRDetail {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    if (appdele.OnLineTest) {
+        [self getRDetail];
+    }
+    else {
+        [self getRDetailLocally];
+    }
+}
+
+- (void)getRDetail {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/search/promotion/detail/",appdele.baseUrl];
+    
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.targetItem.promotionBookDetailLink, @"promotionBookDetailLink",nil];
+    [appdele.manager
+     GET:url
+     parameters:param  // 指定请求参数
+     // 获取服务器响应成功时激发的代码块
+     success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         [self formPriceList:responseObject];
+     }
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"fail search detail in promotion");
+     }];
+}
+
+- (void)getRDetailLocally {
+    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"homeSearchDetail" ofType:@"json"];
+    // 读取jsonPath对应文件的数据
+    NSData* data = [NSData dataWithContentsOfFile:jsonPath];
+    // 调用JSONKit为NSData扩展的objectFromJSONData方法解析JSON数据
+    
+    NSArray *parseResult = [NSJSONSerialization JSONObjectWithData:data
+                                                           options:0 error:nil];
+    [self formPriceList:parseResult];
+}
+
+#pragma mark -- 公共解析部分
+- (void)formPriceList:(NSArray*)arr {
+    for (id item in arr) {
+        NSString *tempName = [item objectForKey:@"bookSaler"];
+        NSRange range = [tempName rangeOfString:@"."];//获取$file/的位置
+        NSString *saler = [tempName substringToIndex:range.location];//开始截取
+        
+        PriceComparisonItem *PriceItem = [[PriceComparisonItem alloc] initSaler:saler withPrice:[item objectForKey:@"bookCurrentPrice"] link:[item objectForKey:@"bookLink"]];
+        [self.PriceList addObject:PriceItem];
+        [self.tableView reloadData];
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return 3;
 }
 
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -80,6 +80,9 @@
 		58E870661D26028100FC7B71 /* SearchInPromotionIndicageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */; };
 		58E870691D260C7100FC7B71 /* SearchInPromotionRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870681D260C7100FC7B71 /* SearchInPromotionRListViewController.m */; };
 		58E8706C1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E8706B1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m */; };
+		58E8706F1D26615100FC7B71 /* PriceComparisonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E8706E1D26615100FC7B71 /* PriceComparisonViewController.m */; };
+		58E870721D26689800FC7B71 /* PriceComparisonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870711D26689800FC7B71 /* PriceComparisonCell.m */; };
+		58E870761D2669FC00FC7B71 /* BookInShopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870751D2669FC00FC7B71 /* BookInShopButton.m */; };
 		58E91F511D20D793000CCC5C /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F441D20D793000CCC5C /* EGOCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		58E91F521D20D793000CCC5C /* README.mdown in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F451D20D793000CCC5C /* README.mdown */; };
 		58E91F531D20D793000CCC5C /* EGOImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F481D20D793000CCC5C /* EGOImageButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -240,6 +243,12 @@
 		58E870681D260C7100FC7B71 /* SearchInPromotionRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInPromotionRListViewController.m; sourceTree = "<group>"; };
 		58E8706A1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInPromotionRDetailViewController.h; sourceTree = "<group>"; };
 		58E8706B1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInPromotionRDetailViewController.m; sourceTree = "<group>"; };
+		58E8706D1D26615100FC7B71 /* PriceComparisonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriceComparisonViewController.h; sourceTree = "<group>"; };
+		58E8706E1D26615100FC7B71 /* PriceComparisonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PriceComparisonViewController.m; sourceTree = "<group>"; };
+		58E870701D26689800FC7B71 /* PriceComparisonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriceComparisonCell.h; sourceTree = "<group>"; };
+		58E870711D26689800FC7B71 /* PriceComparisonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PriceComparisonCell.m; sourceTree = "<group>"; };
+		58E870741D2669FC00FC7B71 /* BookInShopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookInShopButton.h; sourceTree = "<group>"; };
+		58E870751D2669FC00FC7B71 /* BookInShopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookInShopButton.m; sourceTree = "<group>"; };
 		58E91F431D20D793000CCC5C /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		58E91F441D20D793000CCC5C /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
 		58E91F451D20D793000CCC5C /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.mdown; sourceTree = "<group>"; };
@@ -452,6 +461,8 @@
 		58DE03851D1D8A8B00FF910B /* Table */ = {
 			isa = PBXGroup;
 			children = (
+				58E870701D26689800FC7B71 /* PriceComparisonCell.h */,
+				58E870711D26689800FC7B71 /* PriceComparisonCell.m */,
 				58E91F5F1D2123FD000CCC5C /* BookDetailCell.h */,
 				58E91F601D2123FD000CCC5C /* BookDetailCell.m */,
 				58E91F611D2123FD000CCC5C /* BookDetailCell.xib */,
@@ -464,6 +475,7 @@
 		58DE5C2D1CE071A3000BE711 = {
 			isa = PBXGroup;
 			children = (
+				58E870731D2669CA00FC7B71 /* view */,
 				586F5A201D2580C400FFEB72 /* LocalData */,
 				585982AA1D1FF753009A6A72 /* Framework */,
 				58DB64281D1E280E00C5D4D1 /* Data */,
@@ -525,6 +537,8 @@
 			children = (
 				58E83F471D242AF6002B2B80 /* Pre */,
 				58E83F461D242ADE002B2B80 /* search */,
+				58E8706D1D26615100FC7B71 /* PriceComparisonViewController.h */,
+				58E8706E1D26615100FC7B71 /* PriceComparisonViewController.m */,
 				58E91F5C1D21225B000CCC5C /* BookDetailViewController.h */,
 				58E91F5D1D21225B000CCC5C /* BookDetailViewController.m */,
 				5859825A1D1F7DEB009A6A72 /* PromotionDetailViewController.h */,
@@ -613,6 +627,15 @@
 				58E83F301D234D5C002B2B80 /* newLoginViewController.m */,
 			);
 			name = Pre;
+			sourceTree = "<group>";
+		};
+		58E870731D2669CA00FC7B71 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				58E870741D2669FC00FC7B71 /* BookInShopButton.h */,
+				58E870751D2669FC00FC7B71 /* BookInShopButton.m */,
+			);
+			name = view;
 			sourceTree = "<group>";
 		};
 		58E91F411D20D793000CCC5C /* EGOImageLoading图片异步加载类库 */ = {
@@ -779,6 +802,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58E870721D26689800FC7B71 /* PriceComparisonCell.m in Sources */,
 				58EB35791D25636A00BAC23C /* PriceComparisonItem.m in Sources */,
 				58E91F511D20D793000CCC5C /* EGOCache.m in Sources */,
 				585983B11D201C42009A6A72 /* UIScrollView+MJExtension.m in Sources */,
@@ -823,6 +847,7 @@
 				58E83F451D242AB6002B2B80 /* HomeSearchDetailController.m in Sources */,
 				587F6C041D1B8C7F00FCCED3 /* SlideTabBarView.m in Sources */,
 				58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */,
+				58E870761D2669FC00FC7B71 /* BookInShopButton.m in Sources */,
 				585983A11D201C42009A6A72 /* MJRefreshBackFooter.m in Sources */,
 				5854A58D1D14344F00A65193 /* groupBuyViewController.m in Sources */,
 				58E43D481D22B7C600B40FE9 /* Promotion.m in Sources */,
@@ -833,6 +858,7 @@
 				58E3B5EB1D0BA9CF00B5689F /* AFSecurityPolicy.m in Sources */,
 				58E83F3F1D240614002B2B80 /* HomeSearchResultListController.m in Sources */,
 				585983A21D201C42009A6A72 /* MJRefreshComponent.m in Sources */,
+				58E8706F1D26615100FC7B71 /* PriceComparisonViewController.m in Sources */,
 				58DE5C471CE071A4000BE711 /* MyBookRecycle.xcdatamodeld in Sources */,
 				58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */,
 				58E91F621D2123FD000CCC5C /* BookDetailCell.m in Sources */,

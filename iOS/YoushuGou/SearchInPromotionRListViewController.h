@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchInPromotionRListViewController : UITableViewController
-@property (nonatomic ,copy) NSString *targetBookDetailLink;
 
+@property (nonatomic ,copy) NSString *bookName;
+@property (nonatomic ,copy) NSString *promotionID;
 @end

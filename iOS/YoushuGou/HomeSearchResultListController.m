@@ -208,11 +208,6 @@
 #pragma mark --内部函数
 
 - (IBAction)goHomePage:(id)sender {
-  //  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    UINavigationController *navController = [storyboard instantiateViewControllerWithIdentifier:@"NavPromotionViewController"];
-  //  UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
-    
-//    [self.navigationController popViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }

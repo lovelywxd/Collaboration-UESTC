@@ -11,4 +11,5 @@
 @interface SearchInPromotionIndicageViewController : UITableViewController
 @property (nonatomic, strong) NSArray* searchResults;
 @property (nonatomic, copy) NSString* searchStr;
+@property (nonatomic, copy) NSString* promotionID;
 @end

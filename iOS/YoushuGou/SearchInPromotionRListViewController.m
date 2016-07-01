@@ -8,11 +8,14 @@
 
 #import "SearchInPromotionRListViewController.h"
 #import "promotionSearchListItem.h"
+#import "PriceComparisonViewController.h"
+#import "PriceComparisonItem.h"
 #import "EGOImageView.h"
 #import "AppDelegate.h"
 
 @interface SearchInPromotionRListViewController ()
 @property (nonatomic ,strong) NSMutableArray *searchItemList;
+@property (nonatomic ,copy) promotionSearchListItem *targetItem;
 @end
 
 @implementation SearchInPromotionRListViewController
@@ -50,7 +53,21 @@
 }
 
 - (void)getRlist {
-    
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/search/promotion/list/",appdele.baseUrl];
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.bookName, @"bookName",self.promotionID,@"promotionID", nil];
+    [appdele.manager
+     GET:url
+     parameters:param  // 指定请求参数
+     // 获取服务器响应成功时激发的代码块
+     success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         [self formRlistFromJsonArr:responseObject];
+     }
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"fail search in promotion");
+     }];
 }
 
 - (void)getRlistLocally {
@@ -72,6 +89,69 @@
         [self.searchItemList addObject:item];
         [self.tableView reloadData];
     }
+}
+#pragma mark - 获取PriceComparisonList 相关
+- (void)LoadPriceComparisonList {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    if (appdele.OnLineTest) {
+        [self getPriceComparisonList];
+    }
+    else {
+        [self getPriceComparisonListLocally];
+    }
+}
+
+- (void)getPriceComparisonList {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/search/promotion/detail/",appdele.baseUrl];
+    
+    NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.targetItem.promotionBookDetailLink, @"promotionBookDetailLink", nil];
+    [appdele.manager
+     GET:url
+     parameters:param  // 指定请求参数
+     // 获取服务器响应成功时激发的代码块
+     success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         [self formPriceList:responseObject];
+     }
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"fail search in promotion");
+     }];
+}
+
+- (void)getPriceComparisonListLocally {
+    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"promotionSearchDetail"
+                                                         ofType:@"json"];
+    // 读取jsonPath对应文件的数据
+    NSData* data = [NSData dataWithContentsOfFile:jsonPath];
+    // 调用JSONKit为NSData扩展的objectFromJSONData方法解析JSON数据
+    NSArray *parseResult = [NSJSONSerialization JSONObjectWithData:data
+                                                           options:0 error:nil];
+    [self formPriceList:parseResult];
+}
+
+- (void)formPriceList:(NSArray*)arr {
+    NSMutableArray *priceList = [[NSMutableArray alloc] init];
+    for (id item in arr) {
+        PriceComparisonItem *priceitem = [[PriceComparisonItem alloc] initSaler:[item objectForKey:@"bookSaler"] withPrice:[item objectForKey:@"bookCurrentPrice"] link:[item objectForKey:@"bookLink"]];
+        [priceList addObject:priceitem];
+        
+    }
+    
+    //数据加载完以后切换页面
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+//    UINavigationController *navVC = [storyboard instantiateViewControllerWithIdentifier:@"NavHomeSearchDetailController"];
+//    PriceComparisonViewController *detailVC = (PriceComparisonViewController*)navVC.topViewController;
+    
+    PriceComparisonViewController *detailVC = [storyboard instantiateViewControllerWithIdentifier:@"PriceComparisonViewController"];
+    detailVC.PriceList = [priceList copy];
+    detailVC.bookIsbn = self.targetItem.promotionBookISBN;
+    detailVC.bookImageLink = self.targetItem.promotionBookImageLink;
+    detailVC.bookName = self.targetItem.promotionBookName;
+    [self.navigationController pushViewController:detailVC animated:YES];
+    
 }
 
 #pragma mark - Table view data source
@@ -106,6 +186,13 @@
         label.text = item.promotionBookPrice;
     }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:
+(NSIndexPath *)indexPath
+{
+    self.targetItem = [self.searchItemList objectAtIndex:indexPath.row];
+    [self LoadPriceComparisonList];
 }
 
 @end

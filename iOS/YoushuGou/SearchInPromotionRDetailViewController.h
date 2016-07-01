@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "promotionSearchListItem.h"
 
 @interface SearchInPromotionRDetailViewController : UITableViewController
+@property (nonatomic ,copy) promotionSearchListItem *targetItem;
 
 @end
