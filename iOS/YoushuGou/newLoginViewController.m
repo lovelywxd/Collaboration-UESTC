@@ -42,8 +42,6 @@
 }
 
 - (IBAction)Login:(id)sender {
-    NSLog(@"usrname:%@",self.usrname.text);
-    NSLog(@"password:%@",self.password.text);
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     NSString *url = [NSString stringWithFormat:@"%@/user/login/",appdele.baseUrl];
     NSString* username;

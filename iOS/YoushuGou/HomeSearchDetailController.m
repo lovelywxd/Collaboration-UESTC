@@ -67,7 +67,7 @@
     
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.targetItem.booSubject, @"booSubject",nil];
     [appdele.manager
-     POST:url
+     GET:url
      parameters:param  // 指定请求参数
      // 获取服务器响应成功时激发的代码块
      success:^(AFHTTPRequestOperation *operation, id responseObject)

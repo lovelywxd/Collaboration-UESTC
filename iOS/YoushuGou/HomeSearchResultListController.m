@@ -108,7 +108,7 @@
     NSString *url = [NSString stringWithFormat:@"%@/search/home/list/",appdele.baseUrl];
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.searchBookName, @"bookName",nil];
     [appdele.manager
-     POST:url
+     GET:url
      parameters:param  // 指定请求参数
      // 获取服务器响应成功时激发的代码块
      success:^(AFHTTPRequestOperation *operation, id responseObject)

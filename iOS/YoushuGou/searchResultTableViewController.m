@@ -20,15 +20,6 @@
 NSMutableArray* historySearch;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    historySearch = [NSMutableArray arrayWithObjects:@"history1",@"history2",@"history3", nil];
-//    self.navigationController.navigationBar.hidden = YES;
-//    self.definesPresentationContext = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -143,37 +134,7 @@ NSMutableArray* historySearch;
             
 //            [self.navigationController pushViewController:homeSearchListVC animated:YES];
             [self presentViewController:navController animated:YES completion:nil];
-            
-//            AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-//            NSString *bookName = @"深入浅出";
-//            NSString *url1 = @"http://localhost:8000/search/home/list/";
-//            NSDictionary *parameters = [[NSDictionary alloc] initWithObjectsAndKeys:bookName,@"bookName",nil];
-//            [appdele.manager GET:url1 parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject)
-//             {
-//                 NSLog(@"success in search in homePage step 1");
-//                 NSString *subjectUrl = @"https://book.douban.com/subject/2130190/";
-//                  NSDictionary *paras = [[NSDictionary alloc] initWithObjectsAndKeys:subjectUrl,@"bookSubject",nil];
-//                  NSString *url2 = @"http://localhost:8000/search/home/detail/";
-//                 [appdele.manager GET:url2 parameters:paras success:^(AFHTTPRequestOperation *operation, id responseObject)
-//                  {
-//                       NSLog(@"success in search in homePage step 2");
-//                  }
-//                failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//                  
-//                  {
-//                      NSLog(@"fail in search in homePage  step 2");
-//                  }];
-//
-//
-//                 
-//                 
-//                 
-//             }
-//            failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//             
-//             {
-//                 NSLog(@"fail in search in homePage");
-//             }];
+
             
 
         }
@@ -182,61 +143,9 @@ NSMutableArray* historySearch;
         default:
             break;
     }
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    BookDetailViewController* bookDetailVC = [storyboard instantiateViewControllerWithIdentifier:@"BookDetailViewController"];
-//    if (self.promotrion.activityType == GroupBuy) {
-//        bookDetailVC.IsGroupBuy = YES;
-//    }
-//    else bookDetailVC.IsGroupBuy = NO;
-//    NSString *isbn = [[self.BookList objectAtIndex:indexPath.row] valueForKey:@"PromotionBookISBN"];
-//    BookDetailInfo *info = [self.BookDetailList objectForKey:isbn];
-//    bookDetailVC.bookdetailInfo = info;
-//    [self.navigationController pushViewController:bookDetailVC animated:NO];
+
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -77,6 +77,7 @@
 		58E83F3F1D240614002B2B80 /* HomeSearchResultListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F3E1D240614002B2B80 /* HomeSearchResultListController.m */; };
 		58E83F421D240D72002B2B80 /* HomeSearchListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F411D240D72002B2B80 /* HomeSearchListItem.m */; };
 		58E83F451D242AB6002B2B80 /* HomeSearchDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F441D242AB6002B2B80 /* HomeSearchDetailController.m */; };
+		58E870661D26028100FC7B71 /* SearchInPromotionIndicageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */; };
 		58E91F511D20D793000CCC5C /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F441D20D793000CCC5C /* EGOCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		58E91F521D20D793000CCC5C /* README.mdown in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F451D20D793000CCC5C /* README.mdown */; };
 		58E91F531D20D793000CCC5C /* EGOImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F481D20D793000CCC5C /* EGOImageButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -231,6 +232,8 @@
 		58E83F411D240D72002B2B80 /* HomeSearchListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeSearchListItem.m; sourceTree = "<group>"; };
 		58E83F431D242AB6002B2B80 /* HomeSearchDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeSearchDetailController.h; sourceTree = "<group>"; };
 		58E83F441D242AB6002B2B80 /* HomeSearchDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeSearchDetailController.m; sourceTree = "<group>"; };
+		58E870641D26028100FC7B71 /* SearchInPromotionIndicageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInPromotionIndicageViewController.h; sourceTree = "<group>"; };
+		58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInPromotionIndicageViewController.m; sourceTree = "<group>"; };
 		58E91F431D20D793000CCC5C /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		58E91F441D20D793000CCC5C /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
 		58E91F451D20D793000CCC5C /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.mdown; sourceTree = "<group>"; };
@@ -573,6 +576,8 @@
 		58E83F461D242ADE002B2B80 /* search */ = {
 			isa = PBXGroup;
 			children = (
+				58E870641D26028100FC7B71 /* SearchInPromotionIndicageViewController.h */,
+				58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */,
 				58E83F3D1D240614002B2B80 /* HomeSearchResultListController.h */,
 				58E83F3E1D240614002B2B80 /* HomeSearchResultListController.m */,
 				58E83F431D242AB6002B2B80 /* HomeSearchDetailController.h */,
@@ -791,6 +796,7 @@
 				585983AB1D201C42009A6A72 /* MJRefreshGifHeader.m in Sources */,
 				5859825C1D1F7DEB009A6A72 /* PromotionDetailViewController.m in Sources */,
 				585983B21D201C42009A6A72 /* UIScrollView+MJRefresh.m in Sources */,
+				58E870661D26028100FC7B71 /* SearchInPromotionIndicageViewController.m in Sources */,
 				585983A71D201C42009A6A72 /* MJRefreshAutoStateFooter.m in Sources */,
 				58DB646B1D1E994200C5D4D1 /* PromotionViewController.m in Sources */,
 				58E3B5E91D0BA9CF00B5689F /* AFHTTPSessionManager.m in Sources */,
