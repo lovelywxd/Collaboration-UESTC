@@ -11,9 +11,13 @@
 #import "PriceComparisonViewController.h"
 #import "PriceComparisonItem.h"
 #import "EGOImageView.h"
+#import "MBProgressHUD.h"
 #import "AppDelegate.h"
 
 @interface SearchInPromotionRListViewController ()
+{
+    MBProgressHUD *hud;
+}
 @property (nonatomic ,strong) NSMutableArray *searchItemList;
 @property (nonatomic ,copy) promotionSearchListItem *targetItem;
 @end
@@ -43,6 +47,11 @@
 
 #pragma mark - PromotionSearchListItem数据相关
 - (void)loadSearchInPromitonRlist {
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+    
+    // Set the label text.
+    hud.label.text = NSLocalizedString(@"搜索中...", @"HUD loading title");
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     if (appdele.OnLineTest) {
         [self getRlist];
@@ -66,6 +75,7 @@
      }
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
+         [hud hideAnimated:YES];
          NSLog(@"fail search in promotion");
      }];
 }
@@ -87,11 +97,13 @@
     for (id obj in arr) {
         promotionSearchListItem *item = [[promotionSearchListItem alloc] initItem:[obj objectForKey:@"promotionBookISBN"] withName:[obj objectForKey:@"promotionBookName"] price:[obj objectForKey:@"promotionBookPrice"] imageLink:[obj objectForKey:@"promotionBookImageLink"] detailLink:[obj objectForKey:@"promotionBookDetailLink"]];
         [self.searchItemList addObject:item];
+        [hud hideAnimated:YES];
         [self.tableView reloadData];
     }
 }
 #pragma mark - 获取PriceComparisonList 相关
 - (void)LoadPriceComparisonList {
+    
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     if (appdele.OnLineTest) {
         [self getPriceComparisonList];

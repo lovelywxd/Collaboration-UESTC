@@ -14,9 +14,11 @@
 #import "PromotionCell.h"
 #import "WebViewController.h"
 #import "Promotion.h"
-//#import "JSONKit.h"
-//#import "PromotionCell.h"
+#import "MBProgressHUD.h"
 @interface PromotionViewController ()<UISearchResultsUpdating,UITableViewDataSource,UITableViewDelegate>
+{
+    MBProgressHUD *hud;
+}
 
 @property (nonatomic,strong) UISegmentedControl *ShopsSegment;
 @property (nonatomic,strong) UISearchController *searchController;
@@ -53,6 +55,12 @@
 
 #pragma mark - promotionList相关
 - (void) loadPromotionList {
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+    
+    // Set the label text.
+    hud.label.text = NSLocalizedString(@"加载活动列表...", @"HUD loading title");
+    
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     if (appdele.OnLineTest) {
         [self getPromotrion];
@@ -91,6 +99,7 @@
     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      
      {
+         [hud hideAnimated:NO];
          NSLog(@"fail in fetch promotion List");
      }];
 }
@@ -103,6 +112,7 @@
         Promotion *pro = [[Promotion alloc] initPromotion:[promotion objectForKey:@"promotionID"] withName:[promotion objectForKey:@"promotionName"] urlString:[promotion objectForKey:@"promotionLink"] company:[promotion objectForKey:@"promotionCompany"] deadLine:[promotion objectForKey:@"promotionDeadline"] type:GroupBuy];
         [self.promotionList addObject:pro];
     }
+    [hud hideAnimated:YES];
     [self classifyActivity];
     [self initSearchBar];
     [self initSegmentCtl];

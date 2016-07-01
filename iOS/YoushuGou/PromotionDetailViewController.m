@@ -15,10 +15,14 @@
 #import "BookBaseInfo.h"
 #import "BookDetailInfo.h"
 #import "EGOImageView.h"
+#import "MBProgressHUD.h"
 
 #define ITEM_AMOUT_PER_PAGE 20
 
 @interface PromotionDetailViewController ()<UISearchResultsUpdating>
+{
+    MBProgressHUD *hud;
+}
 @property (nonatomic,strong) UISearchController *searchController;
 @property (nonatomic, strong) NSArray *searchResults;
 @property (nonatomic ,strong) NSMutableArray *BookDataBase;//json  格式的 Array。包含所有书的基本信息
@@ -56,6 +60,12 @@
 
 #pragma mark - PromotionDetail相关
 - (void) loadPromotionDetail {
+    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+    
+    // Set the label text.
+    hud.label.text = NSLocalizedString(@"加载书籍列表...", @"HUD loading title");
+    
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     if (appdele.OnLineTest) {
         [self getPromotionDetail];
@@ -79,10 +89,8 @@
      {
          NSLog(@"get promotion detail sucess");
          NSArray* JsonArr = [responseObject objectForKey:@"book"];
-         NSArray *bookBaseInfos = [self formPromotionDetailWithJsonList:JsonArr];
-         [self.BookList addObjectsFromArray:bookBaseInfos];
-         [self.tableView reloadData];
-     }
+         [self formPromotionDetail:JsonArr];
+    }
     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"get promotion detail sucess fail");
@@ -93,9 +101,7 @@
 - (void) getPromotionDetailLocally {
     [self initBookDataBase];
     NSArray* JsonArr = [self FetchBookListForPageLocally:self.totalPage];
-    NSArray *bookBaseInfos = [self formPromotionDetailWithJsonList:JsonArr];
-    [self.BookList addObjectsFromArray:bookBaseInfos];
-    [self.tableView reloadData];
+    [self formPromotionDetail:JsonArr];
 }
 
 - (void) initBookDataBase {
@@ -138,9 +144,15 @@
     return [result copy];
 }
 
-
-
 #pragma mark --数据解析共有部分
+- (void)formPromotionDetail:(NSArray*)arr {
+    NSArray *bookBaseInfos = [self formPromotionDetailWithJsonList:arr];
+    [self.BookList addObjectsFromArray:bookBaseInfos];
+    [hud hideAnimated:YES];
+    [self.tableView reloadData];
+
+}
+
 //输入包含若干本书的NSArray，其中每本书的表示形式为Dictionary格式
 //返回值：需要BookbaseInfo array
 - (NSArray*)formPromotionDetailWithJsonList:(NSArray*)arr {
