@@ -63,7 +63,7 @@
 #pragma mark - 网络请求，从服务器获取数据
 - (void)loadHomeSearchDetail {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-    NSString *url = [NSString stringWithFormat:@"%@/search/home/list/",appdele.baseUrl];
+    NSString *url = [NSString stringWithFormat:@"%@/search/home/detail/",appdele.baseUrl];
     
     NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:self.targetItem.booSubject, @"booSubject",nil];
     [appdele.manager
@@ -76,7 +76,7 @@
      }
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         NSLog(@"fail search in homepage");
+         NSLog(@"fail search detail in homepage");
      }];
 
 }

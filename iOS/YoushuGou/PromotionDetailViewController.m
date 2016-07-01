@@ -7,6 +7,7 @@
 //
 
 #import "PromotionDetailViewController.h"
+#import "SearchInPromotionIndicageViewController.h"
 #import "BookDetailViewController.h"
 #import "MJRefresh.h"
 #import "AppDelegate.h"
@@ -17,7 +18,9 @@
 
 #define ITEM_AMOUT_PER_PAGE 20
 
-@interface PromotionDetailViewController ()
+@interface PromotionDetailViewController ()<UISearchResultsUpdating>
+@property (nonatomic,strong) UISearchController *searchController;
+@property (nonatomic, strong) NSArray *searchResults;
 @property (nonatomic ,strong) NSMutableArray *BookDataBase;//json  格式的 Array。包含所有书的基本信息
 
 @property (nonatomic ,assign) NSInteger totalPage;//指示当前已经获取的promotionList的页数（每页显示8本书）
@@ -39,6 +42,7 @@
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [weakSelf loadMoreData];
     }];
+    [self initSearchBar];
     [self loadPromotionDetail];
 }
 
@@ -138,7 +142,7 @@
 
 #pragma mark --数据解析共有部分
 //输入包含若干本书的NSArray，其中每本书的表示形式为Dictionary格式
-//返回值：需要载入detail infomation的BookbaseInfo array
+//返回值：需要BookbaseInfo array
 - (NSArray*)formPromotionDetailWithJsonList:(NSArray*)arr {
     NSSet *tempSet = [NSSet setWithArray:arr];
     NSMutableArray *BookNeedLoadDetail = [[NSMutableArray alloc] init];
@@ -178,6 +182,45 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - 搜索相关
+#pragma mark -- UISearchControllerDelegate & UISearchResultsDelegate
+
+// Called when the search bar becomes first responder
+- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+{
+    
+    // Set searchString equal to what's typed into the searchbar
+    NSString *searchString = self.searchController.searchBar.text;
+    if (self.searchController.searchResultsController) {
+        UINavigationController *navController = (UINavigationController *)self.searchController.searchResultsController;
+        
+        // Present SearchResultsTableViewController as the topViewController
+        SearchInPromotionIndicageViewController* vc = (SearchInPromotionIndicageViewController *)navController.topViewController;
+        [self filteredContentBySubString:searchString];
+        vc.searchResults = self.searchResults;
+        vc.searchStr = searchString;
+        
+        // And reload the tableView with the new data
+        [vc.tableView reloadData];
+        
+    }
+}
+
+- (void)filteredContentBySubString:(NSString *)subStr
+{
+//    self.searchResults = [NSMutableArray arrayWithObjects:@"1",@"2'", nil];
+
+    if ([subStr  isEqual: @""]) {
+        
+        // If empty the search results are the same as the original data
+        self.searchResults = [self.BookList copy];
+    } else {
+        NSPredicate* pred = [NSPredicate predicateWithFormat:
+                             @"%K CONTAINS %@" ,@"promotionBookName",subStr];
+        self.searchResults = [[self.BookList copy] filteredArrayUsingPredicate:pred];
+        
+    }
+}
 
 #pragma mark - talbeView的代理方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -227,6 +270,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)initSearchBar {
+    UINavigationController* searchResultVC = [[self storyboard] instantiateViewControllerWithIdentifier:@"NavSearchInPromotionIndicageViewController"];
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultVC];
+    self.searchController.searchResultsUpdater = self;
+    CGRect frame = [self.view frame];
+    self.searchController.searchBar.frame = CGRectMake(0,200,frame.size.width, 44.0);
+    self.searchController.searchBar.placeholder = @"搜索书籍";
+    self.definesPresentationContext = YES;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.tableView.tableHeaderView = self.searchController.searchBar;
 }
 
 @end

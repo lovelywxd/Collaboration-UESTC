@@ -78,6 +78,8 @@
 		58E83F421D240D72002B2B80 /* HomeSearchListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F411D240D72002B2B80 /* HomeSearchListItem.m */; };
 		58E83F451D242AB6002B2B80 /* HomeSearchDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F441D242AB6002B2B80 /* HomeSearchDetailController.m */; };
 		58E870661D26028100FC7B71 /* SearchInPromotionIndicageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */; };
+		58E870691D260C7100FC7B71 /* SearchInPromotionRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870681D260C7100FC7B71 /* SearchInPromotionRListViewController.m */; };
+		58E8706C1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E8706B1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m */; };
 		58E91F511D20D793000CCC5C /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F441D20D793000CCC5C /* EGOCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		58E91F521D20D793000CCC5C /* README.mdown in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F451D20D793000CCC5C /* README.mdown */; };
 		58E91F531D20D793000CCC5C /* EGOImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F481D20D793000CCC5C /* EGOImageButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -234,6 +236,10 @@
 		58E83F441D242AB6002B2B80 /* HomeSearchDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeSearchDetailController.m; sourceTree = "<group>"; };
 		58E870641D26028100FC7B71 /* SearchInPromotionIndicageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInPromotionIndicageViewController.h; sourceTree = "<group>"; };
 		58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInPromotionIndicageViewController.m; sourceTree = "<group>"; };
+		58E870671D260C7100FC7B71 /* SearchInPromotionRListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInPromotionRListViewController.h; sourceTree = "<group>"; };
+		58E870681D260C7100FC7B71 /* SearchInPromotionRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInPromotionRListViewController.m; sourceTree = "<group>"; };
+		58E8706A1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInPromotionRDetailViewController.h; sourceTree = "<group>"; };
+		58E8706B1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInPromotionRDetailViewController.m; sourceTree = "<group>"; };
 		58E91F431D20D793000CCC5C /* EGOCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOCache.h; sourceTree = "<group>"; };
 		58E91F441D20D793000CCC5C /* EGOCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOCache.m; sourceTree = "<group>"; };
 		58E91F451D20D793000CCC5C /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.mdown; sourceTree = "<group>"; };
@@ -576,6 +582,10 @@
 		58E83F461D242ADE002B2B80 /* search */ = {
 			isa = PBXGroup;
 			children = (
+				58E870671D260C7100FC7B71 /* SearchInPromotionRListViewController.h */,
+				58E870681D260C7100FC7B71 /* SearchInPromotionRListViewController.m */,
+				58E8706A1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.h */,
+				58E8706B1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m */,
 				58E870641D26028100FC7B71 /* SearchInPromotionIndicageViewController.h */,
 				58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */,
 				58E83F3D1D240614002B2B80 /* HomeSearchResultListController.h */,
@@ -826,7 +836,9 @@
 				58DE5C471CE071A4000BE711 /* MyBookRecycle.xcdatamodeld in Sources */,
 				58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */,
 				58E91F621D2123FD000CCC5C /* BookDetailCell.m in Sources */,
+				58E870691D260C7100FC7B71 /* SearchInPromotionRListViewController.m in Sources */,
 				585983A81D201C42009A6A72 /* MJRefreshBackGifFooter.m in Sources */,
+				58E8706C1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m in Sources */,
 				58E3B5ED1D0BA9CF00B5689F /* AFURLRequestSerialization.m in Sources */,
 				58E3B5EA1D0BA9CF00B5689F /* AFNetworkReachabilityManager.m in Sources */,
 				5859826B1D1F8425009A6A72 /* BookBaseInfo.m in Sources */,

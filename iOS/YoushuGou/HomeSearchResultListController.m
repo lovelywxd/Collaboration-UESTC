@@ -31,6 +31,9 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+- (void) prepareProperty {
+    self.searchItemList = [[NSMutableArray alloc] init];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -203,9 +206,6 @@
 */
 
 #pragma mark --内部函数
-- (void) prepareProperty {
-    self.searchItemList = [[NSMutableArray alloc] init];
-}
 
 - (IBAction)goHomePage:(id)sender {
   //  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

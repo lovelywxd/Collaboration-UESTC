@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchInPromotionIndicageViewController : UITableViewController
-@property (nonatomic, strong) NSMutableArray *searchResults;
-@property (nonatomic, copy)NSString *searchStr;
+@property (nonatomic, strong) NSArray* searchResults;
+@property (nonatomic, copy) NSString* searchStr;
 @end

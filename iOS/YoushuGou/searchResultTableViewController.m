@@ -17,7 +17,6 @@
 @end
 
 @implementation searchResultTableViewController
-NSMutableArray* historySearch;
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
