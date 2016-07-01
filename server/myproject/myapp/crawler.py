@@ -89,8 +89,9 @@ def search_promotion_list_find(bookName, promotionID): #活动图书搜索，结
 
 		promotionSearchLink = promotionSearchLink[0].promotionSearchLink
 		print promotionSearchLink
-		dir = r"D:\chromedriver" #浏览器驱动路径
-		driver = webdriver.Chrome(dir)
+		# dir = r"D:\chromedriver" #浏览器驱动路径
+		# driver = webdriver.Chrome(dir)
+		driver = webdriver.PhantomJS()
 		driver.get(promotionSearchLink + "?c=" + bookName) #获得渲染后的页面
 		response = driver.page_source
 		driver.close()
