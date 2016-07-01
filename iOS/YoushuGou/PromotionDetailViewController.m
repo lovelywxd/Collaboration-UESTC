@@ -106,7 +106,7 @@
 
 - (void) initBookDataBase {
     // 获取JSON文件所在的路径
-    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"promotionDetail2"
+    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"promotionDetail"
                                                          ofType:@"json"];
     // 读取jsonPath对应文件的数据
     NSData* data = [NSData dataWithContentsOfFile:jsonPath];
@@ -165,7 +165,7 @@
     while ((book = [enumerator nextObject])) {
         NSString* bookISBN = [book objectForKey:@"promotionBookISBN"];
         if (![currentBookISBN containsObject:bookISBN]) {
-            BookBaseInfo *info = [[BookBaseInfo alloc] initBook:bookISBN withName:[book objectForKey:@"promotionBookName"] currentPrice:[book objectForKey:@"promotionBookPrice"] imageLink:[book objectForKey:@"promotionBookImageLink"] searchLink:[book objectForKey:@"promotionBookDetailLink"]];
+            BookBaseInfo *info = [[BookBaseInfo alloc] initBook:bookISBN name:[book objectForKey:@"promotionBookName"] currentPrice:[book objectForKey:@"promotionBookPrice"] imageLink:[book objectForKey:@"promotionBookImageLink"]];
             
             [BookNeedLoadDetail addObject:info];
             [self.BookBaseInfoDic setObject:info forKey:bookISBN];
@@ -273,7 +273,7 @@
     label.text = baseInfo.promotionBookName;
     label = (UILabel*)[cell viewWithTag:3];
     label.text = baseInfo.PromotionBookISBN;
-    label = (UILabel*)[cell viewWithTag:3];
+    label = (UILabel*)[cell viewWithTag:4];
     label.text = baseInfo.PromotionBookCurrentPrice;
     return cell;
 }

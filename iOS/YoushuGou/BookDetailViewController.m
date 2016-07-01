@@ -7,7 +7,6 @@
 //
 
 #import "BookDetailViewController.h"
-#import "BookDetailCell.h"
 #import "AppDelegate.h"
 
 @interface BookDetailViewController ()<EGOImageButtonDelegate>
@@ -45,7 +44,7 @@
     NSString *tmpURl = [self.bookDetailInfo.images valueForKey:@"large"];
     [self.bookCoverBtn setImageURL:[NSURL URLWithString:tmpURl]];
     [self imageButtonLoadedImage:self.bookCoverBtn];
-    self.originalPrice.text = self.bookDetailInfo.baseInfo.PromotionBookPrice;
+    self.originalPrice.text = self.bookDetailInfo.baseInfo.PromotionBookCurrentPrice;
     self.currentPrice.text = self.bookDetailInfo.baseInfo.PromotionBookCurrentPrice;
     self.discount.text = @"75";
     self.summaryText.superview.backgroundColor = [UIColor yellowColor];

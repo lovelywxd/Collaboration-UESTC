@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BookBaseInfo.h"
-#import "BookSaleInfo.h"
+
 
 @interface BookDetailInfo : NSObject<NSCopying>
 @property (nonatomic,strong) NSDictionary* images;//图片

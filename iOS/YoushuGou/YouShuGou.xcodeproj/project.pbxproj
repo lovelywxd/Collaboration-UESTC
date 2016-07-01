@@ -13,7 +13,6 @@
 		5854A5931D143B5300A65193 /* assistantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5921D143B5300A65193 /* assistantViewController.m */; };
 		5854A5961D143DB700A65193 /* userSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5951D143DB700A65193 /* userSettingViewController.m */; };
 		5859825C1D1F7DEB009A6A72 /* PromotionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5859825B1D1F7DEB009A6A72 /* PromotionDetailViewController.m */; };
-		585982681D1F83FC009A6A72 /* BookSaleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 585982671D1F83FC009A6A72 /* BookSaleInfo.m */; };
 		5859826B1D1F8425009A6A72 /* BookBaseInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5859826A1D1F8425009A6A72 /* BookBaseInfo.m */; };
 		5859826E1D1F8592009A6A72 /* BookDetailInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5859826D1D1F8592009A6A72 /* BookDetailInfo.m */; };
 		585982AE1D1FF797009A6A72 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 585982AC1D1FF797009A6A72 /* MBProgressHUD.m */; };
@@ -90,9 +89,6 @@
 		58E91F551D20D793000CCC5C /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F4D1D20D793000CCC5C /* EGOImageLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		58E91F561D20D793000CCC5C /* EGOImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F501D20D793000CCC5C /* EGOImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		58E91F5E1D21225B000CCC5C /* BookDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F5D1D21225B000CCC5C /* BookDetailViewController.m */; };
-		58E91F621D2123FD000CCC5C /* BookDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E91F601D2123FD000CCC5C /* BookDetailCell.m */; };
-		58E91F631D2123FD000CCC5C /* BookDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E91F611D2123FD000CCC5C /* BookDetailCell.xib */; };
-		58EB35761D25623500BAC23C /* promotionDetail2.json in Resources */ = {isa = PBXBuildFile; fileRef = 58EB35751D25623500BAC23C /* promotionDetail2.json */; };
 		58EB35791D25636A00BAC23C /* PriceComparisonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 58EB35781D25636A00BAC23C /* PriceComparisonItem.m */; };
 /* End PBXBuildFile section */
 
@@ -119,8 +115,6 @@
 		5854A5951D143DB700A65193 /* userSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = userSettingViewController.m; sourceTree = "<group>"; };
 		5859825A1D1F7DEB009A6A72 /* PromotionDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PromotionDetailViewController.h; sourceTree = "<group>"; };
 		5859825B1D1F7DEB009A6A72 /* PromotionDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PromotionDetailViewController.m; sourceTree = "<group>"; };
-		585982661D1F83FC009A6A72 /* BookSaleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookSaleInfo.h; sourceTree = "<group>"; };
-		585982671D1F83FC009A6A72 /* BookSaleInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookSaleInfo.m; sourceTree = "<group>"; };
 		585982691D1F8425009A6A72 /* BookBaseInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookBaseInfo.h; sourceTree = "<group>"; };
 		5859826A1D1F8425009A6A72 /* BookBaseInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookBaseInfo.m; sourceTree = "<group>"; };
 		5859826C1D1F8592009A6A72 /* BookDetailInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailInfo.h; sourceTree = "<group>"; };
@@ -262,10 +256,6 @@
 		58E91F501D20D793000CCC5C /* EGOImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGOImageView.m; sourceTree = "<group>"; };
 		58E91F5C1D21225B000CCC5C /* BookDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailViewController.h; sourceTree = "<group>"; };
 		58E91F5D1D21225B000CCC5C /* BookDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetailViewController.m; sourceTree = "<group>"; };
-		58E91F5F1D2123FD000CCC5C /* BookDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookDetailCell.h; sourceTree = "<group>"; };
-		58E91F601D2123FD000CCC5C /* BookDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookDetailCell.m; sourceTree = "<group>"; };
-		58E91F611D2123FD000CCC5C /* BookDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BookDetailCell.xib; sourceTree = "<group>"; };
-		58EB35751D25623500BAC23C /* promotionDetail2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = promotionDetail2.json; path = MyBookRecycle/promotionDetail2.json; sourceTree = "<group>"; };
 		58EB35771D25636A00BAC23C /* PriceComparisonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriceComparisonItem.h; sourceTree = "<group>"; };
 		58EB35781D25636A00BAC23C /* PriceComparisonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PriceComparisonItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -422,7 +412,6 @@
 				58A187971D257882002EBDA8 /* bookDetail2.json */,
 				58E83F351D23A9E2002B2B80 /* bookDetail.json */,
 				58E43D7D1D22DA6C00B40FE9 /* promotionList.json */,
-				58EB35751D25623500BAC23C /* promotionDetail2.json */,
 				58E43D7F1D22E84900B40FE9 /* promotionDetail.json */,
 			);
 			name = LocalData;
@@ -448,8 +437,6 @@
 				58EB35781D25636A00BAC23C /* PriceComparisonItem.m */,
 				585982691D1F8425009A6A72 /* BookBaseInfo.h */,
 				5859826A1D1F8425009A6A72 /* BookBaseInfo.m */,
-				585982661D1F83FC009A6A72 /* BookSaleInfo.h */,
-				585982671D1F83FC009A6A72 /* BookSaleInfo.m */,
 				5859826C1D1F8592009A6A72 /* BookDetailInfo.h */,
 				5859826D1D1F8592009A6A72 /* BookDetailInfo.m */,
 				58E43D461D22B7C600B40FE9 /* Promotion.h */,
@@ -463,9 +450,6 @@
 			children = (
 				58E870701D26689800FC7B71 /* PriceComparisonCell.h */,
 				58E870711D26689800FC7B71 /* PriceComparisonCell.m */,
-				58E91F5F1D2123FD000CCC5C /* BookDetailCell.h */,
-				58E91F601D2123FD000CCC5C /* BookDetailCell.m */,
-				58E91F611D2123FD000CCC5C /* BookDetailCell.xib */,
 				587EC0FE1D1EED2100438F1C /* PromotionCell.h */,
 				587EC0FF1D1EED2100438F1C /* PromotionCell.m */,
 			);
@@ -772,7 +756,6 @@
 			files = (
 				586F5A241D25813000FFEB72 /* promotionSearchDetail.json in Resources */,
 				586F5A221D25810800FFEB72 /* promotionSearchList.json in Resources */,
-				58EB35761D25623500BAC23C /* promotionDetail2.json in Resources */,
 				58E83F3A1D2402FF002B2B80 /* homeSearchList.json in Resources */,
 				58E43D801D22E84900B40FE9 /* promotionDetail.json in Resources */,
 				58E43D7E1D22DA6C00B40FE9 /* promotionList.json in Resources */,
@@ -781,7 +764,6 @@
 				58A187981D257882002EBDA8 /* bookDetail2.json in Resources */,
 				58E83F361D23A9E2002B2B80 /* bookDetail.json in Resources */,
 				588DBF1E1D16D10D008F881D /* home_icon.png in Resources */,
-				58E91F631D2123FD000CCC5C /* BookDetailCell.xib in Resources */,
 				58DE5C491CE071A4000BE711 /* Assets.xcassets in Resources */,
 				58DE5C441CE071A4000BE711 /* Main.storyboard in Resources */,
 				585983AE1D201C42009A6A72 /* MJRefresh.bundle in Resources */,
@@ -840,7 +822,6 @@
 				585983B31D201C42009A6A72 /* UIView+MJExtension.m in Sources */,
 				58E91F531D20D793000CCC5C /* EGOImageButton.m in Sources */,
 				58E91F521D20D793000CCC5C /* README.mdown in Sources */,
-				585982681D1F83FC009A6A72 /* BookSaleInfo.m in Sources */,
 				585983A51D201C42009A6A72 /* MJRefreshAutoGifFooter.m in Sources */,
 				585982AE1D1FF797009A6A72 /* MBProgressHUD.m in Sources */,
 				58E91F541D20D793000CCC5C /* EGOImageLoadConnection.m in Sources */,
@@ -861,7 +842,6 @@
 				58E8706F1D26615100FC7B71 /* PriceComparisonViewController.m in Sources */,
 				58DE5C471CE071A4000BE711 /* MyBookRecycle.xcdatamodeld in Sources */,
 				58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */,
-				58E91F621D2123FD000CCC5C /* BookDetailCell.m in Sources */,
 				58E870691D260C7100FC7B71 /* SearchInPromotionRListViewController.m in Sources */,
 				585983A81D201C42009A6A72 /* MJRefreshBackGifFooter.m in Sources */,
 				58E8706C1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m in Sources */,

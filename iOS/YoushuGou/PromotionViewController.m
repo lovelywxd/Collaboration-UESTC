@@ -57,7 +57,6 @@
 - (void) loadPromotionList {
     hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
-    
     // Set the label text.
     hud.label.text = NSLocalizedString(@"加载活动列表...", @"HUD loading title");
     
@@ -108,14 +107,21 @@
 - (void)formMotionListFormJsonArray:(NSArray*)Lists
 {
     for (id promotion in Lists) {
-        
-        Promotion *pro = [[Promotion alloc] initPromotion:[promotion objectForKey:@"promotionID"] withName:[promotion objectForKey:@"promotionName"] urlString:[promotion objectForKey:@"promotionLink"] company:[promotion objectForKey:@"promotionCompany"] deadLine:[promotion objectForKey:@"promotionDeadline"] type:GroupBuy];
+         PromotionType type;
+        if ([[promotion objectForKey:@"promotionSearchLink"] isEqualToString:@""]) {
+            type = Other;
+        }
+        else {
+            type = GroupBuy;
+        }
+        Promotion *pro = [[Promotion alloc] initPromotion:[promotion objectForKey:@"promotionID"] withName:[promotion objectForKey:@"promotionName"] urlString:[promotion objectForKey:@"promotionLink"] company:[promotion objectForKey:@"promotionCompany"] deadLine:[promotion objectForKey:@"promotionDeadline"] type:type];
         [self.promotionList addObject:pro];
     }
     [hud hideAnimated:YES];
     [self classifyActivity];
     [self initSearchBar];
     [self initSegmentCtl];
+    [self.table reloadData];
     
 }
 - (void)classifyActivity{
@@ -212,6 +218,7 @@
     
     
     switch (type) {
+        case PartDiscout:
         case GroupBuy:
         {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -220,9 +227,7 @@
             [self.navigationController pushViewController:detailVC animated:NO];
         }
             break;
-            //        case PartDiscout:
-            //            break;
-        default:
+        case Other:
         {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             WebViewController* webVC = [storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
