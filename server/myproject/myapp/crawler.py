@@ -198,7 +198,6 @@ def sale_list_find(): #活动图书列表
 					bookCurrentPrice = bookCurrentPrice + book_price.contents[1].string
 
 					result = BookPriceList(
-						promotionID      = promotionID,
 						bookISBN         = bookISBN,
 						bookSaler        = bookSaler,
 						bookCurrentPrice = bookCurrentPrice,

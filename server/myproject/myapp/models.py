@@ -32,8 +32,7 @@ class PromotionBookList(models.Model):
 	promotionBookPrice     = models.CharField(max_length=10)
 
 class BookPriceList(models.Model):
-	promotionID      = models.CharField(max_length=20) #同一本书可能在不同活动里面
-	bookISBN         = models.CharField(max_length=20)
+	bookISBN         = models.CharField(max_length=20, primary_key=True)
 	bookSaler        = models.CharField(max_length=50)
 	bookCurrentPrice = models.CharField(max_length=10)
 	bookLink         = models.URLField() #电商图书直达链接
