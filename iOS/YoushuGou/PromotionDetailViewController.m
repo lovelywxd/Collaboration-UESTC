@@ -23,8 +23,6 @@
 @property (nonatomic ,assign) NSInteger totalPage;//指示当前已经获取的promotionList的页数（每页显示8本书）
 @property (nonatomic ,strong) NSString* promotionID;
 @property (nonatomic,strong) NSMutableArray *BookList;//所有书籍BaseInfo集合
-@property (nonatomic ,strong) NSMutableSet *localAllBookIsbns;
-@property (nonatomic,strong) NSMutableDictionary *BookDetailInfoDic;//当前活动下书籍DetailInfo集合
 @property (nonatomic,strong) NSMutableDictionary *BookBaseInfoDic;//当前活动下书籍base集合
 
 @end
@@ -41,15 +39,31 @@
     self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
         [weakSelf loadMoreData];
     }];
-    [self loadPromotionDetailLocally];
-//    [self loadPromotionDetail];
+    [self loadPromotionDetail];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (void) prepareProperty {
+    self.BookDataBase = [[NSMutableArray alloc] init];
+    self.totalPage = 0;
+    self.BookBaseInfoDic = [[NSMutableDictionary alloc] init];
+    self.BookList = [[NSMutableArray alloc] init];
+
 }
+
+#pragma mark - PromotionDetail相关
+- (void) loadPromotionDetail {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    if (appdele.OnLineTest) {
+        [self getPromotionDetail];
+    }
+    else {
+        [self getPromotionDetailLocally];
+    }
+
+}
+
 #pragma mark --从服务器获取PromotionDetail
-- (void) loadPromotionDetail
+- (void) getPromotionDetail
 {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     NSString *url = [NSString stringWithFormat:@"%@/promotion/detail/",appdele.baseUrl];
@@ -71,21 +85,8 @@
      }];
 }
 
-
 #pragma mark --从本地文件更新PromotionDetail
-- (NSArray*) arrayFromSet:(NSSet*)aSet {
-
-        NSEnumerator *enumerator = [aSet objectEnumerator];
-        id value;
-    
-        NSMutableArray* tempArr = [[NSMutableArray alloc] init];
-        while ((value = [enumerator nextObject])) {
-            [tempArr addObject:value];
-        }
-    return [tempArr copy];
-}
-
-- (void) loadPromotionDetailLocally {
+- (void) getPromotionDetailLocally {
     [self initBookDataBase];
     NSArray* JsonArr = [self FetchBookListForPageLocally:self.totalPage];
     NSArray *bookBaseInfos = [self formPromotionDetailWithJsonList:JsonArr];
@@ -133,18 +134,7 @@
     return [result copy];
 }
 
-//- (void)GetAllIsbnLocally
-//{
-//    for (id obj in self.BookDataBase) {
-//        [self.localAllBookIsbns addObject:[obj objectForKey:@"promotionBookISBN"]];
-//    }
-//    //    NSEnumerator *enumerator = [self.localAllBookIsbns objectEnumerator];
-//    //    id value;
-//    //    while ((value = [enumerator nextObject])) {
-//    //        NSLog(@",%@",value);
-//    //    }
-//    
-//}
+
 
 #pragma mark --数据解析共有部分
 //输入包含若干本书的NSArray，其中每本书的表示形式为Dictionary格式
@@ -167,15 +157,17 @@
     }
     return BookNeedLoadDetail;
 }
-
-- (void)formBookDetailInfo:(NSDictionary*)detailInfoDic {
-    NSString *isbn = [detailInfoDic objectForKey:@"isbn13"];
-    BookBaseInfo *book = [self.BookBaseInfoDic objectForKey:isbn];
-    BookDetailInfo *info = [[BookDetailInfo alloc] initBook:book withImages:[detailInfoDic objectForKey:@"images"] title:[detailInfoDic objectForKey:@"title"] publisher:[detailInfoDic objectForKey:@"publisher"] pubdate:[detailInfoDic objectForKey:@"pubdate"] pages:[detailInfoDic objectForKey:@"pages"] author:[detailInfoDic objectForKey:@"author"] summary:[detailInfoDic objectForKey:@"summary"] author_intro:[detailInfoDic objectForKey:@"author_intro"] rating:[detailInfoDic objectForKey:@"rating"] catalog:[detailInfoDic objectForKey:@"catalog"] tags:[detailInfoDic objectForKey:@"tags"] doubanLink:[detailInfoDic objectForKey:@"url"]];
-    [self.BookDetailInfoDic setObject:info forKey:isbn];
-    [self.tableView reloadData];
+- (NSArray*) arrayFromSet:(NSSet*)aSet {
+    
+    NSEnumerator *enumerator = [aSet objectEnumerator];
+    id value;
+    
+    NSMutableArray* tempArr = [[NSMutableArray alloc] init];
+    while ((value = [enumerator nextObject])) {
+        [tempArr addObject:value];
+    }
+    return [tempArr copy];
 }
-
 
 #pragma mark --上拉加载更多
 - (void)loadMoreData
@@ -186,18 +178,8 @@
     [self.tableView reloadData];
 }
 
-#pragma mark --内部函数
-- (void) prepareProperty {
-    self.BookDataBase = [[NSMutableArray alloc] init];
-    self.totalPage = 0;
-    self.BookDetailInfoDic = [[NSMutableDictionary alloc] init];
-    self.BookBaseInfoDic = [[NSMutableDictionary alloc] init];
-    self.BookList = [[NSMutableArray alloc] init];
-    self.localAllBookIsbns = [[NSMutableSet alloc] init];
-}
 
-
-#pragma mark -- talbeView的代理方法
+#pragma mark - talbeView的代理方法
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -241,5 +223,10 @@
     return cell;
 }
 
+#pragma mark - 其他
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 @end
