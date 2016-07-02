@@ -119,7 +119,7 @@
      // 获取服务器响应失败时激发的代码块
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"无法获取服务器响应" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"注册结果" message:@"无法获取服务器响应" preferredStyle:UIAlertControllerStyleAlert];
          UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
          [alert addAction:defaultAction];
          [self presentViewController:alert animated:YES completion:nil];

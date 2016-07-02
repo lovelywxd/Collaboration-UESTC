@@ -134,7 +134,7 @@
         
         FavouriteItem *item = [self.FavoriteList objectAtIndex:indexPath.row];
         AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-        NSString *url = [NSString stringWithFormat:@"%@/favoutite/remove/",appdele.baseUrl];
+        NSString *url = [NSString stringWithFormat:@"%@/favourite/remove/",appdele.baseUrl];
         removeHud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
         removeHud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
         removeHud.label.text = NSLocalizedString(@"删除中", @"HUD loading title");
@@ -143,12 +143,22 @@
         [appdele.manager POST:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
              NSLog(@"success in search in removeFavorite");
-             [removeHud hideAnimated:YES];
-             [self.FavoriteList removeObject:item];
-             [self.tableView reloadData];
-             
+            [removeHud hideAnimated:YES];
+             NSString *loginStatus = [responseObject objectForKey:@"status"];
+             if ([loginStatus isEqualToString:@"0"]) {
+                 [self.FavoriteList removeObject:item];
+                 [self.tableView reloadData];
+             }
+             else {
+                 NSString *result = [NSString stringWithFormat:@"删除失败.info:%@",[responseObject objectForKey:@"data"]];
+                 UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"删除收藏" message:result preferredStyle:UIAlertControllerStyleAlert];
+                 UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                 }];
+                 [alert addAction:defaultAction];
+                 [self presentViewController:alert animated:YES completion:nil];
+             }
          }
-                      failure:^(AFHTTPRequestOperation *operation, NSError *error)
+        failure:^(AFHTTPRequestOperation *operation, NSError *error)
          
          {
              [removeHud hideAnimated:YES];

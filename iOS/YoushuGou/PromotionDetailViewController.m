@@ -93,7 +93,11 @@
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         NSLog(@"get promotion detail sucess fail");
+         NSLog(@"get promotion detail fail");
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器5⃣️响应" message:@"无法获取活动书籍列表" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+         [alert addAction:defaultAction];
+         [self presentViewController:alert animated:YES completion:nil];
      }];
 }
 

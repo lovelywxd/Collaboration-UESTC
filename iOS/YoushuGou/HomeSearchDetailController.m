@@ -72,6 +72,10 @@
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"fail search detail in homepage");
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器5⃣️响应" message:@"获取书籍信息失败" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+         [alert addAction:defaultAction];
+         [self presentViewController:alert animated:YES completion:nil];
      }];
 
 }

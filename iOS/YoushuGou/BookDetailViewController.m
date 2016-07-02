@@ -82,6 +82,10 @@
                  failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"fetch bookdetail fail");
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器5⃣️响应" message:@"获取书籍失败" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+         [alert addAction:defaultAction];
+         [self presentViewController:alert animated:YES completion:nil];
      }];
 }
 #pragma mark --公用解析函数，根据dictionary，解析声称BookDetailInfo并赋给self.bookDetailInfo
@@ -183,7 +187,11 @@
      
      {
          [hud hideAnimated:YES];
-         NSLog(@"fail in search in addFavorite");
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"无法获取服务器响应" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+         [alert addAction:defaultAction];
+         [self presentViewController:alert animated:YES completion:nil];
+         
      }];
 
 

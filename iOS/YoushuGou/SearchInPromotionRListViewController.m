@@ -77,6 +77,10 @@
      {
          [hud hideAnimated:YES];
          NSLog(@"fail search in promotion");
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器5⃣️响应" message:@"获取搜索结果失败" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+         [alert addAction:defaultAction];
+         [self presentViewController:alert animated:YES completion:nil];
      }];
 }
 

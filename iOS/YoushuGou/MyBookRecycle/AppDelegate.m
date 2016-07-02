@@ -18,7 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.manager = [AFHTTPRequestOperationManager manager];
-    self.OnLineTest = YES;
+    self.OnLineTest = NO;
     [self initShopList];
 //    self.baseUrl = @"http://192.168.1.146:8000";
 //    self.baseUrl = @"http://192.168.1.100:8000";
