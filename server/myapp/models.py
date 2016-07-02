@@ -45,11 +45,20 @@ class PromotionBookList(models.Model, DataDict):
     promotionBookISBN = models.CharField(max_length=20)
     promotionBookPrice = models.CharField(max_length=10)
     promotionBookImageLink = models.URLField()
-    promotionBookName      = models.CharField(max_length=100)
+    promotionBookName = models.CharField(max_length=100)
 
 
 class BookPriceList(models.Model, DataDict):
-    bookISBN = models.CharField(max_length=20, primary_key=True)
+    # bookISBN = models.CharField(max_length=20, primary_key=True)
+    bookISBN = models.CharField(max_length=20)
     bookSaler = models.CharField(max_length=100)
     bookCurrentPrice = models.CharField(max_length=10)
     bookLink = models.URLField()  # 电商图书直达链接
+
+
+class UserOrder(models.Model, DataDict):
+    userName = models.CharField(max_length=30)
+    promotionID = models.CharField(max_length=100)
+    promotionBookISBN = models.CharField(max_length=20)
+    bookAmount = models.IntegerField(default=1)
+    

@@ -21,6 +21,10 @@ urlpatterns = patterns('',
                        url(r'^favourite/add/', views.add_favourite),
                        url(r'^favourite/remove/', views.delete_favourite),
                        url(r'^favourite/list/', views.get_favourite),
+                       url(r'^order/add/', views.add_shopping_list),
+                       url(r'^order/list/', views.get_shopping_list),
+                       url(r'^order/remove/', views.delete_shopping_list),
+                       url(r'^order/modify/', views.update_shopping_list),
                        url(r'^user/$', views.get_all_user),
                        )
 

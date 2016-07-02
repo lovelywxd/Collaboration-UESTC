@@ -73,8 +73,8 @@ DATABASES = {
         'NAME': 'YSGwebApp',
         'USER': 'root',
         'PASSWORD': 'wxd',
-        'HOST': 'localhost',
-        #'HOST': '115.159.219.141',
+        # 'HOST': 'localhost',
+        'HOST': '115.159.219.141',
         'PORT': '3306',
     }
 }

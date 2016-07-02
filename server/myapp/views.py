@@ -6,7 +6,7 @@ import time
 import logging
 
 from django.http import HttpResponse
-from models import User, Promotion, PromotionBookList, UserFavourite, BookPriceList
+from models import User, Promotion, PromotionBookList, UserFavourite, BookPriceList, UserOrder
 # from django.core import serializers
 from django.views.decorators.http import require_POST
 
@@ -266,8 +266,9 @@ def get_favourite(request):
     if not user_auth(request):
         return json_response(result)
     userfavourite = UserFavourite.objects.filter(userName=request.user.userName)
+    result["status"] = 0
+    result['data'] = {"username": request.user.userName, "favourite_list": favourite_list}
     if len(userfavourite) == 0:
-        result = {"status": '0', "data": "UserFavourite is empty"}
         return json_response(result)
     for favourite in userfavourite:
         favourite_list.append(dict(bookname=favourite.bookName))
@@ -311,13 +312,118 @@ def delete_favourite(request):
     bookname = request.POST['bookName']
     favourite = UserFavourite.objects.filter(userName=request.user.userName, bookName=bookname)
     if len(favourite) <= 0:
-        result['status'] = '0'
+        result['status'] = '2'
         result['data'] = "book %s no exist" % bookname
         return json_response(result)
     favourite.delete()
     return json_response(result)
 
 
+# ==========================================================================================================================
+@require_POST
+def add_shopping_list(request):
+    result = {"status": '1', "data": ""}
+    if not user_auth(request):
+        result['data'] = "user need login"
+        return json_response(result)
+    isbn = request.POST['bookISBN']
+    book_amount = 1
+    promotion_id = request.POST['promotionID']
+    if "bookAmount" in request.POST:
+        book_amount = request.POST['bookAmount']
+    shopping_order = UserOrder.objects.filter(
+        userName=request.user.userName, 
+        promotionBookISBN=isbn,
+        promotionID=promotion_id)
+    result["status"] = "0"
+    result["data"] = "add success"
+    if len(shopping_order) > 0:
+        # ---------------------------------
+        shopping_order[0].bookAmount = shopping_order[0].bookAmount + book_amount
+        # 应该是update吧。 估计不对。应该需要一个update函数。
+        shopping_order[0].save()
+        return json_response(result)
+    new_order = UserOrder(
+        userName=request.user.userName,
+        promotionID=promotion_id,
+        bookAmount=book_amount,
+        promotionBookISBN=isbn
+    )
+    new_order.save()
+    return json_response(result)
+
+
+@require_POST
+def delete_shopping_list(request):
+    result = {"status": "0", "data": "delete success"}
+    if not user_auth(request):
+        result['status'] = '1'
+        result['data'] = "user need login"
+        return json_response(result)
+    isbn = request.POST['bookISBN']
+    promotion_id = request.POST['promotionID']
+    shopping_order = UserOrder.objects.filter(
+        userName=request.user.userName, 
+        promotionBookISBN=isbn, 
+        promotionID=promotion_id)
+    if len(shopping_order) <= 0:
+        result['status'] = '2'
+        result['data'] = "promotionBook %s no exist" % isbn
+        return json_response(result)
+    shopping_order.delete()
+    return json_response(result)
+
+
+def get_shopping_list(request):
+    shopping_list = []
+    result = {"status": '1', "data": "user need login"}
+    if not user_auth(request):
+        return json_response(result)
+    user_order = UserOrder.objects.filter(userName=request.user.userName)
+    result["status"] = '0'
+    result['data'] = {"username": request.user.userName, "shopping_list": shopping_list}
+    if len(user_order) == 0:
+        return json_response(result)
+    for order in user_order:
+        temp_dict = order.to_dict()
+        del temp_dict["userName"]
+        promotion_book = PromotionBookList.objects.get(
+            promotionID=order.promotionID, 
+            promotionBookISBN=order.promotionBookISBN)
+        promotion = Promotion.objects.get(promotionID=order.promotionID)
+        
+        temp_dict["bookName"] = promotion_book.promotionBookName
+        temp_dict["promotionBookPrice"] = promotion_book.promotionBookPrice
+        temp_dict["promotionBookImageLink"] = promotion_book.promotionBookImageLink
+        temp_dict["promotionName"] = promotion.promotionName
+        shopping_list.append(temp_dict)
+    result['data'] = {"username": request.user.userName, "shopping_list": shopping_list}
+    return json_response(result)
+
+
+@require_POST
+def update_shopping_list(request):
+    result = {"status": '1', "data": ""}
+    if not user_auth(request):
+        result['data'] = "user need login"
+        return json_response(result)
+    isbn = request.POST['bookISBN']
+    book_amount = 1
+    promotion_id = request.POST['promotionID']
+    if "bookAmount" in request.POST:
+        book_amount = request.POST['bookAmount']
+        if book_amount <= 0:
+            result["status"] = '2'
+            result["data"] = 'book_amount at least 1'
+            return json_response(result)
+    
+    shopping_order = UserOrder.objects.get(
+        userName=request.user.userName, 
+        promotionBookISBN=isbn,
+        promotionID=promotion_id)
+    shopping_order.bookAmount = book_amount
+    shopping_order.save()
+    return json_response(result)
 # ===============================================================================================
 
 
@@ -341,12 +447,3 @@ def search_home_list(request):
 def search_home_detail(request):
     bookSubject = request.GET["booSubject"]
     return HttpResponse(search_home_detail_find(bookSubject), content_type="application/json;charset=utf-8")
-
-
-@require_POST
-def delete_shopping_list(request):
-    pass
-
-
-def get_shopping_list(request):
-    pass
