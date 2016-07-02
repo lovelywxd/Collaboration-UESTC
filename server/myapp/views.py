@@ -247,6 +247,7 @@ def get_price_list(request):
     res = {"bookISBN": isbn, "priceList": "empty"}
     if "ISBN" not in request.GET:
         return json_response(res)
+    res["bookISBN"] = isbn
     isbn = request.GET["ISBN"]
     price_set = BookPriceList.objects.filter(bookISBN=isbn)
     if len(price_set) <= 0:
