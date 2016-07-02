@@ -19,7 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *rateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *numRatersLabel;
 @property (strong, nonatomic) IBOutlet EGOImageButton *bookCoverBtn;
-@property (strong, nonatomic) IBOutlet UILabel *currentPrice;
+
 @property (strong, nonatomic) IBOutlet UILabel *discount;
 @property (strong, nonatomic) IBOutlet UILabel *originalPrice;
 @property (strong, nonatomic) IBOutlet UIButton *addToCart;
@@ -28,6 +28,7 @@
 - (IBAction)getPriceComparison:(id)sender;
 - (IBAction)GoDouBan:(id)sender;
 - (IBAction)seeDouBanComment:(id)sender;
+- (IBAction)collect:(id)sender;
 
 @property (nonatomic ,assign) BOOL IsGroupBuy;//指示书籍是否为GroupBuy活动中的书籍
 @property (nonatomic, copy) NSString* bookIsbn;

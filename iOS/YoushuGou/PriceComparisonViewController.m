@@ -12,8 +12,13 @@
 #import "EGOImageView.h"
 #import "BookInShopButton.h"
 #import "WebViewController.h"
+#import "AppDelegate.h"
+#import "MBProgressHUD.h"
 
 @interface PriceComparisonViewController ()
+{
+    MBProgressHUD *hud;
+}
 @property (nonatomic ,copy) NSString *TargetDouBanLink;
 
 @end
@@ -80,9 +85,9 @@
             
             label = (UILabel*)[cell viewWithTag:3];
             label.text = self.bookIsbn;
-//
-//            UIButton *btn = (UIButton*)[cell viewWithTag:4];
-//            [btn addTarget:self action:@selector(GoDouBan:) forControlEvents:UIControlEventTouchUpInside];
+            
+            UIButton *btn = (UIButton*)[cell viewWithTag:4];
+            [btn addTarget:self action:@selector(collect:) forControlEvents:UIControlEventTouchUpInside];
             return cell;
         }
             break;
@@ -119,14 +124,46 @@
     [self.navigationController pushViewController:webVC animated:NO];
 }
 
-- (void)GoDouBan:(id)sender {
-//    NSString *url = self.targetItem.booSubject;
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    WebViewController* webVC = [storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
-//    webVC.urlStr = url;
-//    NSString *vcTitle = [NSString stringWithFormat:@"《%@》",self.targetItem.bookName];
-//    webVC.title = vcTitle;
-//    [self.navigationController pushViewController:webVC animated:NO];
-//    NSLog(@"clicked GoDouBan Btn");
+- (void)collect:(id)sender {
+    hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
+    // Set the label text.
+    hud.label.text = NSLocalizedString(@"收藏中", @"HUD loading title");
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/favourite/add/",appdele.baseUrl];
+    
+    [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
+    
+    NSString *isbn = self.bookIsbn;
+    NSString *bookName = self.bookName;
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookname",nil];
+    //    NSArray *books = [NSArray arrayWithObjects:@"book1",@"book2",nil];
+    [appdele.manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         [hud hideAnimated:YES];
+         NSString *loginStatus = [responseObject objectForKey:@"status"];
+         if ([loginStatus isEqualToString:@"0"]) {
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:@"收藏成功" preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+             
+         }
+         else {
+             NSString *result = [NSString stringWithFormat:@"收藏失败.info:%@",[responseObject objectForKey:@"data"]];
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:result preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
+     }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     
+     {
+         [hud hideAnimated:YES];
+         NSLog(@"fail in search in addFavorite");
+     }];
+
 }
 @end
