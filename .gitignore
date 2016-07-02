@@ -6,3 +6,10 @@
 *._.DS_Store
 ~*
 *.pyc
+
+/.idea
+
+chromedriver.exe
+服务器设计的几个问题
+database.py
+test.py

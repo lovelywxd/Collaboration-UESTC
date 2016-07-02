@@ -102,8 +102,8 @@ def api_register_user(*, email, name, passwd,studentNo,phone,gender):
     if not email or not _RE_EMAIL.match(email):
         raise APIValueError("email")
     # some question ? why.
-    if not passwd or not _RE_SHA1.match(passwd):
-        raise APIValueError("passwd")
+    # if not passwd or not _RE_SHA1.match(passwd):
+    #    raise APIValueError("passwd")
     users = yield from User.findAll('name=?', [name])
     if len(users) > 0:
         raise APIError('register:failed', 'email', 'Email is already in use.')
@@ -138,18 +138,19 @@ def authenticate(*, name, passwd):
     result = False
     if not name:
         raise APIValueError("name", "Invalid name")
-    if not passwd:
-        raise APIValueError("passwd", "Invalid password")
+    # if not passwd:
+    #    raise APIValueError("passwd", "Invalid password")
     users = yield from User.findAll("name=?", [name])
     if len(users) == 0:
         raise APIValueError("name", "name not exits")
     user = users[0]
     # sha1_passwd = '%s:%s' % (uid, passwd)
+
     sha1 = hashlib.sha1()
     sha1.update(user.name.encode("utf-8"))
     sha1.update(b":")
     sha1.update(passwd.encode("utf-8"))
-    logging.info("55555555555555555555555555555555555555555")
+
     if user.passwd != sha1.hexdigest():
         raise APIValueError("passwd", "Invalid password")
     r = web.Response()
