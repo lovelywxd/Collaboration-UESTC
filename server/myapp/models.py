@@ -25,8 +25,10 @@ class User(models.Model, DataDict):
 
 class UserFavourite(models.Model, DataDict):
     userName = models.CharField(max_length=30)
-    ISBN = models.CharField(max_length=100, null=True)
-    bookName = models.CharField(max_length=100)
+    ISBN = models.CharField(max_length=100)
+    bookName = models.CharField(max_length=100, null=True)
+    # 新增
+    # bookImageLink = models.URLField()
 
 
 class Promotion(models.Model, DataDict):

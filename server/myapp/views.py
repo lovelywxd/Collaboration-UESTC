@@ -6,7 +6,7 @@ import time
 import logging
 
 from django.http import HttpResponse
-from models import User, Promotion, PromotionBookList, UserFavourite
+from models import User, Promotion, PromotionBookList, UserFavourite, BookPriceList
 # from django.core import serializers
 from django.views.decorators.http import require_POST
 
@@ -241,13 +241,29 @@ def promotion_detail(request):
         return json_response(res)
 
 
+def get_price_list(request):
+    price_list = []
+    isbn = ""
+    res = {"bookISBN": isbn, "priceList": "empty"}
+    if "ISBN" not in request.GET:
+        return json_response(res)
+    isbn = request.GET["ISBN"]
+    price_set = BookPriceList.objects.filter(bookISBN=isbn)
+    if len(price_set) <= 0:
+        return json_response(res)
+    for price_item in price_set:
+        temp_dict = price_item.to_dict()
+        del temp_dict["bookISBN"]
+        price_list.append(temp_dict)
+    res['priceList'] = price_list
+    return json_response(res)
+
+
 # ===============================================================================================
-# just return bookName
-# problem: request.user.  to be solve.
 def get_favourite(request):
     favourite_list = []
+    result = {"status": '1', "data": "user need login"}
     if not user_auth(request):
-        result = {"status": '1', "data": "user need login"}
         return json_response(result)
     userfavourite = UserFavourite.objects.filter(userName=request.user.userName)
     if len(userfavourite) == 0:
@@ -306,18 +322,21 @@ def delete_favourite(request):
 
 
 def search_promotion_list(request):
-    bookName = request.GET["bookName"] #支持中文搜索
+    bookName = request.GET["bookName"] # 支持中文搜索
     promotionID = request.GET["promotionID"]
     return HttpResponse(search_promotion_list_find(bookName, promotionID), content_type="application/json;charset=utf-8")
 
+
 def search_promotion_detail(request):
     BookDetailLink = request.GET["promotionBookDetailLink"]
-    promotionBookDetailLink = "http://www.queshu.com"+BookDetailLink
+    promotionBookDetailLink = "http://www.queshu.com" + BookDetailLink
     return HttpResponse(search_promotion_detail_find(promotionBookDetailLink), content_type="application/json;charset=utf-8")
 
+
 def search_home_list(request):
-    bookName = request.GET["bookName"].encode("utf-8") #支持中文搜索
+    bookName = request.GET["bookName"].encode("utf-8")  # 支持中文搜索
     return HttpResponse(search_home_list_find(bookName), content_type="application/json;charset=utf-8")
+
 
 def search_home_detail(request):
     bookSubject = request.GET["booSubject"]

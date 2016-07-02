@@ -1,25 +1,29 @@
+# coding=utf-8
 from myapp import views
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
+
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^user/login/', views.user_login),
-    url(r'^user/register/', views.user_register),
-    url(r'^user/logout/', views.user_logout),
-    url(r'^promotion/list/', views.promotion_list),
-    url(r'^promotion/detail/', views.promotion_detail),
-    url(r'^search/promotion/list/', views.search_promotion_list),
-    url(r'^search/promotion/detail/', views.search_promotion_detail),
-    url(r'^search/home/list/', views.search_home_list),
-    url(r'^search/home/detail/', views.search_home_detail),
-    url(r'^favourite/add/', views.add_favourite),
-    url(r'^favourite/remove/', views.delete_favourite),
-    url(r'^favourite/list/', views.get_favourite),
-    url(r'^user/$', views.get_all_user),
-)
+                       url(r'^admin/', include(admin.site.urls)),
+                       url(r'^user/login/', views.user_login),
+                       url(r'^user/register/', views.user_register),
+                       url(r'^user/logout/', views.user_logout),
+                       url(r'^promotion/list/', views.promotion_list),
+                       url(r'^promotion/detail/', views.promotion_detail),
+                       url(r'^search/promotion/list/', views.search_promotion_list),
+                       url(r'^search/promotion/detail/', views.search_promotion_detail),
+                       url(r'^search/home/list/', views.search_home_list),
+                       url(r'^search/home/detail/', views.search_home_detail),
+                       url(r'^book/price/list/', views.get_price_list),
+                       url(r'^favourite/add/', views.add_favourite),
+                       url(r'^favourite/remove/', views.delete_favourite),
+                       url(r'^favourite/list/', views.get_favourite),
+                       url(r'^user/$', views.get_all_user),
+                       )
+
 
 '''
 主页搜索

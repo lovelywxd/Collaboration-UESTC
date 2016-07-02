@@ -31,4 +31,6 @@ sys.setdefaultencoding("utf-8")
 
    备份以前的服务器。
 
+10. 关于bookPriceList的数据仍然重复
+
 	
