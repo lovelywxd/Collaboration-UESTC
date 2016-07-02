@@ -34,15 +34,15 @@ def json_response(data):
 
 
 def user_auth(request):
-    print("check user: %s %s" % (request.method, request.path))
+    # print("check user: %s %s" % (request.method, request.path))
     request.user = None
-    print(request.COOKIES)
+    # print(request.COOKIES)
     if COOKIE_NAME in request.COOKIES:
         cookie_str = request.COOKIES[COOKIE_NAME]
         user = cookie2user(cookie_str)
-        print(user)
+        # print(user)
         if user:
-            print("set current user: %s" % user.userName)
+            # print("set current user: %s" % user.userName)
             request.user = user
             return True
     return False
@@ -60,11 +60,11 @@ def cookie2user(cookie_str):
         return None
     try:
         cookie_list = cookie_str.split("-")
-        print(cookie_list)
+        # print(cookie_list)
         if len(cookie_list) != 3:
             return None
         username, expires, sha1s = cookie_list
-        print(username)
+        # print(username)
         if int(expires) < time.time():
             return None
         # name:email, phone, name
