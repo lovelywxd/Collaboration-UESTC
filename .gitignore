@@ -5,7 +5,7 @@
 *.DS_Store
 *._.DS_Store
 ~*
-.pyc
+*.pyc
 /.idea
 chromedriver.exe
 服务器设计的几个问题
