@@ -5,3 +5,11 @@
 *.DS_Store
 *._.DS_Store
 ~*
+.pyc
+/.idea
+chromedriver.exe
+服务器设计的几个问题
+database.py
+test.py
+服务器URL访问
+服务器暂考虑
