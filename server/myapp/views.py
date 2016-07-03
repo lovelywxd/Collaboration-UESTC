@@ -267,12 +267,12 @@ def get_favourite(request):
     if not user_auth(request):
         return json_response(result)
     userfavourite = UserFavourite.objects.filter(userName=request.user.userName)
-    result["status"] = 0
+    result["status"] = '0'
     result['data'] = {"username": request.user.userName, "favourite_list": favourite_list}
     if len(userfavourite) == 0:
         return json_response(result)
     for favourite in userfavourite:
-        favourite_list.append(dict(bookname=favourite.bookName))
+        favourite_list.append(dict(bookName=favourite.bookName, bookISBN=favourite.ISBN))
     result['data'] = {"username": request.user.userName, "favourite_list": favourite_list}
     return json_response(result)
 
@@ -310,11 +310,11 @@ def delete_favourite(request):
         result['status'] = '1'
         result['data'] = "user need login"
         return json_response(result)
-    bookname = request.POST['bookName']
-    favourite = UserFavourite.objects.filter(userName=request.user.userName, bookName=bookname)
+    book_isbn = request.POST['bookISBN']
+    favourite = UserFavourite.objects.filter(userName=request.user.userName, ISBN=book_isbn)
     if len(favourite) <= 0:
         result['status'] = '2'
-        result['data'] = "book %s no exist" % bookname
+        result['data'] = "book %s no :exist" % bookname
         return json_response(result)
     favourite.delete()
     return json_response(result)
@@ -327,6 +327,8 @@ def add_shopping_list(request):
     if not user_auth(request):
         result['data'] = "user need login"
         return json_response(result)
+    print(request.user.userName)
+    print(request.POST)
     isbn = request.POST['bookISBN']
     book_amount = 1
     promotion_id = request.POST['promotionID']
@@ -388,11 +390,11 @@ def get_shopping_list(request):
     for order in user_order:
         temp_dict = order.to_dict()
         del temp_dict["userName"]
-        promotion_book = PromotionBookList.objects.get(
+        promotion_set = PromotionBookList.objects.filter(
             promotionID=order.promotionID, 
             promotionBookISBN=order.promotionBookISBN)
         promotion = Promotion.objects.get(promotionID=order.promotionID)
-        
+        promotion_book = promotion_set[0]
         temp_dict["bookName"] = promotion_book.promotionBookName
         temp_dict["promotionBookPrice"] = promotion_book.promotionBookPrice
         temp_dict["promotionBookImageLink"] = promotion_book.promotionBookImageLink
