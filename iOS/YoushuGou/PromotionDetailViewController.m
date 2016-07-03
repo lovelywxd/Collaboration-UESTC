@@ -60,10 +60,9 @@
 
 #pragma mark - PromotionDetail相关
 - (void) loadPromotionDetail {
+    
     hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
-    
-    // Set the label text.
     hud.label.text = NSLocalizedString(@"加载书籍列表...", @"HUD loading title");
     
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
@@ -79,6 +78,7 @@
 #pragma mark --从服务器获取PromotionDetail
 - (void) getPromotionDetail
 {
+    self.promotionID = self.promotion.promotionID;
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     NSString *url = [NSString stringWithFormat:@"%@/promotion/detail/",appdele.baseUrl];
 
@@ -89,12 +89,20 @@
      {
          NSLog(@"get promotion detail sucess");
          NSArray* JsonArr = [responseObject objectForKey:@"book"];
-         [self formPromotionDetail:JsonArr];
+         if (JsonArr.count) {
+             [self formPromotionDetail:JsonArr];
+         }
+         else {
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"糟了" message:@"暂时还没有这个活动的数据哦" preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"get promotion detail fail");
-         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器5⃣️响应" message:@"无法获取活动书籍列表" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器无响应" message:@"无法获取活动书籍列表" preferredStyle:UIAlertControllerStyleAlert];
          UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
          [alert addAction:defaultAction];
          [self presentViewController:alert animated:YES completion:nil];
@@ -256,6 +264,7 @@
     }
     else bookDetailVC.IsGroupBuy = NO;
     bookDetailVC.bookBaseInfo = [self.BookList objectAtIndex:indexPath.row];
+    bookDetailVC.promotionID = self.promotionID;
     [self.navigationController pushViewController:bookDetailVC animated:NO];
 }
 

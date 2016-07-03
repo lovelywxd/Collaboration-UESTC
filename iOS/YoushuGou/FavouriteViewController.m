@@ -41,10 +41,6 @@
 
 #pragma mark -FavouriteList相关
 
-- (void)removeFavouriteItem:(NSIndexPath*) path {
-    
-   }
-
 - (void)loadFavouriteList {
     hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
@@ -68,16 +64,28 @@
 
     [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         NSLog(@"success in search in getAllFavorite");
-         NSArray *listArr = [responseObject objectForKey:@"favourite_list"];
-         [self formFavouriteList:listArr];
-         
+         NSString *staus = [responseObject objectForKey:@"status"];
+         if ([staus isEqualToString:@"0"]) {
+             
+             NSArray *listArr = [[responseObject objectForKey:@"data"] objectForKey:@"favourite_list"];
+             [self formFavouriteList:listArr];
+         }
+         else {
+             NSString *result = [NSString stringWithFormat:@"%@",[responseObject objectForKey:@"data"]];
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏信息获取失败" message:result preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
      }
-                 failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     
+    failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         NSLog(@"fail in search in getAllFavorite");
          [hud hideAnimated:YES];
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器无响应" message:@"收藏信息获取失败" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+         [alert addAction:defaultAction];
+         [self presentViewController:alert animated:YES completion:nil];
      }];
 
 }
@@ -89,8 +97,7 @@
 
 - (void)formFavouriteList:(NSArray*)arr {
     for (id obj in arr) {
-        FavouriteItem *item = [[FavouriteItem alloc] initBook:nil name:[obj objectForKey:@"bookname"] imageLink:nil];
-//        FavouriteItem *item = [[FavouriteItem alloc] initBook:[obj objectForKey:@"isbn"] name:[obj objectForKey:@"name"] imageLink:nil];
+        FavouriteItem *item = [[FavouriteItem alloc] initBook:[obj objectForKey:@"bookISBN"] name:[obj objectForKey:@"bookName"] imageLink:[obj objectForKey:@"bookImageLink"]];
         [self.FavoriteList addObject:item];
     }
     [hud hideAnimated:YES];
@@ -139,13 +146,14 @@
         removeHud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
         removeHud.label.text = NSLocalizedString(@"删除中", @"HUD loading title");
         [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
-        NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:item.bookName,@"bookname", nil];
+        NSString* isbn = item.bookISBN;
+        NSDictionary *param = [[NSDictionary alloc] initWithObjectsAndKeys:isbn,@"bookISBN", nil];
         [appdele.manager POST:url parameters:param success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
              NSLog(@"success in search in removeFavorite");
             [removeHud hideAnimated:YES];
-             NSString *loginStatus = [responseObject objectForKey:@"status"];
-             if ([loginStatus isEqualToString:@"0"]) {
+             NSString *status = [responseObject objectForKey:@"status"];
+             if ([status isEqualToString:@"0"]) {
                  [self.FavoriteList removeObject:item];
                  [self.tableView reloadData];
              }
@@ -162,16 +170,12 @@
          
          {
              [removeHud hideAnimated:YES];
-             NSLog(@"fail in search in removeFavorite");
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器无响应" message:@"删除收藏失败" preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
          }];
-        
-        
-        
-        
     }
 }
-
-
-
 
 @end

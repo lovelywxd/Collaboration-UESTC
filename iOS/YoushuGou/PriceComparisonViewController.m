@@ -135,13 +135,19 @@
     
     NSString *isbn = self.bookIsbn;
     NSString *bookName = self.bookName;
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookname",nil];
-    //    NSArray *books = [NSArray arrayWithObjects:@"book1",@"book2",nil];
+    NSString *bookImageLink = self.bookImageLink;
+    
+//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookname",nil];
+
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookName",isbn,@"ISBN",bookImageLink,@"bookImageLink",nil];
+    
+    
+    
     [appdele.manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          [hud hideAnimated:YES];
-         NSString *loginStatus = [responseObject objectForKey:@"status"];
-         if ([loginStatus isEqualToString:@"0"]) {
+         NSString *status = [responseObject objectForKey:@"status"];
+         if ([status isEqualToString:@"0"]) {
              UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:@"收藏成功" preferredStyle:UIAlertControllerStyleAlert];
              UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
              }];

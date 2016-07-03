@@ -9,6 +9,7 @@
 #import "PromotionViewController.h"
 #import "searchResultTableViewController.h"
 #import "PromotionDetailViewController.h"
+#import "welcomeViewController.h"
 #import "Promotion.h"
 #import "AppDelegate.h"
 #import "PromotionCell.h"
@@ -55,9 +56,9 @@
 
 #pragma mark - promotionList相关
 - (void) loadPromotionList {
+    
     hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
-    // Set the label text.
     hud.label.text = NSLocalizedString(@"加载活动列表...", @"HUD loading title");
     
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
@@ -115,7 +116,8 @@
             type = Other;
         }
         else {
-            type = GroupBuy;
+            NSString *proName = [promotion objectForKey:@"promotionName"];
+            type = [self getTypeOfPromotion:proName];
         }
         Promotion *pro = [[Promotion alloc] initPromotion:[promotion objectForKey:@"promotionID"] withName:[promotion objectForKey:@"promotionName"] urlString:[promotion objectForKey:@"promotionLink"] company:[promotion objectForKey:@"promotionCompany"] deadLine:[promotion objectForKey:@"promotionDeadline"] type:type];
         [self.promotionList addObject:pro];
@@ -147,7 +149,7 @@
 
 - (void)initSegmentCtl{
     UISegmentedControl *segmentedControl = [[UISegmentedControl alloc]initWithItems:self.shopWithActivity];
-    segmentedControl.frame = CGRectMake(10.0, 74.0, 355, 20.0);
+    segmentedControl.frame = CGRectMake(10.0, 74.0, 355, 30.0);
     NSInteger defaultSeletedIndex = [self.shopWithActivity indexOfObject:@"全部"];
     segmentedControl.selectedSegmentIndex = defaultSeletedIndex;//设置默认选择项索引
     self.currentShop = [self.shopWithActivity objectAtIndex:segmentedControl.selectedSegmentIndex];//同时设置对应的表格数据
@@ -286,10 +288,22 @@
 }
 
 
+#pragma mark - 活动分类
+- (PromotionType)getTypeOfPromotion:(NSString*)proName {
+    if ([proName containsString:@"满"] && [proName containsString:@"减"]) {
+        return GroupBuy;
+    }
+    else return PartDiscout;
+}
 
 
 
 
 
-
+- (IBAction)goWelCome:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    welcomeViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"NavWelcomeViewController"];
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    appdele.window.rootViewController = homeVC;
+}
 @end

@@ -48,6 +48,7 @@
                 {
                     
                 }
+                    break;
                 case 1:
                 {
                     FavouriteViewController* vc = [storyboard instantiateViewControllerWithIdentifier:@"FavouriteViewController"];

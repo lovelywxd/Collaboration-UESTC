@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5854A5841D13EE6C00A65193 /* welcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5831D13EE6C00A65193 /* welcomeViewController.m */; };
-		5854A58D1D14344F00A65193 /* groupBuyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A58C1D14344F00A65193 /* groupBuyViewController.m */; };
 		5854A5931D143B5300A65193 /* assistantViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5921D143B5300A65193 /* assistantViewController.m */; };
 		5854A5961D143DB700A65193 /* userSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5854A5951D143DB700A65193 /* userSettingViewController.m */; };
 		5859825C1D1F7DEB009A6A72 /* PromotionDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5859825B1D1F7DEB009A6A72 /* PromotionDetailViewController.m */; };
@@ -46,6 +45,9 @@
 		58DB646E1D1EBE4E00C5D4D1 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DB646D1D1EBE4E00C5D4D1 /* WebViewController.m */; };
 		58DDABCE1D277D17008CBC7C /* FavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DDABCD1D277D17008CBC7C /* FavouriteViewController.m */; };
 		58DDABD11D278065008CBC7C /* FavouriteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DDABD01D278065008CBC7C /* FavouriteItem.m */; };
+		58DDABD41D27B723008CBC7C /* CartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DDABD31D27B723008CBC7C /* CartViewController.m */; };
+		58DDABD61D27B8AE008CBC7C /* priceList.json in Resources */ = {isa = PBXBuildFile; fileRef = 58DDABD51D27B8AE008CBC7C /* priceList.json */; };
+		58DDABD91D27BB72008CBC7C /* Good.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DDABD81D27BB72008CBC7C /* Good.m */; };
 		58DE5C3B1CE071A4000BE711 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C3A1CE071A4000BE711 /* main.m */; };
 		58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C3D1CE071A4000BE711 /* AppDelegate.m */; };
 		58DE5C411CE071A4000BE711 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C401CE071A4000BE711 /* ViewController.m */; };
@@ -78,7 +80,6 @@
 		58E83F451D242AB6002B2B80 /* HomeSearchDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F441D242AB6002B2B80 /* HomeSearchDetailController.m */; };
 		58E870661D26028100FC7B71 /* SearchInPromotionIndicageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */; };
 		58E870691D260C7100FC7B71 /* SearchInPromotionRListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870681D260C7100FC7B71 /* SearchInPromotionRListViewController.m */; };
-		58E8706C1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E8706B1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m */; };
 		58E8706F1D26615100FC7B71 /* PriceComparisonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E8706E1D26615100FC7B71 /* PriceComparisonViewController.m */; };
 		58E870721D26689800FC7B71 /* PriceComparisonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870711D26689800FC7B71 /* PriceComparisonCell.m */; };
 		58E870761D2669FC00FC7B71 /* BookInShopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E870751D2669FC00FC7B71 /* BookInShopButton.m */; };
@@ -106,8 +107,6 @@
 /* Begin PBXFileReference section */
 		5854A5821D13EE6C00A65193 /* welcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = welcomeViewController.h; sourceTree = "<group>"; };
 		5854A5831D13EE6C00A65193 /* welcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = welcomeViewController.m; sourceTree = "<group>"; };
-		5854A58B1D14344F00A65193 /* groupBuyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = groupBuyViewController.h; sourceTree = "<group>"; };
-		5854A58C1D14344F00A65193 /* groupBuyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = groupBuyViewController.m; sourceTree = "<group>"; };
 		5854A5911D143B5300A65193 /* assistantViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assistantViewController.h; sourceTree = "<group>"; };
 		5854A5921D143B5300A65193 /* assistantViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = assistantViewController.m; sourceTree = "<group>"; };
 		5854A5941D143DB700A65193 /* userSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userSettingViewController.h; sourceTree = "<group>"; };
@@ -178,6 +177,11 @@
 		58DDABCD1D277D17008CBC7C /* FavouriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavouriteViewController.m; sourceTree = "<group>"; };
 		58DDABCF1D278065008CBC7C /* FavouriteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavouriteItem.h; sourceTree = "<group>"; };
 		58DDABD01D278065008CBC7C /* FavouriteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavouriteItem.m; sourceTree = "<group>"; };
+		58DDABD21D27B723008CBC7C /* CartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CartViewController.h; sourceTree = "<group>"; };
+		58DDABD31D27B723008CBC7C /* CartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CartViewController.m; sourceTree = "<group>"; };
+		58DDABD51D27B8AE008CBC7C /* priceList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = priceList.json; sourceTree = "<group>"; };
+		58DDABD71D27BB72008CBC7C /* Good.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Good.h; sourceTree = "<group>"; };
+		58DDABD81D27BB72008CBC7C /* Good.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Good.m; sourceTree = "<group>"; };
 		58DE5C361CE071A4000BE711 /* YouShuGou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouShuGou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58DE5C3A1CE071A4000BE711 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		58DE5C3C1CE071A4000BE711 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -237,8 +241,6 @@
 		58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInPromotionIndicageViewController.m; sourceTree = "<group>"; };
 		58E870671D260C7100FC7B71 /* SearchInPromotionRListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInPromotionRListViewController.h; sourceTree = "<group>"; };
 		58E870681D260C7100FC7B71 /* SearchInPromotionRListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInPromotionRListViewController.m; sourceTree = "<group>"; };
-		58E8706A1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchInPromotionRDetailViewController.h; sourceTree = "<group>"; };
-		58E8706B1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchInPromotionRDetailViewController.m; sourceTree = "<group>"; };
 		58E8706D1D26615100FC7B71 /* PriceComparisonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriceComparisonViewController.h; sourceTree = "<group>"; };
 		58E8706E1D26615100FC7B71 /* PriceComparisonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PriceComparisonViewController.m; sourceTree = "<group>"; };
 		58E870701D26689800FC7B71 /* PriceComparisonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PriceComparisonCell.h; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 		586F5A201D2580C400FFEB72 /* LocalData */ = {
 			isa = PBXGroup;
 			children = (
+				58DDABD51D27B8AE008CBC7C /* priceList.json */,
 				586F5A231D25813000FFEB72 /* promotionSearchDetail.json */,
 				586F5A211D25810700FFEB72 /* promotionSearchList.json */,
 				58E83F3B1D24031F002B2B80 /* homeSearchDetail.json */,
@@ -432,6 +435,8 @@
 		58DB64281D1E280E00C5D4D1 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				58DDABD71D27BB72008CBC7C /* Good.h */,
+				58DDABD81D27BB72008CBC7C /* Good.m */,
 				58DDABCF1D278065008CBC7C /* FavouriteItem.h */,
 				58DDABD01D278065008CBC7C /* FavouriteItem.m */,
 				586F5A251D2582DF00FFEB72 /* promotionSearchListItem.h */,
@@ -539,8 +544,8 @@
 				58DB646D1D1EBE4E00C5D4D1 /* WebViewController.m */,
 				5854A5941D143DB700A65193 /* userSettingViewController.h */,
 				5854A5951D143DB700A65193 /* userSettingViewController.m */,
-				5854A58B1D14344F00A65193 /* groupBuyViewController.h */,
-				5854A58C1D14344F00A65193 /* groupBuyViewController.m */,
+				58DDABD21D27B723008CBC7C /* CartViewController.h */,
+				58DDABD31D27B723008CBC7C /* CartViewController.m */,
 				5854A5911D143B5300A65193 /* assistantViewController.h */,
 				5854A5921D143B5300A65193 /* assistantViewController.m */,
 			);
@@ -586,8 +591,6 @@
 			children = (
 				58E870671D260C7100FC7B71 /* SearchInPromotionRListViewController.h */,
 				58E870681D260C7100FC7B71 /* SearchInPromotionRListViewController.m */,
-				58E8706A1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.h */,
-				58E8706B1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m */,
 				58E870641D26028100FC7B71 /* SearchInPromotionIndicageViewController.h */,
 				58E870651D26028100FC7B71 /* SearchInPromotionIndicageViewController.m */,
 				58E83F3D1D240614002B2B80 /* HomeSearchResultListController.h */,
@@ -775,6 +778,7 @@
 				58E43D801D22E84900B40FE9 /* promotionDetail.json in Resources */,
 				58E43D7E1D22DA6C00B40FE9 /* promotionList.json in Resources */,
 				58DE5C4C1CE071A4000BE711 /* LaunchScreen.storyboard in Resources */,
+				58DDABD61D27B8AE008CBC7C /* priceList.json in Resources */,
 				58E83F3C1D24031F002B2B80 /* homeSearchDetail.json in Resources */,
 				58A187981D257882002EBDA8 /* bookDetail2.json in Resources */,
 				588DBF1E1D16D10D008F881D /* home_icon.png in Resources */,
@@ -836,6 +840,7 @@
 				585983B31D201C42009A6A72 /* UIView+MJExtension.m in Sources */,
 				58E91F531D20D793000CCC5C /* EGOImageButton.m in Sources */,
 				58E91F521D20D793000CCC5C /* README.mdown in Sources */,
+				58DDABD41D27B723008CBC7C /* CartViewController.m in Sources */,
 				585983A51D201C42009A6A72 /* MJRefreshAutoGifFooter.m in Sources */,
 				585982AE1D1FF797009A6A72 /* MBProgressHUD.m in Sources */,
 				58E91F541D20D793000CCC5C /* EGOImageLoadConnection.m in Sources */,
@@ -845,7 +850,6 @@
 				58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */,
 				58E870761D2669FC00FC7B71 /* BookInShopButton.m in Sources */,
 				585983A11D201C42009A6A72 /* MJRefreshBackFooter.m in Sources */,
-				5854A58D1D14344F00A65193 /* groupBuyViewController.m in Sources */,
 				58E43D481D22B7C600B40FE9 /* Promotion.m in Sources */,
 				58E91F561D20D793000CCC5C /* EGOImageView.m in Sources */,
 				585983A41D201C42009A6A72 /* MJRefreshHeader.m in Sources */,
@@ -855,12 +859,12 @@
 				58DDABD11D278065008CBC7C /* FavouriteItem.m in Sources */,
 				58E83F3F1D240614002B2B80 /* HomeSearchResultListController.m in Sources */,
 				585983A21D201C42009A6A72 /* MJRefreshComponent.m in Sources */,
+				58DDABD91D27BB72008CBC7C /* Good.m in Sources */,
 				58E8706F1D26615100FC7B71 /* PriceComparisonViewController.m in Sources */,
 				58DE5C471CE071A4000BE711 /* MyBookRecycle.xcdatamodeld in Sources */,
 				58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */,
 				58E870691D260C7100FC7B71 /* SearchInPromotionRListViewController.m in Sources */,
 				585983A81D201C42009A6A72 /* MJRefreshBackGifFooter.m in Sources */,
-				58E8706C1D260C8D00FC7B71 /* SearchInPromotionRDetailViewController.m in Sources */,
 				58E3B5ED1D0BA9CF00B5689F /* AFURLRequestSerialization.m in Sources */,
 				58E3B5EA1D0BA9CF00B5689F /* AFNetworkReachabilityManager.m in Sources */,
 				5859826B1D1F8425009A6A72 /* BookBaseInfo.m in Sources */,
@@ -996,7 +1000,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MyBookRecycle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thinkofsomethingclever.MyBookRecycle;
+				PRODUCT_BUNDLE_IDENTIFIER = iclound.com.YouShuGou;
 				PRODUCT_NAME = YouShuGou;
 			};
 			name = Debug;
@@ -1007,7 +1011,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MyBookRecycle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thinkofsomethingclever.MyBookRecycle;
+				PRODUCT_BUNDLE_IDENTIFIER = iclound.com.YouShuGou;
 				PRODUCT_NAME = YouShuGou;
 			};
 			name = Release;

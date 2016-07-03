@@ -11,6 +11,7 @@
 
 @interface PromotionViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UITableView *table;
+- (IBAction)goWelCome:(id)sender;
 
 
 @end

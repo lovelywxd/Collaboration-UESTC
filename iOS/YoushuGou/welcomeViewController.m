@@ -7,6 +7,7 @@
 //
 
 #import "welcomeViewController.h"
+#import "AppDelegate.h"
 
 @interface welcomeViewController ()
 
@@ -35,4 +36,10 @@
 }
 */
 
+- (IBAction)goHomePage:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    appdele.window.rootViewController = homeVC;
+}
 @end

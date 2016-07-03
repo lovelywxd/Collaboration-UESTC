@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface welcomeViewController : UIViewController
+- (IBAction)goHomePage:(id)sender;
 
 @end

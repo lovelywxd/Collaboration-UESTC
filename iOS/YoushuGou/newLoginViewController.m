@@ -74,7 +74,6 @@
                  
                  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                  UIViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
-//                 [self.navigationController pushViewController:homeVC animated:YES];
                  appdele.window.rootViewController = homeVC;
              }];
              [alert addAction:defaultAction];
@@ -94,7 +93,7 @@
      // 获取服务器响应失败时激发的代码块
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"登录结果" message:@"无法获取服务器响应" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器无响应" message:@"登录失败" preferredStyle:UIAlertControllerStyleAlert];
          UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
          [alert addAction:defaultAction];
          [self presentViewController:alert animated:YES completion:nil];
