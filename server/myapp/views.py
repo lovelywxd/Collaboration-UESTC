@@ -200,6 +200,33 @@ def user_logout(request):
     return response
 
 
+from PIL import Image
+
+@require_POST
+def upload_user_image(request):
+    result = {'status': '0', 'data': 'user need login'}
+    if not user_auth(request):
+        return json_response(result)
+    content = request.FILES['image']
+    print(content.content_type)
+    try:
+        image = Image.open(content)
+        image.save("%s.jpg" % request.user.userName, 'jpeg')
+    except Exception as e:
+        print(e)
+	return json_response(dict(status='2', data='upload failure'))
+    result["data"] = "upload success"
+    return json_response(result)
+
+
+def download_user_image(request):
+    result = {'status': '0', 'data': 'user need login'}
+    if not user_auth(request):
+        return json_response(result)
+    image = User.objects.get(userName=request.user.userName).image
+    return HttpResponse(image, content_type="image/png")
+
+
 # =============================================================
 def get_all_user(request):
     # res = HttpResponse(serializers.serialize("json", User.objects.all()))
@@ -226,8 +253,9 @@ def promotion_detail(request):
     """
     promotion_id = request.GET["promotionID"].encode('utf-8')
     book_list = PromotionBookList.objects.filter(promotionID=promotion_id)
-    res = {'promotionID': promotion_id, 'book': 'invalid promotionID or empty book list'}
+    # res = {'promotionID': promotion_id, 'book': 'invalid promotionID or empty book list'}
     promotionbooklist = []
+    res = {'promotionID': promotion_id, 'book': promotionbooklist}
     if len(book_list) <= 0:
         return json_response(res)
     else:
@@ -244,7 +272,8 @@ def promotion_detail(request):
 def get_price_list(request):
     price_list = []
     isbn = ""
-    res = {"bookISBN": isbn, "priceList": "empty"}
+    # res = {"bookISBN": isbn, "priceList": "empty"}
+    res = {"bookISBN": isbn, "priceList": price_list}
     if "ISBN" not in request.GET:
         return json_response(res)
     res["bookISBN"] = isbn
@@ -272,7 +301,7 @@ def get_favourite(request):
     if len(userfavourite) == 0:
         return json_response(result)
     for favourite in userfavourite:
-        favourite_list.append(dict(bookName=favourite.bookName, bookISBN=favourite.ISBN))
+        favourite_list.append(dict(bookName=favourite.bookName, bookISBN=favourite.bookISBN))
     result['data'] = {"username": request.user.userName, "favourite_list": favourite_list}
     return json_response(result)
 
@@ -285,10 +314,11 @@ def add_favourite(request):
         result = {"status": '1', "data": "user need login"}
         return json_response(result)
     isbn = ""
-    if "ISBN" in request.POST:
-        isbn = request.POST['ISBN']
+    if "bookISBN" in request.POST:
+        isbn = request.POST['bookISBN']
     bookname = request.POST['bookName']
-    favourite = UserFavourite.objects.filter(userName=request.user.userName, bookName=bookname)
+    favourite = UserFavourite.objects.filter(userName=request.user.userName, bookISBN=isbn)
+    print(len(favourite))
     if len(favourite) > 0:
         result = {"status": '1',
                   "data": "book %s have been added before by %s." % (bookname, request.user.userName)}
@@ -296,7 +326,7 @@ def add_favourite(request):
     new_favourite = UserFavourite(
         userName=request.user.userName,
         bookName=bookname,
-        ISBN=isbn
+        bookISBN=isbn
     )
     new_favourite.save()
     result = {"status": '0', "data": "add success"}
@@ -311,7 +341,7 @@ def delete_favourite(request):
         result['data'] = "user need login"
         return json_response(result)
     book_isbn = request.POST['bookISBN']
-    favourite = UserFavourite.objects.filter(userName=request.user.userName, ISBN=book_isbn)
+    favourite = UserFavourite.objects.filter(userName=request.user.userName, bookISBN=book_isbn)
     if len(favourite) <= 0:
         result['status'] = '2'
         result['data'] = "book %s no :exist" % bookname

@@ -26,6 +26,9 @@ urlpatterns = patterns('',
                        url(r'^order/remove/', views.delete_shopping_list),
                        url(r'^order/modify/', views.update_shopping_list),
                        url(r'^user/$', views.get_all_user),
+
+		       url(r'^user/image/upload/', views.upload_user_image),
+                       url(r'^images/(?P<path>.*)','django.views.static.serve',{'document_root':'/home/ubuntu/Collaboration-UESTC/server/'}),
                        )
 
 

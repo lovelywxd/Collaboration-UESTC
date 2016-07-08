@@ -21,14 +21,17 @@ class User(models.Model, DataDict):
     email = models.EmailField(unique=True)
     studentNo = models.CharField(max_length=20, null=True)
     gender = models.BooleanField()
+    # image = models.ImageField(upload_to='user_image', null=True)
 
+class Meta:
+    db_table = 'User'
 
 class UserFavourite(models.Model, DataDict):
     userName = models.CharField(max_length=30)
-    ISBN = models.CharField(max_length=100)
+    bookISBN = models.CharField(max_length=100)
     bookName = models.CharField(max_length=100, null=True)
     # 新增
-    # bookImageLink = models.URLField()
+    bookImageLink = models.URLField(null=True)
 
 
 class Promotion(models.Model, DataDict):
