@@ -11,6 +11,11 @@
 #import "AppDelegate.h"
 #import "AFURLRequestSerialization.h"
 #import "HomeSearchResultListController.h"
+#import "PromotionDetailViewController.h"
+#import "WebViewController.h"
+
+
+
 
 @interface searchResultTableViewController ()
 
@@ -68,17 +73,16 @@
         case 0:
         {
             // 为表格行定义一个静态字符串作为标示符
-            static NSString* cellId = @"cellId";
-            PromotionCell* cell = [tableView
-                                   dequeueReusableCellWithIdentifier:cellId];
-            if (cell == nil) {
-                cell = [[PromotionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-            }
+            static NSString* cellId = @"searchResultTableViewControllerCell";
+            PromotionCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
             cell.promotion = [self.searchResults objectAtIndex:indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@"Amazon"];
             
-            cell.textLabel.text = [cell.promotion valueForKey:@"promotionName"];
-//            cell.detailTextLabel.text = @"我听过空境的回忆，雨水浇绿孤山岭，听过被没听过你；我抓住散落的欲望，缱绻的馥郁让我紧张，我抓住时间的假想，没抓住你";
+            UIImageView *imageView = (UIImageView*)[cell viewWithTag:1];
+            imageView.contentMode = UIViewContentModeScaleAspectFit;
+            imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",cell.promotion.promotionCompany]];
+            
+            UILabel *label = (UILabel*)[cell viewWithTag:2];
+            label.text = [cell.promotion valueForKey:@"promotionName"];
             return cell;
 
         }
@@ -86,14 +90,17 @@
         case 1:
         {
             static NSString* cellId = @"searchResult";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
-            UILabel *label = (UILabel*)[cell viewWithTag:1];
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+            if (cell == nil) {
+                                cell = [[PromotionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+                            }
+
             switch (indexPath.row) {
                 case 0:
-                    label.text = [NSMutableString stringWithFormat:@"搜索书籍:%@",self.searchStr];
+                    cell.textLabel.text = [NSMutableString stringWithFormat:@"搜索书籍:%@",self.searchStr];
                     break;
                 case 1:
-                    label.text = [NSMutableString stringWithFormat:@"搜索活动:%@",self.searchStr];
+                    cell.textLabel.text = [NSMutableString stringWithFormat:@"搜索活动:%@",self.searchStr];
                     break;
                 default:
                     break;
@@ -114,27 +121,16 @@
         case 0:
         {
             Promotion *pro = [self.searchResults objectAtIndex:indexPath.row];
-            NSLog(@"selected promotion:%@",pro);
-            
+            [self.promotionDelegate navigateToPromotion:pro];
         }
             break;
         case 1:
         {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            UINavigationController *navController = [storyboard instantiateViewControllerWithIdentifier:@"NavHomeSearchResultListController"];;
-            
-         
-
-            HomeSearchResultListController* homeSearchListVC = (HomeSearchResultListController *)navController.topViewController;
-//            HomeSearchResultListController* homeSearchListVC = [storyboard instantiateViewControllerWithIdentifier:@"HomeSearchResultListController"];;
-
-            
-            homeSearchListVC.searchBookName = self.searchStr;
-            
-//            [self.navigationController pushViewController:homeSearchListVC animated:YES];
-            [self presentViewController:navController animated:YES completion:nil];
-
-            
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                UINavigationController *navController = [storyboard instantiateViewControllerWithIdentifier:@"NavHomeSearchResultListController"];;
+                HomeSearchResultListController* homeSearchListVC = (HomeSearchResultListController *)navController.topViewController;
+                homeSearchListVC.searchBookName = self.searchStr;
+                [self presentViewController:navController animated:YES completion:nil];
 
         }
             break;

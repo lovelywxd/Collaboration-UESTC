@@ -18,14 +18,143 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.manager = [AFHTTPRequestOperationManager manager];
+    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/html",@"text/plain",nil];
+    self.manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
     self.OnLineTest = NO;
+//    self.OnLineTest = YES;
     [self initShopList];
 //    self.baseUrl = @"http://192.168.1.146:8000";
 //    self.baseUrl = @"http://192.168.1.100:8000";
 //    self.baseUrl = @"http://192.168.3.107:8000";
     self.baseUrl = @"http://115.159.219.141:8000";
 
+    
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+        
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:myTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    }else {
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeSound;
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+    }
+    
+    
+    //判断是否由远程消息通知触发应用程序启动
+    if (launchOptions) {
+        //获取应用程序消息通知标记数（即小红圈中的数字）
+        NSInteger badge = [UIApplication sharedApplication].applicationIconBadgeNumber;
+        if (badge>0) {
+            //如果应用程序消息通知标记数（即小红圈中的数字）大于0，清除标记。
+            badge--;
+            //清除标记。清除小红圈中数字，小红圈中数字为0，小红圈才会消除。
+            [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
+            
+            NSDictionary* pushInfo = [launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
+            if (pushInfo)
+            {
+                NSDictionary *apsInfo = [pushInfo objectForKey:@"aps"];
+                if(apsInfo)
+                {
+                    NSString *alerMsg = [apsInfo objectForKey:@"alert"];
+                    
+                    
+                    NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"alerMsg:%@",alerMsg];
+                    
+                    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+                
+            }
+
+        }
+    }
     return YES;
+}
+
+-(void)application:(UIApplication* )application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings{
+    [application registerForRemoteNotifications];
+    
+}
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    NSString *str = [NSString
+                     stringWithFormat:@"Device Token=%@",deviceToken];
+    NSLog(@"%@",str);
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+    NSLog(@"alert");
+    NSDictionary *dic = [userInfo objectForKey:@"aps"];
+    NSString *alerMsg = [dic objectForKey:@"alert"];
+    NSString *state;
+    if (application.applicationState == UIApplicationStateActive) {
+        state = @"active";
+    }
+    else if(application.applicationState == UIApplicationStateInactive)
+    {
+        state = @"inactive";
+    }
+    
+    NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
+    NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
+    [keys removeObject:@"aps"];
+    for (id key in keys) {
+        [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
+        NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
+    }
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+    //    [BPush handleNotification:userInfo];
+    //    [self applicationOnReceiveNotification:userInfo];
+    
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSString *str = [NSString stringWithFormat: @"Error: %@", error];
+    NSLog(@"%@",str);
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"失败" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+    NSLog(@"call fetch");
+//    NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:3000/update.do"];
+//    NSURLSession *updateSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//    [updateSession dataTaskWithHTTPGetRequest:url
+//                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//                                NSDictionary *messageInfo = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//                                NSLog(@"messageInfo:%@",messageInfo);
+//                                completionHandler(UIBackgroundFetchResultNewData);
+//                            }];
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler {
+    NSDictionary *dic = [userInfo objectForKey:@"aps"];
+    NSString *alerMsg = [dic objectForKey:@"alert"];
+    NSString *state;
+    if (application.applicationState == UIApplicationStateActive) {
+        state = @"active";
+    }
+    else if(application.applicationState == UIApplicationStateInactive)
+    {
+        state = @"inactive";
+    }
+    
+    NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
+    NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
+    [keys removeObject:@"aps"];
+    for (id key in keys) {
+        [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
+        NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
+    }
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+//    UIBackgroundFetchResult *result = 
+    NSLog(@"fetch");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

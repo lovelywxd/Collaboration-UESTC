@@ -102,6 +102,7 @@
         case 0:
         {
             BookBaseInfo *info = [self.searchResults objectAtIndex:indexPath.row];
+            [self.NavBookDelegate NavigateToBook:info];
             NSLog(@"selected promotion:%@",info);
             
         }

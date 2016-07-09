@@ -121,7 +121,7 @@
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"fail search in homepage");
-         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器5⃣️响应" message:@"无法获取搜索结果" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器无响应" message:@"无法获取搜索结果" preferredStyle:UIAlertControllerStyleAlert];
          UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
          [alert addAction:defaultAction];
          [self presentViewController:alert animated:YES completion:nil];

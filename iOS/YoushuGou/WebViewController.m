@@ -51,4 +51,14 @@
     [view removeFromSuperview];
     NSLog(@"didFailLoadWithError:%@", error);
 }
+- (IBAction)goBack:(id)sender {
+    if (self.navigationController == nil || self.navigationController.viewControllers.count == 1) {
+         [self dismissViewControllerAnimated:YES completion:nil];
+           }
+    else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+
+   
+}
 @end

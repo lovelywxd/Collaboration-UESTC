@@ -13,4 +13,5 @@
 @property (nonatomic ,copy) NSString *bookImageLink;
 @property (nonatomic ,copy) NSString *bookName;
 @property (nonatomic ,strong) NSArray *PriceList;
+@property (nonatomic ,copy) NSString *bookLowestPrice;
 @end

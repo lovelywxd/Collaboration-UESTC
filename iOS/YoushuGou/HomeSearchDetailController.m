@@ -13,6 +13,8 @@
 
 @interface HomeSearchDetailController ()
 @property (nonatomic ,strong) NSMutableArray *PriceList;
+@property (nonatomic, copy) NSString* bookISBN;
+@property (nonatomic, copy) NSString* bookLowestPrice;
 @end
 
 @implementation HomeSearchDetailController
@@ -82,14 +84,31 @@
 
 #pragma mark -－公用解析函数
 - (void)formPriceList:(NSArray*)arr {
-    for (id item in arr) {
-        NSString *tempName = [item objectForKey:@"bookSaler"];
-        NSRange range = [tempName rangeOfString:@"."];//获取$file/的位置
-        NSString *saler = [tempName substringToIndex:range.location];//开始截取
+    self.bookISBN = [arr[0] objectForKey:@"bookISBN"];
+    if (arr.count) {
+        CGFloat lowestPrice = [[arr[0] objectForKey:@"bookCurrentPrice"] floatValue];
+        for (id item in arr) {
+            
+            NSString *tempName = [item objectForKey:@"bookSaler"];
+            NSRange range = [tempName rangeOfString:@"."];//获取$file/的位置
+            NSString *saler = [tempName substringToIndex:range.location];//开始截取
+            NSString *price = [item objectForKey:@"bookCurrentPrice"];
+            [self.PriceList addObject:[NSDictionary dictionaryWithObjectsAndKeys:saler,@"bookSaler",price,@"bookCurrentPrice", nil]];
+            CGFloat fPrice = [price floatValue];
+            if (fPrice < lowestPrice) {
+                lowestPrice = fPrice;
+            }
+            self.bookLowestPrice = [NSString stringWithFormat:@"%f",lowestPrice];
+            [self.tableView reloadData];
+        }
         
-        [self.PriceList addObject:[NSDictionary dictionaryWithObjectsAndKeys:saler,@"bookSaler",[item objectForKey:@"bookCurrentPrice"],@"bookCurrentPrice", nil]];
-        [self.tableView reloadData];
+        
     }
+    else {
+        self.bookLowestPrice = @"";
+    }
+   
+    
 }
 
 #pragma mark - Table view data source
@@ -171,4 +190,49 @@
 
 
 
+- (IBAction)collect:(id)sender {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/favourite/add/",appdele.baseUrl];
+    
+    [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
+    
+   
+    NSString *bookName = self.targetItem.bookName;
+    NSString *bookImageLink = self.targetItem.bookImageLink;
+
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookName",self.bookISBN,@"bookISBN",bookImageLink,@"bookImageLink",self.bookLowestPrice,@"bookLowestPrice",nil];
+    
+    [appdele.manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         //         [hud hideAnimated:YES];
+         NSString *status = [responseObject objectForKey:@"status"];
+         if ([status isEqualToString:@"0"]) {
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:@"收藏成功" preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+             
+         }
+         else {
+             NSString *result = [NSString stringWithFormat:@"收藏失败.info:%@",[responseObject objectForKey:@"data"]];
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:result preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+             }];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+         }
+     }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     
+     {
+         //         [hud hideAnimated:YES];
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器无响应" message:@"收藏失败" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+         [alert addAction:defaultAction];
+         [self presentViewController:alert animated:YES completion:nil];
+         
+     }];
+
+}
 @end

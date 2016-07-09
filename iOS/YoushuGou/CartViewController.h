@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface CartViewController : UITableViewController
+- (IBAction)commitAll:(id)sender;
 
 @end

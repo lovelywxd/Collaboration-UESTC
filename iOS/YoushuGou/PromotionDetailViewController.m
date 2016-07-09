@@ -19,7 +19,7 @@
 
 #define ITEM_AMOUT_PER_PAGE 20
 
-@interface PromotionDetailViewController ()<UISearchResultsUpdating>
+@interface PromotionDetailViewController ()<UISearchResultsUpdating,NavBookDetail>
 {
     MBProgressHUD *hud;
 }
@@ -297,8 +297,10 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)initSearchBar {
-    UINavigationController* searchResultVC = [[self storyboard] instantiateViewControllerWithIdentifier:@"NavSearchInPromotionIndicageViewController"];
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultVC];
+    UINavigationController* navSearchResultVC = [[self storyboard] instantiateViewControllerWithIdentifier:@"NavSearchInPromotionIndicageViewController"];
+    SearchInPromotionIndicageViewController *searchIndecateVC = (SearchInPromotionIndicageViewController*)navSearchResultVC.topViewController;
+    searchIndecateVC.NavBookDelegate = self;
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:navSearchResultVC];
     self.searchController.searchResultsUpdater = self;
     CGRect frame = [self.view frame];
     self.searchController.searchBar.frame = CGRectMake(0,200,frame.size.width, 44.0);
@@ -306,6 +308,19 @@
     self.definesPresentationContext = YES;
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.tableView.tableHeaderView = self.searchController.searchBar;
+}
+
+#pragma mark - NavBookDetail协议
+- (void)NavigateToBook:(BookBaseInfo *)baseInfo {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    BookDetailViewController* bookDetailVC = [storyboard instantiateViewControllerWithIdentifier:@"BookDetailViewController"];
+    if (self.promotion.promotionType == GroupBuy) {
+        bookDetailVC.IsGroupBuy = YES;
+    }
+    else bookDetailVC.IsGroupBuy = NO;
+    bookDetailVC.bookBaseInfo = baseInfo;
+    bookDetailVC.promotionID = self.promotionID;
+    [self.navigationController pushViewController:bookDetailVC animated:NO];
 }
 
 @end

@@ -20,4 +20,8 @@
     self.promotionName = pName;
     return  self;
 }
+
+
+
+
 @end

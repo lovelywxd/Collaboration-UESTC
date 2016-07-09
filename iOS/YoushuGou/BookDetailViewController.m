@@ -150,7 +150,8 @@
     NSString *bookName = self.bookBaseInfo.promotionBookName;
     NSString *bookImageLink = self.bookBaseInfo.promotionBookImageLink;
     
-//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookname",nil];
+//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:self.bookName,@"bookName",self.bookIsbn,@"bookISBN",self.bookImageLink,@"bookImageLink",self.bookLowestPrice,@"bookLowestPrice",nil];
+    
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookName",isbn,@"ISBN",bookImageLink,@"bookImageLink",nil];
  
     [appdele.manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -194,7 +195,7 @@
     addToCarthud.label.text = NSLocalizedString(@"添加到购物车", @"HUD loading title");
     
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-    NSString *url = [NSString stringWithFormat:@"%@/order/add/",appdele.baseUrl];
+    NSString *url = [NSString stringWithFormat:@"%@/shopping/add/",appdele.baseUrl];
     [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
     NSString *promotionID = self.promotionID;
     NSString *bookISBN = self.bookBaseInfo.PromotionBookISBN;

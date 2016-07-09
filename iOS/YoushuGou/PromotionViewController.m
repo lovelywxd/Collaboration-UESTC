@@ -16,7 +16,7 @@
 #import "WebViewController.h"
 #import "Promotion.h"
 #import "MBProgressHUD.h"
-@interface PromotionViewController ()<UISearchResultsUpdating,UITableViewDataSource,UITableViewDelegate>
+@interface PromotionViewController ()<UISearchResultsUpdating,UITableViewDataSource,UITableViewDelegate,NavigateToPromotion>
 {
     MBProgressHUD *hud;
 }
@@ -133,6 +133,7 @@
     for (id pro in self.promotionList)
     {
         NSString *shopname = [pro valueForKey:@"promotionCompany"];
+        [self.shopActivitys setObject:self.promotionList forKey:@"全部"];
         NSMutableArray *promotionOfAShop = [self.shopActivitys objectForKey:shopname];
         if (promotionOfAShop) {
             [promotionOfAShop addObject:pro];
@@ -141,8 +142,12 @@
             [self.shopActivitys setObject:[[NSMutableArray alloc] initWithObjects:pro, nil] forKey:shopname];
         }
     }
-    [self.shopActivitys setObject:self.promotionList forKey:@"全部"];
+    
     self.shopWithActivity = [self.shopActivitys allKeys];
+    NSInteger index = [self.shopWithActivity indexOfObject:@"全部"];
+    NSMutableArray *tempArr = [[NSMutableArray alloc] initWithArray:self.shopWithActivity];
+    [tempArr exchangeObjectAtIndex:0 withObjectAtIndex:index];
+    self.shopWithActivity = tempArr;
 }
 #pragma mark - 视图相关
 #pragma mark -- 初始化相关子视图
@@ -159,8 +164,10 @@
 }
 
 - (void)initSearchBar {
-    UINavigationController* searchResultVC = [[self storyboard] instantiateViewControllerWithIdentifier:@"navSearchResultTableViewController"];
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:searchResultVC];
+    UINavigationController* navSearchResultVC = [[self storyboard] instantiateViewControllerWithIdentifier:@"navSearchResultTableViewController"];
+    searchResultTableViewController *searchResultVC = (searchResultTableViewController*)navSearchResultVC.topViewController;
+    searchResultVC.promotionDelegate = self;
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:navSearchResultVC];
     self.searchController.searchResultsUpdater = self;
     CGRect frame = [self.view frame];
     self.searchController.searchBar.frame = CGRectMake(0,200,frame.size.width, 44.0);
@@ -187,17 +194,11 @@
     return [[self.shopActivitys objectForKey:self.currentShop] count];
 }
 
-//-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return 40;
-//}
-
 -(PromotionCell *)tableView:tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     // 为表格行定义一个静态字符串作为标示符
     static NSString* cellId = @"PromotionCell";
     PromotionCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId forIndexPath:indexPath];
-    //    PromotionCell* cell = [tableView
-    //                             dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil) {
         cell = [[PromotionCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
     }
@@ -209,9 +210,6 @@
     
     UILabel *label = (UILabel*)[cell viewWithTag:2];
     label.text = cell.promotion.promotionName;
-    
-    //    cell.textLabel.text = [cell.promotion valueForKey:@"promotionName"];
-    //    cell.detailTextLabel.text = @"我听过空境的回忆，雨水浇绿孤山岭，听过被没听过你；我抓住散落的欲望，缱绻的馥郁让我紧张，我抓住时间的假想，没抓住你";
     return cell;
 }
 
@@ -240,8 +238,6 @@
             webVC.title = cell.promotion.promotionName;
             [self.navigationController pushViewController:webVC animated:NO];
         }
-            
-            
             break;
     }
 }
@@ -278,8 +274,6 @@
             // If empty the search results are the same as the original data
             self.searchResults = [self.promotionList mutableCopy];
         } else {
-//            NSPredicate* pred = [NSPredicate predicateWithFormat:
-//                                 @"%K CONTAINS[c] %@" ,@"activityName",subStr];
             NSPredicate* pred = [NSPredicate predicateWithFormat:
                                  @"%K CONTAINS %@" ,@"promotionName",subStr];
             NSArray *tempArr = [[self.promotionList copy] filteredArrayUsingPredicate:pred];
@@ -306,4 +300,31 @@
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     appdele.window.rootViewController = homeVC;
 }
+
+#pragma mark - NavigateToPromotion协议
+- (void)navigateToPromotion:(Promotion *)pro {
+    PromotionType type = pro.promotionType;
+    
+    switch (type) {
+        case PartDiscout:
+        case GroupBuy:
+        {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            PromotionDetailViewController* detailVC = [storyboard instantiateViewControllerWithIdentifier:@"PromotionDetailViewController"];
+            detailVC.promotion = pro;
+            [self.navigationController pushViewController:detailVC animated:NO];
+        }
+            break;
+        case Other:
+        {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            WebViewController* webVC = [storyboard instantiateViewControllerWithIdentifier:@"WebViewController"];
+            webVC.urlStr = pro.promotionLink;
+            webVC.title = pro.promotionName;
+            [self.navigationController pushViewController:webVC animated:NO];
+        }
+            break;
+    }
+}
+
 @end

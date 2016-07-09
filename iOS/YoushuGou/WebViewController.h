@@ -10,5 +10,6 @@
 
 @interface WebViewController : UIViewController
 @property (nonatomic,copy)NSString* urlStr;
+- (IBAction)goBack:(id)sender;
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
 @end

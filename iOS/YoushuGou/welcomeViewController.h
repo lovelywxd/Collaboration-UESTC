@@ -10,5 +10,9 @@
 
 @interface welcomeViewController : UIViewController
 - (IBAction)goHomePage:(id)sender;
+@property (strong, nonatomic) IBOutlet UIImageView *head;
+- (IBAction)downImage:(id)sender;
+- (IBAction)testReciveHtml:(id)sender;
 
+- (IBAction)testImage:(id)sender;
 @end

@@ -20,6 +20,7 @@
 }
 @property (nonatomic ,strong) NSMutableArray *searchItemList;
 @property (nonatomic ,copy) promotionSearchListItem *targetItem;
+@property (nonatomic ,copy) NSString *bookLowestPrice;
 @end
 
 @implementation SearchInPromotionRListViewController
@@ -148,24 +149,42 @@
 }
 
 - (void)formPriceList:(NSArray*)arr {
-    NSMutableArray *priceList = [[NSMutableArray alloc] init];
-    for (id item in arr) {
-        PriceComparisonItem *priceitem = [[PriceComparisonItem alloc] initSaler:[item objectForKey:@"bookSaler"] withPrice:[item objectForKey:@"bookCurrentPrice"] link:[item objectForKey:@"bookLink"]];
-        [priceList addObject:priceitem];
+    NSMutableArray *priceList;
+    if (arr.count) {
+        NSMutableArray *priceList = [[NSMutableArray alloc] init];
         
+        CGFloat lowestPrice = [[arr[0] objectForKey:@"bookCurrentPrice"] floatValue];
+        for (id item in arr) {
+            
+            NSString *price = [item objectForKey:@"bookCurrentPrice"];
+
+            PriceComparisonItem *priceitem = [[PriceComparisonItem alloc] initSaler:[item objectForKey:@"bookSaler"] withPrice:price link:[item objectForKey:@"bookLink"]];
+            
+            CGFloat fPrice = [price floatValue];
+            if (fPrice < lowestPrice) {
+                lowestPrice = fPrice;
+            }
+            
+            [priceList addObject:priceitem];
+            
+        }
+        self.bookLowestPrice = [NSString stringWithFormat:@"%f",lowestPrice];
     }
-    
+    else {
+        self.bookLowestPrice = @"";
+    }
+
+
+
     //数据加载完以后切换页面
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-//    UINavigationController *navVC = [storyboard instantiateViewControllerWithIdentifier:@"NavHomeSearchDetailController"];
-//    PriceComparisonViewController *detailVC = (PriceComparisonViewController*)navVC.topViewController;
     
     PriceComparisonViewController *detailVC = [storyboard instantiateViewControllerWithIdentifier:@"PriceComparisonViewController"];
     detailVC.PriceList = [priceList copy];
     detailVC.bookIsbn = self.targetItem.promotionBookISBN;
     detailVC.bookImageLink = self.targetItem.promotionBookImageLink;
     detailVC.bookName = self.targetItem.promotionBookName;
+    detailVC.bookLowestPrice = self.bookLowestPrice;
     [self.navigationController pushViewController:detailVC animated:YES];
     
 }
