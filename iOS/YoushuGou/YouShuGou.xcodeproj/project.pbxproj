@@ -80,6 +80,11 @@
 		58E48D311D2CF6140006627B /* PhotoOperate.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E48D301D2CF6140006627B /* PhotoOperate.m */; };
 		58E48D371D2CF78F0006627B /* AFJSONUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E48D361D2CF78F0006627B /* AFJSONUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		58E48D3D1D2CF8FC0006627B /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E48D3C1D2CF8FC0006627B /* AFHTTPRequestOperation.m */; };
+		58E5F1651D308F31004DE114 /* UserOderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E5F1641D308F31004DE114 /* UserOderModel.m */; };
+		58E5F1681D309173004DE114 /* ComeBineOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E5F1671D309173004DE114 /* ComeBineOrderModel.m */; };
+		58E5F16B1D309F6F004DE114 /* MyAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E5F16A1D309F6F004DE114 /* MyAlertView.m */; };
+		58E5F16E1D30D636004DE114 /* ValidCombineOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E5F16D1D30D636004DE114 /* ValidCombineOrder.m */; };
+		58E5F1711D30D7D7004DE114 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E5F1701D30D7D7004DE114 /* UserInfo.m */; };
 		58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F301D234D5C002B2B80 /* newLoginViewController.m */; };
 		58E83F341D235C53002B2B80 /* NewRegisterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F331D235C53002B2B80 /* NewRegisterTableViewController.m */; };
 		58E83F3A1D2402FF002B2B80 /* homeSearchList.json in Resources */ = {isa = PBXBuildFile; fileRef = 58E83F391D2402FF002B2B80 /* homeSearchList.json */; };
@@ -248,6 +253,16 @@
 		58E48D361D2CF78F0006627B /* AFJSONUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFJSONUtilities.m; sourceTree = "<group>"; };
 		58E48D3B1D2CF8FC0006627B /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		58E48D3C1D2CF8FC0006627B /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		58E5F1631D308F31004DE114 /* UserOderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserOderModel.h; sourceTree = SOURCE_ROOT; };
+		58E5F1641D308F31004DE114 /* UserOderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserOderModel.m; sourceTree = SOURCE_ROOT; };
+		58E5F1661D309173004DE114 /* ComeBineOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComeBineOrderModel.h; path = "/Users/rainyslr/Documents/Collaboration-UESTC/iOS/YoushuGou/MyBookRecycle/ComeBineOrderModel.h"; sourceTree = "<absolute>"; };
+		58E5F1671D309173004DE114 /* ComeBineOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComeBineOrderModel.m; path = "/Users/rainyslr/Documents/Collaboration-UESTC/iOS/YoushuGou/MyBookRecycle/ComeBineOrderModel.m"; sourceTree = "<absolute>"; };
+		58E5F1691D309F6F004DE114 /* MyAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAlertView.h; sourceTree = "<group>"; };
+		58E5F16A1D309F6F004DE114 /* MyAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAlertView.m; sourceTree = "<group>"; };
+		58E5F16C1D30D636004DE114 /* ValidCombineOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ValidCombineOrder.h; path = MyBookRecycle/ValidCombineOrder.h; sourceTree = SOURCE_ROOT; };
+		58E5F16D1D30D636004DE114 /* ValidCombineOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ValidCombineOrder.m; path = MyBookRecycle/ValidCombineOrder.m; sourceTree = SOURCE_ROOT; };
+		58E5F16F1D30D7D7004DE114 /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfo.h; path = MyBookRecycle/UserInfo.h; sourceTree = SOURCE_ROOT; };
+		58E5F1701D30D7D7004DE114 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfo.m; path = MyBookRecycle/UserInfo.m; sourceTree = SOURCE_ROOT; };
 		58E83F2F1D234D5C002B2B80 /* newLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newLoginViewController.h; sourceTree = "<group>"; };
 		58E83F301D234D5C002B2B80 /* newLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newLoginViewController.m; sourceTree = "<group>"; };
 		58E83F321D235C53002B2B80 /* NewRegisterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRegisterTableViewController.h; sourceTree = "<group>"; };
@@ -310,6 +325,14 @@
 		5820DB9D1D2F978E0024C01B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				58E5F16C1D30D636004DE114 /* ValidCombineOrder.h */,
+				58E5F16D1D30D636004DE114 /* ValidCombineOrder.m */,
+				58E5F1661D309173004DE114 /* ComeBineOrderModel.h */,
+				58E5F1671D309173004DE114 /* ComeBineOrderModel.m */,
+				58E5F1631D308F31004DE114 /* UserOderModel.h */,
+				58E5F1641D308F31004DE114 /* UserOderModel.m */,
+				58E5F16F1D30D7D7004DE114 /* UserInfo.h */,
+				58E5F1701D30D7D7004DE114 /* UserInfo.m */,
 				5820DBA11D2F993C0024C01B /* GoodModel.h */,
 				5820DBA21D2F993C0024C01B /* GoodModel.m */,
 			);
@@ -669,6 +692,8 @@
 		58E870731D2669CA00FC7B71 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				58E5F1691D309F6F004DE114 /* MyAlertView.h */,
+				58E5F16A1D309F6F004DE114 /* MyAlertView.m */,
 				58E870741D2669FC00FC7B71 /* BookInShopButton.h */,
 				58E870751D2669FC00FC7B71 /* BookInShopButton.m */,
 			);
@@ -856,6 +881,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58E5F1681D309173004DE114 /* ComeBineOrderModel.m in Sources */,
 				58E870721D26689800FC7B71 /* PriceComparisonCell.m in Sources */,
 				58EB35791D25636A00BAC23C /* PriceComparisonItem.m in Sources */,
 				58E91F511D20D793000CCC5C /* EGOCache.m in Sources */,
@@ -874,6 +900,7 @@
 				58E3B5E81D0BA9CF00B5689F /* AFHTTPRequestOperationManager.m in Sources */,
 				58E83F341D235C53002B2B80 /* NewRegisterTableViewController.m in Sources */,
 				58DB646E1D1EBE4E00C5D4D1 /* WebViewController.m in Sources */,
+				58E5F1711D30D7D7004DE114 /* UserInfo.m in Sources */,
 				58DE5C411CE071A4000BE711 /* ViewController.m in Sources */,
 				58E91F5E1D21225B000CCC5C /* BookDetailViewController.m in Sources */,
 				585983B01D201C42009A6A72 /* NSBundle+MJRefresh.m in Sources */,
@@ -903,12 +930,14 @@
 				58E83F451D242AB6002B2B80 /* HomeSearchDetailController.m in Sources */,
 				587F6C041D1B8C7F00FCCED3 /* SlideTabBarView.m in Sources */,
 				58DE5C3E1CE071A4000BE711 /* AppDelegate.m in Sources */,
+				58E5F16B1D309F6F004DE114 /* MyAlertView.m in Sources */,
 				58E48D3D1D2CF8FC0006627B /* AFHTTPRequestOperation.m in Sources */,
 				58E870761D2669FC00FC7B71 /* BookInShopButton.m in Sources */,
 				585983A11D201C42009A6A72 /* MJRefreshBackFooter.m in Sources */,
 				58E48D371D2CF78F0006627B /* AFJSONUtilities.m in Sources */,
 				5820DBA31D2F993C0024C01B /* GoodModel.m in Sources */,
 				58E43D481D22B7C600B40FE9 /* Promotion.m in Sources */,
+				58E5F16E1D30D636004DE114 /* ValidCombineOrder.m in Sources */,
 				58E91F561D20D793000CCC5C /* EGOImageView.m in Sources */,
 				585983A41D201C42009A6A72 /* MJRefreshHeader.m in Sources */,
 				58E48D311D2CF6140006627B /* PhotoOperate.m in Sources */,
@@ -921,6 +950,7 @@
 				58DDABD91D27BB72008CBC7C /* Good.m in Sources */,
 				58E8706F1D26615100FC7B71 /* PriceComparisonViewController.m in Sources */,
 				58DE5C471CE071A4000BE711 /* MyBookRecycle.xcdatamodeld in Sources */,
+				58E5F1651D308F31004DE114 /* UserOderModel.m in Sources */,
 				58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */,
 				58E870691D260C7100FC7B71 /* SearchInPromotionRListViewController.m in Sources */,
 				585983A81D201C42009A6A72 /* MJRefreshBackGifFooter.m in Sources */,

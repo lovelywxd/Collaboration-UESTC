@@ -22,4 +22,19 @@
     self.isEditStyle = NO;//初始化为非编辑状态
     return  self;
 }
+
+- (id)copyWithZone:(NSZone *)zone {
+    GoodModel *item = [[[self class] allocWithZone:zone] init];
+    item.bookISBN = self.bookISBN;
+    item.bookName = self.bookName;
+    item.bookImageLink = self.bookImageLink;
+    item.bookPrice = self.bookPrice;
+    item.relatedPromotionID = self.relatedPromotionID;
+    item.amout = self.amout;
+    item.promotionName = self.promotionName;
+    item.isSelected = self.isSelected;//初始化为未选择
+    item.isEditStyle = self.isEditStyle;//初始化为非编辑状态
+    return item;
+}
+
 @end

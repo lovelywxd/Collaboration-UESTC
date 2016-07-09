@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "Good.h"
 #import "EGOImageView.h"
+#import "MJRefresh.h"
 
 @interface CartViewController ()
 {
@@ -30,6 +31,13 @@
     [super viewDidLoad];
     [self prepareProperty];
     [self loadGoodsList];
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    
+    // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [weakSelf loadGoodsList];
+    }];
+
 }
 
 - (void)didReceiveMemoryWarning {

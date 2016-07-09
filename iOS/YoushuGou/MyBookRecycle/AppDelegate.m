@@ -7,9 +7,15 @@
 //
 
 #import "AppDelegate.h"
+#import "UserOderModel.h"
+#import "ComeBineOrderModel.h"
+#import "MyAlertView.h"
 
 @interface AppDelegate ()
-
+{
+    MyAlertView *availableCombineOrderAlert;
+    
+}
 @end
 
 @implementation AppDelegate
@@ -19,10 +25,10 @@
     // Override point for customization after application launch.
     self.manager = [AFHTTPRequestOperationManager manager];
     self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/html",@"text/plain",nil];
-    self.manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
     self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    self.OnLineTest = NO;
-//    self.OnLineTest = YES;
+//    self.OnLineTest = NO;
+    self.OnLineTest = YES;
     [self initShopList];
 //    self.baseUrl = @"http://192.168.1.146:8000";
 //    self.baseUrl = @"http://192.168.1.100:8000";
@@ -70,6 +76,7 @@
 
         }
     }
+//    [self testAlert];
     return YES;
 }
 
@@ -83,7 +90,9 @@
                      stringWithFormat:@"Device Token=%@",deviceToken];
     NSLog(@"%@",str);
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
+       [alert show];
+    
+    
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
@@ -153,7 +162,7 @@
     }
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
-//    UIBackgroundFetchResult *result = 
+
     NSLog(@"fetch");
 }
 
@@ -260,6 +269,92 @@
         }
     }
 }
+#pragma mark - 服务器数据解析
+
+- (void)testAlert {
+
+    
+    
+//    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"拼单结果" message:msg preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+//        NSLog(@"click OK");
+//    }];
+//    [alert addAction:defaultAction];
+//    [self.window.rootViewController presentViewController:alert animated:YES completion:nil];
+    
+    ;
+    NSMutableString *msg = [NSMutableString stringWithFormat:@"折前价是否接受?"];
+    availableCombineOrderAlert = [[MyAlertView alloc] initWithTitle:@"拼单结果" message:msg delegate:self acceptButtonTitle:@"接受" declineButtonTitle:@"拒绝"];
+//    availableCombineOrderAlert = [[UIAlertView alloc]initWithTitle:@"拼单结果" message:msg delegate:nil cancelButtonTitle:@"接受" otherButtonTitles:@"拒绝", nil];
+//    availableCombineOrderAlert.delegate = self;
+    availableCombineOrderAlert.orderStatus = @"hahha";
+    [availableCombineOrderAlert show];
+
+    
+}
+#pragma mark - alerview代理函数
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+
+{
+    if ([alertView isKindOfClass:[MyAlertView class]]) {
+        MyAlertView *myAlet = (MyAlertView*)alertView;
+        if (buttonIndex == 0) {
+            //用户接受
+            myAlet.confirm = @"Y";
+           
+        }
+        else {
+            //用户拒绝
+             myAlet.confirm = @"N";
+        }
+        
+        if (alertView == availableCombineOrderAlert) {
+            [self confirm:availableCombineOrderAlert];
+        }
+        
+        
+    }
+   
+    
+   
+    
+}
+
+- (void)processAvailableCombineOrder:(NSDictionary*)message {
+    NSString *submitOrderID = [message objectForKey:@"submitOrderID"];
+    UserOderModel *uOrder = [[NSUserDefaults standardUserDefaults] valueForKey:submitOrderID];
+    ComeBineOrderModel *cOder = [[ComeBineOrderModel alloc] initWihtDictionary:message];
+    NSMutableString *msg = [NSMutableString stringWithFormat:@"折前价:%@,折后价:%@,拼单折前价:%@, 拼单折后价%@.是否接受?",cOder.submitOrderPrice,cOder.submitNeedPrice,cOder.comineOrderPrice,cOder.combineNeedPrice];
+    availableCombineOrderAlert = [[UIAlertView alloc]initWithTitle:@"拼单结果" message:msg delegate:nil cancelButtonTitle:@"接受" otherButtonTitles:@"拒绝", nil];
+    availableCombineOrderAlert.delegate = self;
+    [availableCombineOrderAlert show];
+
+}
+
+- (void)processValidCombineOrder:(NSDictionary*)message {
+    
+}
+
+#pragma mark - 请求
+- (void) confirm:(MyAlertView*) alert {
+    
+    NSString *url = [NSString stringWithFormat:@"%@/order/confirm/",self.baseUrl];
+    
+    NSDictionary *param = [NSDictionary dictionaryWithObjectsAndKeys:alert.confirm,@"confirm",alert.orderStatus,@"orderStatus",alert.promotionID,@"promotionID",alert.orderID,@"orderID", nil];
+    NSString *confirmMsg = [NSString stringWithFormat:@"response:%@,orderstatus:%@,promitionID:%@,orderID:%@",alert.confirm,alert.orderStatus,alert.promotionID,alert.orderID];
+    [self.manager POST:url parameters:param
+               success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSLog(@"suceess send confirm msg.%@",confirmMsg);
+     }
+     // 获取服务器响应失败时激发的代码块
+               failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         NSLog(@"fail send confirm msg.%@",confirmMsg);
+     }];
+
+}
+
 
 #pragma mark --内部函数
 - (void)initShopList{

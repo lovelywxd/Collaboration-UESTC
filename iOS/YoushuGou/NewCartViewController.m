@@ -12,6 +12,8 @@
 #import "MBProgressHUD.h"
 #import "AppDelegate.h"
 #import "EGOImageView.h"
+#import "UserOderModel.h"
+#import "MJRefresh.h"
 
 @interface NewCartViewController ()<UITableViewDelegate,UITableViewDataSource,CartCellDelegate>
 {
@@ -20,6 +22,7 @@
     float allPrice;
     //每次进入编辑状态后，先把之前的数据备份下来，最后提交时有差异的数据发给服务器
     NSMutableDictionary *previousGoodList;
+    NSArray *lastSubmitList;
 
 }
 //GoodModel数组，未根据promotion分类
@@ -42,7 +45,14 @@
     self.deleteBtn.hidden = YES;
     self.table.dataSource = self;
     self.table.delegate = self;
-    [self loadGoodsList];
+    __unsafe_unretained __typeof(self) weakSelf = self;
+    
+    // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
+    self.table.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [weakSelf loadGoodsList];
+    }];
+    // 马上进入刷新状态
+    [self.table.mj_header beginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -147,6 +157,8 @@
 }
 
 - (void)formGoodsList:(NSArray*)arr {
+    [self.table.mj_header endRefreshing];
+
     for (id obj in arr) {
         GoodModel *good = [[GoodModel alloc] initWithDictionary:obj];
         [self.goodList addObject:good];
@@ -274,7 +286,7 @@
 //        
 //    }
 //}
-#pragma mark - 数据更新
+#pragma mark - 数据处理
 - (void)updateAllEditState:(BOOL)newState {
     for (id key in self.promotionGoods) {
         NSArray *goods = self.promotionGoods[key];
@@ -294,7 +306,6 @@
         }
     }
 }
-
 - (NSArray*)comepare:(NSDictionary*)new withPrevious:(NSDictionary*)old {
     NSMutableArray *result = [[NSMutableArray alloc] init];
     for (id key in previousGoodList) {
@@ -382,6 +393,26 @@
     }
     return [result copy];
 
+}
+
+- (void)proccess:(NSArray*)result withSubmitedList:(NSArray*)submitList {
+    for (id obj in result) {
+        if ([[obj objectForKey:@"submitOrderID"] isEqualToString:@"3"]) {
+            //提交成功
+            NSString *promotionID = [obj objectForKey:@"promotionID"];
+            NSArray *goods;
+            for (id proGoods in lastSubmitList) {
+                if ([[proGoods objectForKey:@"promotionID"] isEqualToString:promotionID]) {
+                    goods = [proGoods objectForKey:@"bookList"];
+                }
+            }
+            NSString *submitOrderID = [obj objectForKey:@"submitOrderID"];
+            //存储此submitOrder
+            UserOderModel* uOder = [[UserOderModel alloc] init:submitOrderID with:goods inPromotion:promotionID];
+            [[NSUserDefaults standardUserDefaults] setObject:uOder  forKey:submitOrderID];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
 }
 
 #pragma mark - CartCellDelegate协议中函数
@@ -490,8 +521,8 @@
 }
 
 - (IBAction)submit:(id)sender {
-    NSArray *submitList = [self getSubmitList];
-    [self requestToSubmit:submitList];
+    lastSubmitList = [self getSubmitList];
+    [self requestToSubmit:lastSubmitList];
 }
 
 - (IBAction)delete:(id)sender {
@@ -503,6 +534,7 @@
 #pragma mark -网络请求
 - (void)requestModifyCart:(NSArray*)diff {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    appdele.manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSString *url = [NSString stringWithFormat:@"%@/shopping/modify/",appdele.baseUrl];
     [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
     [appdele.manager POST:url parameters:diff success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -523,10 +555,17 @@
          [alert addAction:defaultAction];
          [self presentViewController:alert animated:YES completion:nil];
      }];
+    
+    
+    appdele.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
 }
 
 - (void)requestToDeleteInCart:(NSArray*)deletingList {
+    
+    
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    appdele.manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSString *url = [NSString stringWithFormat:@"%@/shopping/remove/",appdele.baseUrl];
     [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
     [appdele.manager POST:url parameters:deletingList success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -547,20 +586,28 @@
          [alert addAction:defaultAction];
          [self presentViewController:alert animated:YES completion:nil];
      }];
+    
+    appdele.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    
+
 
 }
 
 -(void)requestToSubmit:(NSArray*)submitList {
-    
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     NSString *url = [NSString stringWithFormat:@"%@/order/submit/",appdele.baseUrl];
+    appdele.manager.requestSerializer = [AFJSONRequestSerializer serializer];
+ 
     [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
     [appdele.manager POST:url parameters:submitList success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
          NSString *status = [responseObject objectForKey:@"status"];
          if ([status isEqualToString:@"0"]) {
-            //提交修改成功后就更新购物车
-//            此时已提交成功的部分不会出现在购物车中
+              //处理提交结果
+             NSArray *data = [responseObject objectForKey:@"data"];
+             [self proccess:data withSubmitedList:lastSubmitList];
+             //提交修改成功后就更新购物车
+             //            此时已提交成功的部分不会出现在购物车中
              [self loadGoodsList];
          }
          else {
@@ -586,6 +633,7 @@
          
          
      }];
+    appdele.manager.requestSerializer = [AFHTTPRequestSerializer serializer];
 
 }
 

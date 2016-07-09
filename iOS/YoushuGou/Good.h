@@ -16,10 +16,10 @@
 @property (nonatomic, copy) NSString *relatedPromotionID;//所属的promotion
 @property (nonatomic, copy) NSString *promotionName;
 @property (nonatomic, copy) NSString *amout;//数量
-@property (nonatomic, assign) BOOL isSelected;
-
-
-- (instancetype)initBook:(NSString*)isbn name:(NSString*)bName imageLink:(NSString*)bLink price:(NSString*)bPrice inPromotionID:(NSString*)promotionID promotionName:(NSString*)pName amout:(NSString*)bAmout;
+//@property (nonatomic, assign) BOOL isSelected;
+//
+//
+//- (instancetype)initBook:(NSString*)isbn name:(NSString*)bName imageLink:(NSString*)bLink price:(NSString*)bPrice inPromotionID:(NSString*)promotionID promotionName:(NSString*)pName amout:(NSString*)bAmout;
 
 
 @end
