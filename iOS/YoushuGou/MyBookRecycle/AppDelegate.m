@@ -19,6 +19,7 @@
 @property (nonatomic ,copy)UserOderModel *lastSubmitOrder;
 @property (nonatomic ,copy)ComeBineOrderModel *NeedConfirmCOder;
 
+
 @end
 
 @implementation AppDelegate
@@ -30,8 +31,8 @@
 //    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/html",@"text/plain",nil];
     
 //    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    self.OnLineTest = NO;
-//    self.OnLineTest = YES;
+//    self.OnLineTest = NO;
+    self.OnLineTest = YES;
     [self initShopList];
 //    self.baseUrl = @"http://192.168.1.146:8000";
 //    self.baseUrl = @"http://192.168.1.100:8000";
@@ -86,87 +87,6 @@
 -(void)application:(UIApplication* )application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings{
     [application registerForRemoteNotifications];
     
-}
-
--(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
-    NSString *str = [NSString
-                     stringWithFormat:@"Device Token=%@",deviceToken];
-    NSLog(@"%@",str);
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-       [alert show];
-    
-    
-}
-
--(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    NSLog(@"alert");
-    NSDictionary *dic = [userInfo objectForKey:@"aps"];
-    NSString *alerMsg = [dic objectForKey:@"alert"];
-    NSString *state;
-    if (application.applicationState == UIApplicationStateActive) {
-        state = @"active";
-    }
-    else if(application.applicationState == UIApplicationStateInactive)
-    {
-        state = @"inactive";
-    }
-    
-    NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
-    NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
-    [keys removeObject:@"aps"];
-    for (id key in keys) {
-        [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
-        NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
-    }
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
-    //    [BPush handleNotification:userInfo];
-    //    [self applicationOnReceiveNotification:userInfo];
-    
-}
-
--(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
-    NSString *str = [NSString stringWithFormat: @"Error: %@", error];
-    NSLog(@"%@",str);
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"失败" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
-}
-
-- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
-    NSLog(@"call fetch");
-//    NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:3000/update.do"];
-//    NSURLSession *updateSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-//    [updateSession dataTaskWithHTTPGetRequest:url
-//                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-//                                NSDictionary *messageInfo = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-//                                NSLog(@"messageInfo:%@",messageInfo);
-//                                completionHandler(UIBackgroundFetchResultNewData);
-//                            }];
-}
-
--(void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler {
-    NSDictionary *dic = [userInfo objectForKey:@"aps"];
-    NSString *alerMsg = [dic objectForKey:@"alert"];
-    NSString *state;
-    if (application.applicationState == UIApplicationStateActive) {
-        state = @"active";
-    }
-    else if(application.applicationState == UIApplicationStateInactive)
-    {
-        state = @"inactive";
-    }
-    
-    NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
-    NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
-    [keys removeObject:@"aps"];
-    for (id key in keys) {
-        [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
-        NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
-    }
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
-
-    NSLog(@"fetch");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -272,6 +192,102 @@
         }
     }
 }
+
+#pragma mark - 远程推送相关
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler {
+    NSDictionary *dic = [userInfo objectForKey:@"aps"];
+    NSString *alerMsg = [dic objectForKey:@"alert"];
+    NSString *state;
+    if (application.applicationState == UIApplicationStateActive) {
+        state = @"active";
+    }
+    else if(application.applicationState == UIApplicationStateInactive)
+    {
+        state = @"inactive";
+    }
+    
+    NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
+    NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
+    [keys removeObject:@"aps"];
+    for (id key in keys) {
+        [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
+        NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
+    }
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+    
+    NSLog(@"fetch");
+    
+    
+//    NSString *type = [userInfo objectForKey:@"messageType"];
+//    if ([type isEqualToString:@"AvailableCombineOrder"]) {
+//        [self processAvailableCombineOrder:[userInfo objectForKey:@"message"] alerMsg:alerMsg];
+//    }
+}
+
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    NSString *str = [NSString
+                     stringWithFormat:@"Device Token=%@",deviceToken];
+    NSLog(@"%@",str);
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+    
+    
+}
+
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error{
+    NSString *str = [NSString stringWithFormat: @"Error: %@", error];
+    NSLog(@"%@",str);
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"失败" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+
+//- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler{
+//    NSLog(@"call fetch");
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"失败" message:@"信息在" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//    [alert show];
+
+//    NSURL *url = [NSURL URLWithString:@"http://127.0.0.1:3000/update.do"];
+//    NSURLSession *updateSession = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+//    [updateSession dataTaskWithHTTPGetRequest:url
+//                            completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+//                                NSDictionary *messageInfo = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//                                NSLog(@"messageInfo:%@",messageInfo);
+//                                completionHandler(UIBackgroundFetchResultNewData);
+//                            }];
+//}
+
+
+//-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
+//    NSLog(@"alert");
+//    NSDictionary *dic = [userInfo objectForKey:@"aps"];
+//    NSString *alerMsg = [dic objectForKey:@"alert"];
+//    NSString *state;
+//    if (application.applicationState == UIApplicationStateActive) {
+//        state = @"active";
+//    }
+//    else if(application.applicationState == UIApplicationStateInactive)
+//    {
+//        state = @"inactive";
+//    }
+//
+//    NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
+//    NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
+//    [keys removeObject:@"aps"];
+//    for (id key in keys) {
+//        [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
+//        NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
+//    }
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//    [alert show];
+//    //    [BPush handleNotification:userInfo];
+//    //    [self applicationOnReceiveNotification:userInfo];
+//
+//}
+
+
 #pragma mark - 服务器数据解析
 
 - (void)testAlert {
@@ -323,14 +339,14 @@
     
 }
 
-- (void)processAvailableCombineOrder:(NSDictionary*)message {
+- (void)processAvailableCombineOrder:(NSDictionary*)message alerMsg:(NSString*)aMsg {
 //    NSString *submitOrderID = [message objectForKey:@"submitOrderID"];
     
 //    UserOderModel *uOrder = [[NSUserDefaults standardUserDefaults] valueForKey:submitOrderID];
+    
     self.NeedConfirmCOder  = [[ComeBineOrderModel alloc] initWihtDictionary:message];
-
-    NSMutableString *msg = [NSMutableString stringWithFormat:@"折前价:%@,折后价:%@,拼单折前价:%@, 拼单折后价%@.是否接受?",self.NeedConfirmCOder.submitOrderPrice,self.NeedConfirmCOder.submitNeedPrice,self.NeedConfirmCOder.comineOrderPrice,self.NeedConfirmCOder.combineNeedPrice];
-    availableCombineOrderAlert = [[UIAlertView alloc]initWithTitle:@"拼单结果" message:msg delegate:self cancelButtonTitle:@"接受" otherButtonTitles:@"拒绝", nil];
+    NSMutableString *msg = [NSMutableString stringWithFormat:@"%@,折前价:%@,折后价:%@,拼单折前价:%@, 拼单折后价%@.是否接受?",aMsg, self.NeedConfirmCOder.submitOrderPrice,self.NeedConfirmCOder.submitNeedPrice,self.NeedConfirmCOder.comineOrderPrice,self.NeedConfirmCOder.combineNeedPrice];
+    availableCombineOrderAlert = [[MyAlertView alloc] initWithTitle:@"拼单结果" message:msg delegate:self acceptButtonTitle:@"接受" declineButtonTitle:@"拒绝"];
     availableCombineOrderAlert.orderID = self.NeedConfirmCOder.combineOrderID;
     availableCombineOrderAlert.orderStatus = self.NeedConfirmCOder.currentStatus;
     availableCombineOrderAlert.promotionID = self.NeedConfirmCOder.promotionID;
@@ -360,6 +376,7 @@
          if ([responseStatus isEqualToString:@"0"]) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
             NSLog(@"orderStatus:%@,orderTime%@",[data objectForKey:@"orderStatus"],[data objectForKey:@"orderTime"]);
+             //暂时想不到怎么去主动更新数据。先全部下载好了。
          }
          else {
         }

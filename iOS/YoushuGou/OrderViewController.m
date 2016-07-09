@@ -17,10 +17,25 @@
 {
     MBProgressHUD *hud;
     MBProgressHUD *removeHud;
-//    NSArray *orderList;
+    UISegmentedControl *segmentedControl;
+
 }
-//SubmitOrderModel数组
+//SubmitOrderModel数组，服务器存储的所有用户的相关订单
 @property (nonatomic ,copy) NSMutableArray *orderList;
+//SubmitOrderModel数组,存放状态为3,5的订单,拼单中的订单
+@property (nonatomic ,strong) NSMutableArray *calculatingList;
+//SubmitOrderModel数组,存放状态为4的订单,需要用户确认是否接受
+@property (nonatomic ,strong) NSMutableArray *needProcessingList;
+//SubmitOrderModel数组,存放状态为6的订单,已成功拼单的订单
+@property (nonatomic ,strong) NSMutableArray *successfulList;
+//根据segement选择的值二变化的当前展示的list
+@property (nonatomic ,strong) NSMutableArray *displayOrderList;
+
+//SubmitOrderModel数组,存放状态为7，或者2的订单用户可选择回收这些订单，也就是请求服务器继续拼购他们
+@property (nonatomic ,strong) NSMutableArray *recyclealbleList;
+//SubmitOrderModel数组,存放状态为8的失效订单
+@property (nonatomic ,strong) NSMutableArray *InvalidList;
+
 @end
 
 @implementation OrderViewController
@@ -31,12 +46,19 @@
     self.table.dataSource = self;
     // Do any additional setup after loading the view.
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
+   
+    self.title = @"我的订单";
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
      __unsafe_unretained __typeof(self) weakSelf = self;
     self.table.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [weakSelf loadOrderList];
     }];
+     [self initSegmentCtl];
     // 马上进入刷新状态
-    [self.table.mj_header beginRefreshing];
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,6 +67,20 @@
 }
 
 - (void)prepareProperty {
+    
+}
+
+- (void)initSegmentCtl{
+    NSArray *titles = [NSArray arrayWithObjects: @"拼单中",@"待处理",@"已拼单",@"可回收",@"已失效",nil];
+    segmentedControl = [[UISegmentedControl alloc]initWithItems:titles];
+    segmentedControl.frame = CGRectMake(15.0, 74.0,345 , 30.0);
+    segmentedControl.selectedSegmentIndex = 1;//设置默认选择项索引
+    self.displayOrderList = self.needProcessingList;
+    [segmentedControl addTarget:self action:@selector(selectOrderType:)  forControlEvents:UIControlEventValueChanged];
+//        self.navigationItem.titleView = segmentedControl;
+//    self.table.tableHeaderView = segmentedControl;
+    [self.view addSubview:segmentedControl];
+    [self.table.mj_header beginRefreshing];
     
 }
 
@@ -83,7 +119,7 @@
 //    appdele.manager.responseSerializer = [AFJSONResponseSerializer serializer];
     
 //       appdele.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/json",@"text/plain",nil];
-    [self printSet: appdele.manager.responseSerializer.acceptableContentTypes];
+//    [self printSet: appdele.manager.responseSerializer.acceptableContentTypes];
     
     [appdele.manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
@@ -104,8 +140,6 @@
 
 
 - (void) getOrderLocally {
-    
-    
     // 获取JSON文件所在的路径
     NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"orderList"  ofType:@"json"];
     // 读取jsonPath对应文件的数据
@@ -124,11 +158,43 @@
         [result addObject:SOder];
     }
     self.orderList = [result copy];
+    [self classifyOrder:self.orderList];
     [self.table reloadData];
     [hud hideAnimated:YES];
 }
 
-
+//根据状态，对orderList进行分类
+- (void)classifyOrder:(NSArray*)rawList {
+    self.calculatingList = [[NSMutableArray alloc] init];
+    self.calculatingList = [[NSMutableArray alloc] init];
+    self.needProcessingList = [[NSMutableArray alloc] init];
+    self.successfulList = [[NSMutableArray alloc] init];
+    self.recyclealbleList = [[NSMutableArray alloc] init];
+    self.InvalidList = [[NSMutableArray alloc] init];
+    for (id obj in rawList) {
+        NSString *status = [obj valueForKey:@"currentStatus"];
+        if ([status isEqualToString:@"3"] || [status isEqualToString:@"5"]) {
+            [self.calculatingList addObject:obj];
+        }
+        else if ([status isEqualToString:@"4"]) {
+            [self.needProcessingList addObject:obj];
+            
+        }
+        else if ([status isEqualToString:@"6"]) {
+            [self.successfulList addObject:obj];
+        }
+        else if ([status isEqualToString:@"7"] || [status isEqualToString:@"2"]) {
+            [self.recyclealbleList addObject:obj];
+        }
+        else if ([status isEqualToString:@"8"]) {
+            [self.InvalidList addObject:obj];
+        }
+        
+    }
+    segmentedControl.selectedSegmentIndex = 1;//设置默认选择项索引
+    self.displayOrderList = self.needProcessingList;
+    
+}
 
 
 #pragma mark - tableView datasource 和tableView delegate
@@ -137,11 +203,13 @@
     return 122;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.orderList.count;
+//    return self.orderList.count;
+     return self.displayOrderList.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return  [[self.orderList[section] valueForKey:@"bookList"] count];
+//    return  [[self.orderList[section] valueForKey:@"bookList"] count];
+    return  [[self.displayOrderList[section] valueForKey:@"bookList"] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -153,7 +221,8 @@
         nibsRegistered=YES;
     }
     OrderCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-    SubmitOrderModel *Soder = self.orderList[indexPath.section];
+//    SubmitOrderModel *Soder = self.orderList[indexPath.section];
+    SubmitOrderModel *Soder = self.displayOrderList[indexPath.section];
     
     NSArray *goods = Soder.bookList;
     Good* good = goods[indexPath.row];
@@ -162,12 +231,14 @@
 }
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSString *title = [self.orderList[section] valueForKey:@"submitOrderID"];
+//    NSString *title = [self.orderList[section] valueForKey:@"submitOrderID"];
+    NSString *title = [self.displayOrderList[section] valueForKey:@"submitOrderID"];
     return title;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    SubmitOrderModel *SoOder = self.orderList[section];
+//    SubmitOrderModel *SoOder = self.orderList[section];
+    SubmitOrderModel *SoOder = self.displayOrderList[section];
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0,0, 375, 40)];
     
     UILabel *orderID = [[UILabel alloc] initWithFrame:CGRectMake(0,0, 375, 20)];
@@ -200,4 +271,31 @@
 //    return UITableViewCellEditingStyleDelete;
 //}
 
+- (void)selectOrderType:(id)sender {
+    UISegmentedControl *Seg = (UISegmentedControl*)sender;
+    NSInteger Index = Seg.selectedSegmentIndex;
+    switch (Index) {
+        case 0:
+            self.displayOrderList = self.calculatingList;
+            break;
+        case 1:
+            self.displayOrderList = self.needProcessingList;
+            break;
+        case 2:
+            self.displayOrderList = self.successfulList;
+            break;
+        case 3:
+            self.displayOrderList = self.recyclealbleList;
+            break;
+        case 4:
+            self.displayOrderList = self.InvalidList;
+            break;
+        default:
+            self.displayOrderList = self.needProcessingList;
+            break;
+    }
+    [self.table reloadData];
+}
+- (IBAction)Recycled:(id)sender {
+}
 @end

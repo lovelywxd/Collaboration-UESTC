@@ -45,6 +45,7 @@
     self.deleteBtn.hidden = YES;
     self.table.dataSource = self;
     self.table.delegate = self;
+    self.title = @"购物车";
     __unsafe_unretained __typeof(self) weakSelf = self;
     
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
@@ -170,6 +171,8 @@
 
 - (void) classify:(NSArray*)list {
     self.promotionGoods = [[NSMutableDictionary alloc] init];
+    
+    self.title = [NSString stringWithFormat:@"购物车(%ld)",list.count];
     for (id good in list) {
         NSString *proID = [good valueForKey:@"relatedPromotionID"];
         NSMutableArray *relatedBooks = [self.promotionGoods objectForKey:proID];

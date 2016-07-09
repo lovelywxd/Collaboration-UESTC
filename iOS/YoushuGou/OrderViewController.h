@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface OrderViewController : UIViewController
+- (IBAction)Recycled:(id)sender;
 @property (strong, nonatomic) IBOutlet UITableView *table;
+- (IBAction)selectOrderType:(id)sender;
 
 @end

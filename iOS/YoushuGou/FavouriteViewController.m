@@ -91,8 +91,14 @@
 }
 
 - (void)getFavouriteListLocally {
-   
-
+    // 获取JSON文件所在的路径
+    NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"collection"  ofType:@"json"];
+    // 读取jsonPath对应文件的数据
+    NSData* data = [NSData dataWithContentsOfFile:jsonPath];
+    // 调用JSONKit为NSData扩展的objectFromJSONData方法解析JSON数据
+    NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+     NSArray *listArr = [[responseObject objectForKey:@"data"] objectForKey:@"favourite_list"];
+    [self formFavouriteList:listArr];
 }
 
 - (void)formFavouriteList:(NSArray*)arr {

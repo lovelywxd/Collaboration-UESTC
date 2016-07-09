@@ -97,6 +97,7 @@
 		58E5F18F1D3142C2004DE114 /* userInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E5F18D1D3142C1004DE114 /* userInfoCell.m */; };
 		58E5F1901D3142C2004DE114 /* userInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 58E5F18E1D3142C1004DE114 /* userInfoCell.xib */; };
 		58E5F1931D314466004DE114 /* CoderUserDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E5F1921D314466004DE114 /* CoderUserDetailController.m */; };
+		58E5F1951D315622004DE114 /* favouriteList.json in Resources */ = {isa = PBXBuildFile; fileRef = 58E5F1941D315622004DE114 /* favouriteList.json */; };
 		58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F301D234D5C002B2B80 /* newLoginViewController.m */; };
 		58E83F341D235C53002B2B80 /* NewRegisterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E83F331D235C53002B2B80 /* NewRegisterTableViewController.m */; };
 		58E83F3A1D2402FF002B2B80 /* homeSearchList.json in Resources */ = {isa = PBXBuildFile; fileRef = 58E83F391D2402FF002B2B80 /* homeSearchList.json */; };
@@ -294,6 +295,7 @@
 		58E5F18E1D3142C1004DE114 /* userInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = userInfoCell.xib; sourceTree = "<group>"; };
 		58E5F1911D314466004DE114 /* CoderUserDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoderUserDetailController.h; sourceTree = "<group>"; };
 		58E5F1921D314466004DE114 /* CoderUserDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoderUserDetailController.m; sourceTree = "<group>"; };
+		58E5F1941D315622004DE114 /* favouriteList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = favouriteList.json; sourceTree = "<group>"; };
 		58E83F2F1D234D5C002B2B80 /* newLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = newLoginViewController.h; sourceTree = "<group>"; };
 		58E83F301D234D5C002B2B80 /* newLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = newLoginViewController.m; sourceTree = "<group>"; };
 		58E83F321D235C53002B2B80 /* NewRegisterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRegisterTableViewController.h; sourceTree = "<group>"; };
@@ -500,6 +502,7 @@
 		586F5A201D2580C400FFEB72 /* LocalData */ = {
 			isa = PBXGroup;
 			children = (
+				58E5F1941D315622004DE114 /* favouriteList.json */,
 				58E5F18A1D312E2B004DE114 /* GroupList.json */,
 				58E5F1801D31128F004DE114 /* orderList.json */,
 				58E263441D2E767C00973E21 /* cartList.json */,
@@ -906,6 +909,7 @@
 				58E43D801D22E84900B40FE9 /* promotionDetail.json in Resources */,
 				58E43D7E1D22DA6C00B40FE9 /* promotionList.json in Resources */,
 				58DE5C4C1CE071A4000BE711 /* LaunchScreen.storyboard in Resources */,
+				58E5F1951D315622004DE114 /* favouriteList.json in Resources */,
 				58E5F17F1D30F51A004DE114 /* OrderCell.xib in Resources */,
 				58E2638E1D2E917900973E21 /* CartCell.xib in Resources */,
 				58DDABD61D27B8AE008CBC7C /* priceList.json in Resources */,
