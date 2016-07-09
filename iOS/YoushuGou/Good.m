@@ -9,19 +9,48 @@
 #import "Good.h"
 
 @implementation Good
-- (instancetype)initBook:(NSString*)isbn name:(NSString*)bName imageLink:(NSString*)bLink price:(NSString*)bPrice inPromotionID:(NSString*)promotionID promotionName:(NSString*)pName amout:(NSString*)bAmout {
+
+
+
+- (instancetype)initWithDictionary:(NSDictionary*)dic {
     self = [super init];
-    self.bookISBN = isbn;
-    self.bookName = bName;
-    self.bookImageLink = bLink;
-    self.bookPrice = bPrice;
-    self.relatedPromotionID = promotionID;
-    self.amout = bAmout;
-    self.promotionName = pName;
+    if (self) {
+        self.bookISBN = [dic objectForKey:@"promotionBookISBN"];
+        self.bookName = [dic objectForKey:@"promotionBookName"];
+        self.bookImageLink = [dic objectForKey:@"promotionBookImageLink"];
+        self.bookPrice = [dic objectForKey:@"promotionBookPrice"];
+        self.relatedPromotionID = [dic objectForKey:@"promotionID"];
+        self.amout = [dic objectForKey:@"bookAmount"];
+        self.promotionName = [dic objectForKey:@"promotionName"];
+    }
     return  self;
 }
 
+- (instancetype)initWithDicInCOrder:(NSDictionary*)dic{
+    self = [super init];
+    if (self) {
+        self.bookISBN = [dic objectForKey:@"promotionBookISBN"];
+        self.bookName = [dic objectForKey:@"bookName"];
+        self.bookImageLink = [dic objectForKey:@"promotionBookImageLink"];
+        self.bookPrice = [dic objectForKey:@"promotionBookPrice"];
+        self.relatedPromotionID = [dic objectForKey:@"promotionID"];
+        self.amout = [dic objectForKey:@"bookAmount"];
+        self.promotionName = [dic objectForKey:@"promotionName"];
+    }
+    return  self;
+}
 
+- (id)copyWithZone:(NSZone *)zone {
+    Good *item = [[[self class] allocWithZone:zone] init];
+    item.bookISBN = self.bookISBN;
+    item.bookName = self.bookName;
+    item.bookImageLink = self.bookImageLink;
+    item.bookPrice = self.bookPrice;
+    item.relatedPromotionID = self.relatedPromotionID;
+    item.amout = self.amout;
+    item.promotionName = self.promotionName;
+    return item;
+}
 
 
 @end

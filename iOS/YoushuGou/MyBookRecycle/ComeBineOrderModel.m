@@ -22,8 +22,39 @@
         self.submitNeedPrice = [dic objectForKey:@"submitNeedPrice"];
         self.combineTime = [dic objectForKey:@"combineTime"];
         self.combineTimeLimited = [dic objectForKey:@"combineTimeLimited"];
-        self.bookIsbnList = nil;
     }
     return self;
+}
+
+- (instancetype)initCombineOrder:(NSString*)CoID withUsrOrder:(NSString*)UoID status:(NSString*)state promotion:(NSString*)proID submitOderPirce:(NSString*)SoPrice combineOrderPrice:(NSString*)CoPrice submitNeedPrice:(NSString*)SnPrice combineNeedPrice:(NSString*)CnPrice combineTime:(NSString*)cTime combineTimeLimited:(NSString*)CtlTime {
+    self = [super init];
+    if (self) {
+        self.promotionID = proID;
+        self.currentStatus = state;
+        self.combineOrderID = CoID;
+        self.submitOrderID = UoID;
+        self.submitOrderPrice = SoPrice;
+        self.comineOrderPrice = CoPrice;
+        self.combineNeedPrice = CnPrice;
+        self.submitNeedPrice = SnPrice;
+        self.combineTime = cTime;
+        self.combineTimeLimited = CtlTime;
+    }
+    return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    ComeBineOrderModel *item = [[[self class] allocWithZone:zone] init];
+    item.promotionID = self.promotionID;
+    item.currentStatus = self.currentStatus;
+    item.combineOrderID = self.combineOrderID;
+    item.submitOrderID = self.submitOrderID;
+    item.submitOrderPrice = self.submitOrderPrice;
+    item.comineOrderPrice = self.comineOrderPrice;
+    item.combineNeedPrice = self.combineNeedPrice;
+    item.submitNeedPrice = self.submitNeedPrice;
+    item.combineTime = self.combineTime;
+    item.combineTimeLimited = self.combineTimeLimited;
+    return  item;
 }
 @end

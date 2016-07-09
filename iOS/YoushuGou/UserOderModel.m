@@ -20,4 +20,12 @@
 
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    UserOderModel *item = [[[self class] allocWithZone: zone] init];
+    item.orderID = self.orderID;
+    item.bookIsbnList = self.bookIsbnList;
+    item.promotionID = self.promotionID;
+    return self;
+}
+
 @end

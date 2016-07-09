@@ -7,17 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ComeBineOrderModel.h"
+#import "UserOrderDetail.h"
+
 
 @interface ValidCombineOrder : NSObject
-@property (nonatomic ,copy) NSString* currentStatus;
-@property (nonatomic ,copy) NSString* promotionID;
-@property (nonatomic ,copy) NSString* combineTime;
-@property (nonatomic ,copy) NSString* combineOrderID;
-@property (nonatomic ,copy) NSString* submitOrderID;
-@property (nonatomic ,copy) NSString* submitOrderPrice;
-@property (nonatomic ,copy) NSString* comineOrderPrice;
-@property (nonatomic ,copy) NSString* combineNeedPrice;
-@property (nonatomic ,copy) NSString* submitNeedPrice;
-
+//@property (nonatomic ,copy) ComeBineOrderModel* combineOrderInfo;
+@property (nonatomic ,copy) NSString *combineOrderID;
+@property (nonatomic ,copy) NSString *currentStatus;
+@property (nonatomic ,copy) UserOrderDetail* gameLeader;
+//UserOrderDetail数组，存有其他成员的订单相信息
+@property (nonatomic ,copy) NSArray* members;
 - (instancetype)initWihtDictionary:(NSDictionary*)dic;
 @end

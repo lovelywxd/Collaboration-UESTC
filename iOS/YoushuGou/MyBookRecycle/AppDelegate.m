@@ -10,12 +10,15 @@
 #import "UserOderModel.h"
 #import "ComeBineOrderModel.h"
 #import "MyAlertView.h"
-
+#import "ValidCombineOrder.h"
 @interface AppDelegate ()
 {
     MyAlertView *availableCombineOrderAlert;
     
 }
+@property (nonatomic ,copy)UserOderModel *lastSubmitOrder;
+@property (nonatomic ,copy)ComeBineOrderModel *NeedConfirmCOder;
+
 @end
 
 @implementation AppDelegate
@@ -24,11 +27,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.manager = [AFHTTPRequestOperationManager manager];
-    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/html",@"text/plain",nil];
+//    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/html",@"text/plain",nil];
     
-    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    self.OnLineTest = NO;
-    self.OnLineTest = YES;
+//    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    self.OnLineTest = NO;
+//    self.OnLineTest = YES;
     [self initShopList];
 //    self.baseUrl = @"http://192.168.1.146:8000";
 //    self.baseUrl = @"http://192.168.1.100:8000";
@@ -321,17 +324,23 @@
 }
 
 - (void)processAvailableCombineOrder:(NSDictionary*)message {
-    NSString *submitOrderID = [message objectForKey:@"submitOrderID"];
-    UserOderModel *uOrder = [[NSUserDefaults standardUserDefaults] valueForKey:submitOrderID];
-    ComeBineOrderModel *cOder = [[ComeBineOrderModel alloc] initWihtDictionary:message];
-    NSMutableString *msg = [NSMutableString stringWithFormat:@"折前价:%@,折后价:%@,拼单折前价:%@, 拼单折后价%@.是否接受?",cOder.submitOrderPrice,cOder.submitNeedPrice,cOder.comineOrderPrice,cOder.combineNeedPrice];
-    availableCombineOrderAlert = [[UIAlertView alloc]initWithTitle:@"拼单结果" message:msg delegate:nil cancelButtonTitle:@"接受" otherButtonTitles:@"拒绝", nil];
+//    NSString *submitOrderID = [message objectForKey:@"submitOrderID"];
+    
+//    UserOderModel *uOrder = [[NSUserDefaults standardUserDefaults] valueForKey:submitOrderID];
+    self.NeedConfirmCOder  = [[ComeBineOrderModel alloc] initWihtDictionary:message];
+
+    NSMutableString *msg = [NSMutableString stringWithFormat:@"折前价:%@,折后价:%@,拼单折前价:%@, 拼单折后价%@.是否接受?",self.NeedConfirmCOder.submitOrderPrice,self.NeedConfirmCOder.submitNeedPrice,self.NeedConfirmCOder.comineOrderPrice,self.NeedConfirmCOder.combineNeedPrice];
+    availableCombineOrderAlert = [[UIAlertView alloc]initWithTitle:@"拼单结果" message:msg delegate:self cancelButtonTitle:@"接受" otherButtonTitles:@"拒绝", nil];
+    availableCombineOrderAlert.orderID = self.NeedConfirmCOder.combineOrderID;
+    availableCombineOrderAlert.orderStatus = self.NeedConfirmCOder.currentStatus;
+    availableCombineOrderAlert.promotionID = self.NeedConfirmCOder.promotionID;
     availableCombineOrderAlert.delegate = self;
     [availableCombineOrderAlert show];
 
 }
 
 - (void)processValidCombineOrder:(NSDictionary*)message {
+    ValidCombineOrder *VcOrder = [[ValidCombineOrder alloc] initWihtDictionary:message];
     
 }
 
@@ -345,7 +354,18 @@
     [self.manager POST:url parameters:param
                success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-         NSLog(@"suceess send confirm msg.%@",confirmMsg);
+         
+         
+         NSString *responseStatus = [responseObject objectForKey:@"status"];
+         if ([responseStatus isEqualToString:@"0"]) {
+            NSDictionary *data = [responseObject objectForKey:@"data"];
+            NSLog(@"orderStatus:%@,orderTime%@",[data objectForKey:@"orderStatus"],[data objectForKey:@"orderTime"]);
+         }
+         else {
+        }
+
+         
+         
      }
      // 获取服务器响应失败时激发的代码块
                failure:^(AFHTTPRequestOperation *operation, NSError *error)

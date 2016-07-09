@@ -8,9 +8,14 @@
 
 #import "newLoginViewController.h"
 #import "AppDelegate.h"
+#import "MBProgressHUD.h"
 
 @interface newLoginViewController ()
+{
+    MBProgressHUD *hud;
+    MBProgressHUD *removeHud;
 
+}
 @end
 
 @implementation newLoginViewController

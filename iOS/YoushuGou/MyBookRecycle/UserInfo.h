@@ -9,12 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "GoodModel.h"
 
-@interface UserInfo : NSObject
+@interface UserInfo : NSObject <NSCopying>
 @property (nonatomic ,copy) NSString* username;
 @property (nonatomic ,copy) NSString* phone;
 @property (nonatomic ,copy) NSString* email;
-@property (nonatomic ,copy) NSString* shool;
-@property (nonatomic ,copy) NSString* bookList;
+@property (nonatomic ,copy) NSString* school;
 
-
+- (instancetype)initWithDic:(NSDictionary*)dic;
 @end

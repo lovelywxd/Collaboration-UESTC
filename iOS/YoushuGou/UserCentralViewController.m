@@ -9,6 +9,8 @@
 #import "UserCentralViewController.h"
 #import "assistantViewController.h"
 #import "FavouriteViewController.h"
+#import "OrderViewController.h"
+#import "GroupViewController.h"
 
 @interface UserCentralViewController ()
 
@@ -47,11 +49,19 @@
                 case 0:
                 {
                     
+                    GroupViewController* vc = [storyboard instantiateViewControllerWithIdentifier:@"GroupViewController"];
+                    [self.navigationController pushViewController:vc animated:YES];
                 }
                     break;
                 case 1:
                 {
                     FavouriteViewController* vc = [storyboard instantiateViewControllerWithIdentifier:@"FavouriteViewController"];
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                    break;
+                case 2:
+                {
+                    OrderViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"OrderViewController"];
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                     break;

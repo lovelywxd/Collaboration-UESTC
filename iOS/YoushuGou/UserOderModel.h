@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UserOderModel : NSObject
+@interface UserOderModel : NSObject<NSCopying>
 @property (nonatomic ,copy) NSString* orderID;
 @property (nonatomic ,copy) NSString* promotionID;
 //该订单包含的书籍ISBN组合

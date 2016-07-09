@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ComeBineOrderModel : NSObject
+@interface ComeBineOrderModel : NSObject<NSCopying>
 @property (nonatomic ,copy) NSString* promotionID;
 @property (nonatomic ,copy) NSString* currentStatus;
 @property (nonatomic ,copy) NSString* combineOrderID;
@@ -19,7 +19,7 @@
 @property (nonatomic ,copy) NSString* submitNeedPrice;
 @property (nonatomic ,copy) NSString* combineTime;
 @property (nonatomic ,copy) NSString* combineTimeLimited;
-//该订单包含的书籍ISBN组合
-@property (nonatomic ,copy) NSArray* bookIsbnList;
+
 - (instancetype)initWihtDictionary:(NSDictionary*)dic;
+- (instancetype)initCombineOrder:(NSString*)CoID withUsrOrder:(NSString*)UoID status:(NSString*)state promotion:(NSString*)proID submitOderPirce:(NSString*)SoPrice combineOrderPrice:(NSString*)CoPrice submitNeedPrice:(NSString*)SnPrice combineNeedPrice:(NSString*)CnPrice combineTime:(NSString*)cTime combineTimeLimited:(NSString*)CtlTime;
 @end

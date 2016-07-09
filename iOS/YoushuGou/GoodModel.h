@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GoodModel : NSObject
+@interface GoodModel : NSObject<NSCopying>
 @property (nonatomic, copy) NSString *bookISBN;//书籍所ISBN，OK
 @property (nonatomic, copy) NSString *bookName;//书籍名称，OK
 @property (nonatomic, copy) NSString *bookImageLink;//书籍图片链接，OK
