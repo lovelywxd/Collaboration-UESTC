@@ -11,7 +11,7 @@
 @interface MyAlertView : UIAlertView
 
 @property (nonatomic ,copy) NSString *confirm;
-@property (nonatomic ,copy) NSString *orderStatus;
+@property (nonatomic ,copy) NSNumber *orderStatus;
 @property (nonatomic ,copy) NSString *promotionID;
 @property (nonatomic ,copy) NSString *orderID;
 

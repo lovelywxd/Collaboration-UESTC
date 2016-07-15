@@ -86,6 +86,10 @@
 
 #pragma mark - 获取数据源
 
+- (void)SimplyLoadLsit {
+    [self getOrderList];
+}
+
 - (void)loadOrderList {
     hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
@@ -157,38 +161,62 @@
         SubmitOrderModel *SOder = [[SubmitOrderModel alloc] initWithDictionary:item];
         [result addObject:SOder];
     }
-    self.orderList = [result copy];
-    [self classifyOrder:self.orderList];
+    self.orderList = [result mutableCopy];
+//    NSArray *temp = [self.orderList copy];
+    [self classifyOrder];
     [self.table reloadData];
     [hud hideAnimated:YES];
 }
 
 //根据状态，对orderList进行分类
-- (void)classifyOrder:(NSArray*)rawList {
+- (void)classifyOrder {
     self.calculatingList = [[NSMutableArray alloc] init];
     self.calculatingList = [[NSMutableArray alloc] init];
     self.needProcessingList = [[NSMutableArray alloc] init];
     self.successfulList = [[NSMutableArray alloc] init];
     self.recyclealbleList = [[NSMutableArray alloc] init];
     self.InvalidList = [[NSMutableArray alloc] init];
-    for (id obj in rawList) {
-        NSString *status = [obj valueForKey:@"currentStatus"];
-        if ([status isEqualToString:@"3"] || [status isEqualToString:@"5"]) {
+    for (id obj in self.orderList) {
+        NSNumber *status = [obj valueForKey:@"currentStatus"];
+        NSInteger state = [status intValue];
+
+        
+        if (state == 3 || state == 5) {
             [self.calculatingList addObject:obj];
         }
-        else if ([status isEqualToString:@"4"]) {
+        else if (state == 4) {
             [self.needProcessingList addObject:obj];
             
         }
-        else if ([status isEqualToString:@"6"]) {
+        else if (state == 6) {
             [self.successfulList addObject:obj];
         }
-        else if ([status isEqualToString:@"7"] || [status isEqualToString:@"2"]) {
+        else if (state == 7 || state == 2) {
             [self.recyclealbleList addObject:obj];
         }
-        else if ([status isEqualToString:@"8"]) {
+        else if (state == 8) {
             [self.InvalidList addObject:obj];
         }
+
+        
+//        if ([status isEqualToString:@"3"] || [status isEqualToString:@"5"]) {
+//            [self.calculatingList addObject:obj];
+//        }
+//        else if ([status isEqualToString:@"4"]) {
+//            [self.needProcessingList addObject:obj];
+//            
+//        }
+//        else if ([status isEqualToString:@"6"]) {
+//            [self.successfulList addObject:obj];
+//        }
+//        else if ([status isEqualToString:@"7"] || [status isEqualToString:@"2"]) {
+//            [self.recyclealbleList addObject:obj];
+//        }
+//        else if ([status isEqualToString:@"8"]) {
+//            [self.InvalidList addObject:obj];
+//        }
+        
+        
         
     }
     segmentedControl.selectedSegmentIndex = 1;//设置默认选择项索引

@@ -11,6 +11,8 @@
 #import "ComeBineOrderModel.h"
 #import "MyAlertView.h"
 #import "ValidCombineOrder.h"
+#import "OrderViewController.h"
+#import "favouriteBookInPro.h"
 @interface AppDelegate ()
 {
     MyAlertView *availableCombineOrderAlert;
@@ -205,24 +207,101 @@
     {
         state = @"inactive";
     }
-    
-    NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
-    NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
-    [keys removeObject:@"aps"];
-    for (id key in keys) {
-        [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
-        NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
+    NSString *msgtype = [userInfo objectForKey:@"messageType"];
+    if (msgtype) {
+        if ([msgtype isEqualToString:@"AvailableCombineOrder"]) {
+            [self processAvailableCombineOrder:[userInfo objectForKey:@"message"] alerMsg:alerMsg];
+        }
+        else if ([msgtype isEqualToString:@"Promotion"]) {
+            id messageData = [userInfo objectForKey:@"message"];
+            if ([messageData isKindOfClass:[NSDictionary class]]) {
+                NSLog(@"NSDictionary");
+            }
+            else if ([messageData isKindOfClass:[NSArray class]]) {
+                NSLog(@"NSArray");
+            }
+            
+            NSDictionary *mesageDic = [userInfo objectForKey:@"message"];
+            
+            favouriteBookInPro *bookItem = [[favouriteBookInPro alloc] initWithDic:mesageDic];
+            NSDictionary *old = [[NSUserDefaults standardUserDefaults] objectForKey:@"updataingBookInPro"];
+            NSMutableDictionary *newDic;
+            if (old) {
+                //如果已经存在了相关的信息
+                newDic = [NSMutableDictionary dictionaryWithDictionary:old];
+                //只存储某本书的最新内容
+                newDic[bookItem.bookISBN] = bookItem;
+            }
+            else {
+                newDic = [NSMutableDictionary dictionaryWithObject:bookItem forKey:bookItem.bookISBN];
+            }
+        }
+        else if ([msgtype isEqualToString:@"Price"]) {
+            NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
+            NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
+            [keys removeObject:@"aps"];
+            for (id key in keys) {
+                [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
+                NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
+            }
+            //    UIViewController *currrentVC = [self getCurrentVC];
+            //    UIViewController *currrentVC = [self activityViewController];
+            NSArray *subviews = self.window.rootViewController.view.subviews;
+            UIView *frontView = [subviews lastObject];
+            UIViewController *currrentVC = [self getCurrentViewControllerofView:frontView];
+            NSString *type = NSStringFromClass([currrentVC class]);
+            [msg appendString:[NSString stringWithFormat:@".current VC:%@",type] ];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil
+                                                 cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+
+           
+        }
+        
+        else {
+            NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
+            NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
+            [keys removeObject:@"aps"];
+            for (id key in keys) {
+                [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
+                NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
+            }
+            //    UIViewController *currrentVC = [self getCurrentVC];
+            //    UIViewController *currrentVC = [self activityViewController];
+            NSArray *subviews = self.window.rootViewController.view.subviews;
+            UIView *frontView = [subviews lastObject];
+            UIViewController *currrentVC = [self getCurrentViewControllerofView:frontView];
+            NSString *type = NSStringFromClass([currrentVC class]);
+            [msg appendString:[NSString stringWithFormat:@".current VC:%@",type] ];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil
+                                                 cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alert show];
+
+        }
+        
     }
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
-    
-    NSLog(@"fetch");
-    
-    
-//    NSString *type = [userInfo objectForKey:@"messageType"];
-//    if ([type isEqualToString:@"AvailableCombineOrder"]) {
-//        [self processAvailableCombineOrder:[userInfo objectForKey:@"message"] alerMsg:alerMsg];
-//    }
+    else {
+        
+        
+        NSMutableString *msg = [[NSMutableString alloc] initWithFormat:@"%@.alerMsg:%@。",state, alerMsg];
+        NSMutableArray *keys = [NSMutableArray arrayWithArray:userInfo.allKeys];
+        [keys removeObject:@"aps"];
+        for (id key in keys) {
+            [msg appendString:[NSString stringWithFormat:@"key: %@, value: %@", key, [userInfo objectForKey:key]]];
+            NSLog(@"key: %@, value: %@。", key, [userInfo objectForKey:key]);
+        }
+        //    UIViewController *currrentVC = [self getCurrentVC];
+        //    UIViewController *currrentVC = [self activityViewController];
+        NSArray *subviews = self.window.rootViewController.view.subviews;
+        UIView *frontView = [subviews lastObject];
+        UIViewController *currrentVC = [self getCurrentViewControllerofView:frontView];
+        NSString *type = NSStringFromClass([currrentVC class]);
+        [msg appendString:[NSString stringWithFormat:@".current VC:%@",type] ];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"收到数据为：" message:msg delegate:nil
+                                             cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+
+    }
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
@@ -333,8 +412,13 @@
         
         
     }
+    else{
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        OrderViewController *vc = (OrderViewController*)[storyboard instantiateViewControllerWithIdentifier:@"OrderViewController"];
+        [vc performSelector:@selector(SimplyLoadLsit)];
+        
+    }
    
-    
    
     
 }
@@ -345,7 +429,7 @@
 //    UserOderModel *uOrder = [[NSUserDefaults standardUserDefaults] valueForKey:submitOrderID];
     
     self.NeedConfirmCOder  = [[ComeBineOrderModel alloc] initWihtDictionary:message];
-    NSMutableString *msg = [NSMutableString stringWithFormat:@"%@,折前价:%@,折后价:%@,拼单折前价:%@, 拼单折后价%@.是否接受?",aMsg, self.NeedConfirmCOder.submitOrderPrice,self.NeedConfirmCOder.submitNeedPrice,self.NeedConfirmCOder.comineOrderPrice,self.NeedConfirmCOder.combineNeedPrice];
+    NSMutableString *msg = [NSMutableString stringWithFormat:@"%@,折前价:%@,折后价:%@,拼单折前价:%@, 拼单折后价:%@.是否接受?",aMsg, self.NeedConfirmCOder.submitOrderPrice,self.NeedConfirmCOder.submitNeedPrice,self.NeedConfirmCOder.comineOrderPrice,self.NeedConfirmCOder.combineNeedPrice];
     availableCombineOrderAlert = [[MyAlertView alloc] initWithTitle:@"拼单结果" message:msg delegate:self acceptButtonTitle:@"接受" declineButtonTitle:@"拒绝"];
     availableCombineOrderAlert.orderID = self.NeedConfirmCOder.combineOrderID;
     availableCombineOrderAlert.orderStatus = self.NeedConfirmCOder.currentStatus;
@@ -375,10 +459,16 @@
          NSString *responseStatus = [responseObject objectForKey:@"status"];
          if ([responseStatus isEqualToString:@"0"]) {
             NSDictionary *data = [responseObject objectForKey:@"data"];
-            NSLog(@"orderStatus:%@,orderTime%@",[data objectForKey:@"orderStatus"],[data objectForKey:@"orderTime"]);
+//            NSLog(@"orderStatus:%@,orderTime%@",[data objectForKey:@"orderStatus"],[data objectForKey:@"orderTime"]);
              //暂时想不到怎么去主动更新数据。先全部下载好了。
+             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            OrderViewController *vc = (OrderViewController*)[storyboard instantiateViewControllerWithIdentifier:@"OrderViewController"];
+             [vc performSelector:@selector(SimplyLoadLsit)];
+
+
          }
          else {
+             
         }
 
          
@@ -394,6 +484,89 @@
 
 
 #pragma mark --内部函数
+
+
+//获取当前屏幕显示的viewcontroller
+- (UIViewController *)activityViewController
+{
+    UIViewController* activityViewController = nil;
+    
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    if(window.windowLevel != UIWindowLevelNormal)
+    {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow *tmpWin in windows)
+        {
+            if(tmpWin.windowLevel == UIWindowLevelNormal)
+            {
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    
+    NSArray *viewsArray = [window subviews];
+    if([viewsArray count] > 0)
+    {
+        UIView *frontView = [viewsArray objectAtIndex:0];
+        
+        id nextResponder = [frontView nextResponder];
+        
+        if([nextResponder isKindOfClass:[UIViewController class]])
+        {
+            activityViewController = nextResponder;
+        }
+        else
+        {
+            activityViewController = window.rootViewController;
+        }
+    }
+    
+    return activityViewController;
+}
+
+- (UIViewController *)getCurrentVC
+{
+    UIViewController *result = nil;
+    
+    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
+    if (window.windowLevel != UIWindowLevelNormal)
+    {
+        NSArray *windows = [[UIApplication sharedApplication] windows];
+        for(UIWindow * tmpWin in windows)
+        {
+            if (tmpWin.windowLevel == UIWindowLevelNormal)
+            {
+                window = tmpWin;
+                break;
+            }
+        }
+    }
+    
+    UIView *frontView = [[window subviews] objectAtIndex:0];
+    id nextResponder = [frontView nextResponder];
+    
+    if ([nextResponder isKindOfClass:[UIViewController class]])
+        result = nextResponder;
+    else
+        result = window.rootViewController;
+    
+    return result;
+}
+
+/** 获取当前View的控制器对象 */
+-(UIViewController *)getCurrentViewControllerofView:(UIView*)aView{
+    UIResponder *next = [aView nextResponder];
+    do {
+        if ([next isKindOfClass:[UIViewController class]]) {
+            return (UIViewController *)next;
+        }
+        next = [next nextResponder];
+    } while (next != nil);
+    return nil;
+}
+
+
 - (void)initShopList{
 //    self.shopList = [NSArray arrayWithObjects:@"京东",@"亚马逊",@"当当",@"天猫",@"中图",nil];
     self.shopList = [NSDictionary dictionaryWithObjectsAndKeys:@"jd.com",@"京东", @"amazon.cn", @"亚马逊", @"dangdang.com",@"当当",@"taobao.com",@"天猫", @"bookschina.com",@"中图",nil];

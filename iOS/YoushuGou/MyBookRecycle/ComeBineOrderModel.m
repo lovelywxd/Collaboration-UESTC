@@ -26,7 +26,7 @@
     return self;
 }
 
-- (instancetype)initCombineOrder:(NSString*)CoID withUsrOrder:(NSString*)UoID status:(NSString*)state promotion:(NSString*)proID submitOderPirce:(NSString*)SoPrice combineOrderPrice:(NSString*)CoPrice submitNeedPrice:(NSString*)SnPrice combineNeedPrice:(NSString*)CnPrice combineTime:(NSString*)cTime combineTimeLimited:(NSString*)CtlTime {
+- (instancetype)initCombineOrder:(NSString*)CoID withUsrOrder:(NSString*)UoID status:(NSNumber*)state promotion:(NSString*)proID submitOderPirce:(NSString*)SoPrice combineOrderPrice:(NSString*)CoPrice submitNeedPrice:(NSString*)SnPrice combineNeedPrice:(NSString*)CnPrice combineTime:(NSString*)cTime combineTimeLimited:(NSString*)CtlTime {
     self = [super init];
     if (self) {
         self.promotionID = proID;

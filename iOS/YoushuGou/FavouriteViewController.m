@@ -117,21 +117,39 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.FavoriteList.count;
+    if (section == 0) {
+        return self.FavoriteList.count;
+    }
+    else {
+        return 1;
+    }
+    
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FavouriteCell" forIndexPath:indexPath];
-    FavouriteItem *item = [self.FavoriteList objectAtIndex:indexPath.row];
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FavouriteCell" forIndexPath:indexPath];
+        FavouriteItem *item = [self.FavoriteList objectAtIndex:indexPath.row];
+        
+        UILabel *label;
+        label = (UILabel*)[cell viewWithTag:2];
+        label.text = item.bookName;
+        return cell;
+    }
+    else {
+                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"simpleCell"];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"simpleCell"];
+        }
+        cell.textLabel.text = @"查看相关更新";
+        return cell;
+        
+    }
 
-    UILabel *label;
-    label = (UILabel*)[cell viewWithTag:2];
-    label.text = item.bookName;
-    return cell;
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {

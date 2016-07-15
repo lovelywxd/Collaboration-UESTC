@@ -7,13 +7,21 @@
 //
 
 #import "UserCentralViewController.h"
-#import "assistantViewController.h"
 #import "FavouriteViewController.h"
 #import "OrderViewController.h"
 #import "GroupViewController.h"
+#import "newLoginViewController.h"
+#import "PhotoOperate.h"
+#import "AppDelegate.h"
+#import "SettingController.h"
+#import "EGOImageView.h"
 
-@interface UserCentralViewController ()
 
+
+@interface UserCentralViewController ()<HTTPRequestFinishedDelegate>
+{
+    BOOL isLogin;
+}
 @end
 
 @implementation UserCentralViewController
@@ -27,6 +35,18 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+    if (userName) {
+        self.UserNameLabel.text = userName;
+        [self initHeader];
+        isLogin = YES;
+    }
+    else {
+        self.UserNameLabel.text = @"未登录";
+        isLogin = NO;
+        
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,60 +54,140 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)initHeader {
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+//    NSDictionary *oldHeaderDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"headerDic"];
+//
+//    if (oldHeaderDic) {
+////        此前已经有用户头像路径
+//        NSString* fileFullPath = oldHeaderDic[username];
+//        if (fileFullPath) {
+//            NSData* data = [NSData dataWithContentsOfFile:fileFullPath];
+//            UIImage* image = [[UIImage alloc] initWithData:data];
+//             self.header.image = image;
+//        }
+//        else {
+//            [self downloadPhotoAction];
+//        }
+//    }
+//    else {
+//        [self downloadPhotoAction];
+//    }@"%@/images/%@",appdele.baseUrl,imgName];
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *strUrl = [NSString stringWithFormat:@"%@/images/%@.jpg",appdele.baseUrl,username];
+    self.egoHeader.imageURL = [NSURL URLWithString:strUrl];
+    
+}
+
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    switch (indexPath.section) {
-        case 0:
-        {
-            
-        }
-            break;
-        case 1:
-        {
-            switch (indexPath.row) {
-                case 0:
-                {
-                    
-                    GroupViewController* vc = [storyboard instantiateViewControllerWithIdentifier:@"GroupViewController"];
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                    break;
-                case 1:
-                {
-                    FavouriteViewController* vc = [storyboard instantiateViewControllerWithIdentifier:@"FavouriteViewController"];
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                    break;
-                case 2:
-                {
-                    OrderViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"OrderViewController"];
-                    [self.navigationController pushViewController:vc animated:YES];
-                }
-                    break;
-                    
-                default:
-                    break;
+    if (isLogin) {
+        switch (indexPath.section) {
+            case 0:
+            {
+                
             }
-            
+                break;
+            case 1:
+            {
+                switch (indexPath.row) {
+                    case 0:
+                    {
+                        
+                        GroupViewController* vc = [storyboard instantiateViewControllerWithIdentifier:@"GroupViewController"];
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
+                        break;
+                    case 1:
+                    {
+                        FavouriteViewController* vc = [storyboard instantiateViewControllerWithIdentifier:@"FavouriteViewController"];
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
+                        break;
+                    case 2:
+                    {
+                        OrderViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"OrderViewController"];
+                        [self.navigationController pushViewController:vc animated:YES];
+                    }
+                        break;
+                        
+                    default:
+                        break;
+                }
+                
+            }
+                break;
+            case 2:
+            {
+                SettingController *vc = [storyboard instantiateViewControllerWithIdentifier:@"SettingController"];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+                break;
+            default:
+                break;
         }
-            break;
-        case 2:
-        {
-            
-            
-            //    UINavigationController *navVC = [storyboard instantiateViewControllerWithIdentifier:@"NavHomeSearchDetailController"];
-            //    PriceComparisonViewController *detailVC = (PriceComparisonViewController*)navVC.topViewController;
-            
-            assistantViewController *detailVC = [storyboard instantiateViewControllerWithIdentifier:@"assistantViewController"];
-            [self.navigationController pushViewController:detailVC animated:YES];
-        }
-            break;
-            break;
-        default:
-            break;
+    }
+    else {
+        
+        UINavigationController *navVC = [storyboard instantiateViewControllerWithIdentifier:@"navNewLoginViewController"];
+        AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+        appdele.window.rootViewController = navVC;
+
+//        newLoginViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"newLoginViewController"];
+//        [self.navigationController pushViewController:vc animated:YES];
     }
 }
+
+#pragma mark - 图片下载
+- (void)downloadPhotoAction {
+    NSLog(@"downloadPhotoAction");
+    //在百度图片上随便找一个图片地址
+    //    NSString* photoAddress = @"http://c.hiphotos.baidu.com/image/pic/item/14ce36d3d539b600c8525d44eb50352ac75cb7a1.jpg";
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+    NSString *imgName;
+    if ([username isEqualToString:@"Slr"]) {
+        imgName = @"Slr.jpg";
+    }
+    else if([username isEqualToString:@"Syr"]) {
+        imgName = @"Syr.jpg";
+    }
+//    NSString* photoAddress = [NSString stringWithFormat:@"%@/images/Slr.jpg",appdele.baseUrl];
+    NSString* photoAddress = [NSString stringWithFormat:@"%@/images/%@",appdele.baseUrl,imgName];
+ 
+    NSString *pictureFileName = [NSString stringWithFormat:@"%@.jpg",username];
+    NSString* fileFullPath = [[PhotoOperate sharedPhotoOperate] productFileFullPathWithSubDirectory:@"download" fileName:pictureFileName];
+    [[PhotoOperate sharedPhotoOperate] downloadPhotoWithURL:photoAddress fileFullPath:fileFullPath target:self];
+}
+
+- (void)requestFinished:(NSDictionary *)dictionary tag:(NSInteger)tag{
+    NSLog(@"requestFinished");
+    NSString* fileFullPath = [dictionary objectForKey:@"photo"];
+    
+    
+    NSData* data = [NSData dataWithContentsOfFile:fileFullPath];
+    UIImage* image = [[UIImage alloc] initWithData:data];
+    self.header.image = image;
+    
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+    NSDictionary *oldHeaderDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"headerDic"];
+    NSMutableDictionary *newDic;
+    if (oldHeaderDic) {
+        newDic = [NSMutableDictionary dictionaryWithDictionary:oldHeaderDic];
+        newDic[username] = fileFullPath;
+    }
+    else {
+        
+        newDic = [NSMutableDictionary dictionaryWithObject:fileFullPath forKey:username];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:[newDic copy] forKey:@"headerDic"];
+
+}
+
+
+
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 //    return 0;
 //}

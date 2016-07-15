@@ -150,9 +150,7 @@
     NSString *bookName = self.bookBaseInfo.promotionBookName;
     NSString *bookImageLink = self.bookBaseInfo.promotionBookImageLink;
     
-//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:self.bookName,@"bookName",self.bookIsbn,@"bookISBN",self.bookImageLink,@"bookImageLink",self.bookLowestPrice,@"bookLowestPrice",nil];
-    
-        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookName",isbn,@"ISBN",bookImageLink,@"bookImageLink",nil];
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookName",isbn,@"bookISBN",bookImageLink,@"bookImageLink",nil];
  
     [appdele.manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
      {

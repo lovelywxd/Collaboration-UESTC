@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class EGOImageView;
 
 @interface UserCentralViewController : UITableViewController
 @property (strong, nonatomic) IBOutlet UILabel *UserNameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *header;
+@property (strong, nonatomic) IBOutlet UITextField *personalState;
+
+@property (strong, nonatomic) IBOutlet EGOImageView *egoHeader;
+
 
 @end

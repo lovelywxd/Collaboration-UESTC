@@ -140,8 +140,8 @@ NSMutableData* totalData;
     NSString* url;
     
     if (appdele.OnLineTest) {
-//        url = @"http://115.159.219.141:8000/user/login/";
-        url = @"http://192.168.1.100:8000/user/login/";
+        url = @"http://115.159.219.141:8000/user/login";
+//        url = @"http://192.168.1.100:8000/user/login/";
 //        url = @"http://115.159.219.141:80/api/authenticate";
 //        url = @"http://52.69.162.241:8888/login";
     }
