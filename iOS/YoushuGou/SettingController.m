@@ -9,7 +9,7 @@
 #import "SettingController.h"
 #import "AppDelegate.h"
 #import "MBProgressHUD.h"
-#import "newLoginViewController.h"
+#import "QQViewController.h"
 
 @interface SettingController ()
 {
@@ -99,22 +99,25 @@
      {
          NSString *status = [responseObject objectForKey:@"status"];
          if ([status isEqualToString:@"0"]) {
-             
-             NSMutableDictionary *userList = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"userList"]];
-             NSString *currentUser =  [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
-             [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"currentUser"];
-             [userList removeObjectForKey:currentUser];
-             [[NSUserDefaults standardUserDefaults] setObject:userList forKey:@"userList"];
-             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-             UINavigationController *vc = [storyboard instantiateViewControllerWithIdentifier:@"navNewLoginViewController"];
-             AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-             appdele.window.rootViewController = vc;
 
+            //只是退出登录的话，不从本地用户列表中删除该用户；只是改变当前活跃账号和当前在线账号
+            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"currentUser"];
+            [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"currentOnLineUser"];
+             
+
+//             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//             UINavigationController *vc = [storyboard instantiateViewControllerWithIdentifier:@"navNewLoginViewController"];
+             AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+             
+             QQViewController *loginVc = [[QQViewController alloc] initWithNibName:@"QQViewController" bundle:nil];
+
+             
+             appdele.window.rootViewController = loginVc;
              
          }
          else {
              NSString *msg = [responseObject objectForKey:@"data"];
-             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"注销失败" message:msg preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"退出失败" message:msg preferredStyle:UIAlertControllerStyleAlert];
              UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
              [alert addAction:defaultAction];
              [self presentViewController:alert animated:YES completion:nil];

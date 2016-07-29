@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *school;
 @property (strong, nonatomic) IBOutlet UILabel *email;
 @property (strong, nonatomic) IBOutlet UILabel *phone;
+@property (strong, nonatomic) IBOutlet UIImageView *header;
 @property (strong, nonatomic) IBOutlet UILabel *name;
 - (void)fillContent:(UserInfo*)info;
 @end

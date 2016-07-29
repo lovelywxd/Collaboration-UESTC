@@ -13,6 +13,7 @@
 #import "ValidCombineOrder.h"
 #import "OrderViewController.h"
 #import "favouriteBookInPro.h"
+#import "QQViewController.h"
 @interface AppDelegate ()
 {
     MyAlertView *availableCombineOrderAlert;
@@ -33,14 +34,13 @@
 //    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/html",@"text/plain",nil];
     
 //    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    self.OnLineTest = NO;
-    self.OnLineTest = YES;
+    self.OnLineTest = NO;
+//    self.OnLineTest = YES;
     [self initShopList];
-//    self.baseUrl = @"http://192.168.1.146:8000";
-//    self.baseUrl = @"http://192.168.1.100:8000";
-//    self.baseUrl = @"http://192.168.3.107:8000";
+
     self.baseUrl = @"http://115.159.219.141:8000";
 
+    NSObject *obj = [[NSObject alloc] init];
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         UIUserNotificationType myTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
@@ -82,7 +82,21 @@
 
         }
     }
-//    [self testAlert];
+    
+    
+    //当前占用App的账户名
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+    if (userName) {
+//       直接登录，进入主页
+        [self loginDerectly:userName];
+        
+    }
+    else {
+//    用户未登录，打开登录界面
+    QQViewController *loginVc = [[QQViewController alloc] initWithNibName:@"QQViewController" bundle:nil];
+    self.window.rootViewController = loginVc;
+    }
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
@@ -309,7 +323,7 @@
                      stringWithFormat:@"Device Token=%@",deviceToken];
     NSLog(@"%@",str);
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"注册" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
+//    [alert show];
     
     
 }
@@ -319,7 +333,7 @@
     NSString *str = [NSString stringWithFormat: @"Error: %@", error];
     NSLog(@"%@",str);
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"失败" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
+//    [alert show];
 }
 
 
@@ -365,7 +379,40 @@
 //    //    [self applicationOnReceiveNotification:userInfo];
 //
 //}
-
+#pragma mark - 直接登录
+- (void)loginDerectly:(NSString*)userName {
+    NSString *url = [NSString stringWithFormat:@"%@/user/login/",self.baseUrl];
+    NSString *passwd = @"1234567";
+        NSDictionary *logindata = [[NSDictionary alloc] initWithObjectsAndKeys:userName, @"name",passwd,@"passwd",nil];
+    [self.manager
+     POST:url
+     parameters:logindata  // 指定请求参数
+     // 获取服务器响应成功时激发的代码块
+     success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSString *loginStatus = [responseObject objectForKey:@"status"];
+         if ([loginStatus isEqualToString:@"0"]) {
+//             登录成功则纪录下当前在线用户
+        NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+             [[NSUserDefaults standardUserDefaults] setObject:userName forKey:@"currentOnLineUser"];
+         }
+         else {
+            
+         }
+         
+         
+     }
+     // 获取服务器响应失败时激发的代码块
+     failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+        
+     }];
+    //不管是否登录成功，都直接进入活动页面
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *homeVC = [storyboard instantiateViewControllerWithIdentifier:@"homeVC"];
+    self.window.rootViewController = homeVC;
+    [self.window makeKeyAndVisible];
+}
 
 #pragma mark - 服务器数据解析
 

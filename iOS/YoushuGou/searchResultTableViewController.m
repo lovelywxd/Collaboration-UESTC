@@ -58,7 +58,7 @@
             return self.searchResults.count;
             break;
         case 1:
-            return 2;
+            return 1;
             break;
         default:
             return 0;
@@ -99,9 +99,9 @@
                 case 0:
                     cell.textLabel.text = [NSMutableString stringWithFormat:@"搜索书籍:%@",self.searchStr];
                     break;
-                case 1:
-                    cell.textLabel.text = [NSMutableString stringWithFormat:@"搜索活动:%@",self.searchStr];
-                    break;
+//                case 1:
+//                    cell.textLabel.text = [NSMutableString stringWithFormat:@"搜索活动:%@",self.searchStr];
+//                    break;
                 default:
                     break;
             }

@@ -26,11 +26,28 @@
     return  self;
 }
 
+- (instancetype)initWithDicNewWay:(NSDictionary*)dic
+{
+    self = [super init];
+    if (self) {
+        self.bookISBN = [dic objectForKey:@"promotionBookISBN"];
+        self.bookName = [dic objectForKey:@"promotionBookName"];
+        
+        self.bookImageLink = [dic objectForKey:@"promotionBookImageLink"];
+        self.bookPrice = [dic objectForKey:@"promotionBookPrice"];
+        self.relatedPromotionID = [dic objectForKey:@"promotionID"];
+        self.amout = [dic objectForKey:@"bookAmount"];
+        self.promotionName = [dic objectForKey:@"promotionName"];
+    }
+    return  self;
+}
+
 - (instancetype)initWithDicInCOrder:(NSDictionary*)dic{
     self = [super init];
     if (self) {
         self.bookISBN = [dic objectForKey:@"promotionBookISBN"];
         self.bookName = [dic objectForKey:@"bookName"];
+        
         self.bookImageLink = [dic objectForKey:@"promotionBookImageLink"];
         self.bookPrice = [dic objectForKey:@"promotionBookPrice"];
         self.relatedPromotionID = [dic objectForKey:@"promotionID"];

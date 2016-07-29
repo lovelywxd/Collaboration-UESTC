@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EGOImageView.h"
 
 @interface FavouriteViewController : UITableViewController
+
+
 
 @end

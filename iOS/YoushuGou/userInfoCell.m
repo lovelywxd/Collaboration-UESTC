@@ -25,5 +25,9 @@
     self.phone.text = info.phone;
     self.email.text = info.email;
     self.school.text = info.school;
+    
+    NSDictionary *headerDic =[[NSUserDefaults standardUserDefaults] valueForKey:@"accountList"];
+
+    self.header.image = [UIImage imageNamed:headerDic[info.username]];
 }
 @end

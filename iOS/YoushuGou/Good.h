@@ -20,5 +20,6 @@
 - (instancetype)initWithDictionary:(NSDictionary*)dic;
 //根据CombineList响应中返回的书籍的信息字典生成good；
 - (instancetype)initWithDicInCOrder:(NSDictionary*)dic;
+- (instancetype)initWithDicNewWay:(NSDictionary*)dic;
 
 @end

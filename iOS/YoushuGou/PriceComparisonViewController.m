@@ -133,6 +133,16 @@
     
     [appdele.manager.requestSerializer setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"userCookie"] forHTTPHeaderField:@"Cookie"];
     
+    
+    NSDictionary *oldDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"collectionDic"];
+    NSMutableDictionary *newDic;
+    if (oldDic) {
+        newDic = [NSMutableDictionary dictionaryWithDictionary:oldDic];
+        newDic[self.bookIsbn] = self.bookImageLink;
+    }
+    else newDic= [NSMutableDictionary dictionaryWithObject:self.bookImageLink forKey:self.bookIsbn];
+    [[NSUserDefaults standardUserDefaults] setObject:newDic forKey:@"collectionDic"];
+    
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:self.bookName,@"bookName",self.bookIsbn,@"bookISBN",self.bookImageLink,@"bookImageLink",self.bookLowestPrice,@"bookLowestPrice",nil];
 
     [appdele.manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)

@@ -97,6 +97,7 @@
     BookBaseInfo *book = self.bookBaseInfo;
     BookDetailInfo *info = [[BookDetailInfo alloc] initBook:book withImages:[detailInfoDic objectForKey:@"images"] title:[detailInfoDic objectForKey:@"title"] publisher:[detailInfoDic objectForKey:@"publisher"] pubdate:[detailInfoDic objectForKey:@"pubdate"] pages:[detailInfoDic objectForKey:@"pages"] author:[detailInfoDic objectForKey:@"author"] summary:[detailInfoDic objectForKey:@"summary"] author_intro:[detailInfoDic objectForKey:@"author_intro"] rating:[detailInfoDic objectForKey:@"rating"] catalog:[detailInfoDic objectForKey:@"catalog"] tags:[detailInfoDic objectForKey:@"tags"] doubanLink:[detailInfoDic objectForKey:@"url"]];
     self.bookDetailInfo = info;
+    self.oPrice = [detailInfoDic objectForKey:@"price"];
 //    [hud hideAnimated:YES];
     [self fillContent];
 }
@@ -150,6 +151,16 @@
     NSString *bookName = self.bookBaseInfo.promotionBookName;
     NSString *bookImageLink = self.bookBaseInfo.promotionBookImageLink;
     
+    NSDictionary *oldDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"collectionDic"];
+    NSMutableDictionary *newDic;
+    if (oldDic) {
+        newDic = [NSMutableDictionary dictionaryWithDictionary:oldDic];
+        newDic[isbn] = bookImageLink;
+    }
+    else newDic= [NSMutableDictionary dictionaryWithObject:bookImageLink forKey:isbn];
+    [[NSUserDefaults standardUserDefaults] setObject:newDic forKey:@"collectionDic"];
+    
+    
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookName",isbn,@"bookISBN",bookImageLink,@"bookImageLink",nil];
  
     [appdele.manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)
@@ -159,6 +170,8 @@
          if ([status isEqualToString:@"0"]) {
              UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:@"收藏成功" preferredStyle:UIAlertControllerStyleAlert];
              UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+
+                 
              }];
              [alert addAction:defaultAction];
              [self presentViewController:alert animated:YES completion:nil];
@@ -252,15 +265,18 @@
     NSNumber *aver_score = [self.bookDetailInfo.rating objectForKey:@"numRaters"];
     NSMutableString* numRaters = [NSMutableString stringWithFormat:@"%@人评价",aver_score];
     self.numRatersLabel.text = numRaters;
-    [self.bookCoverBtn setPlaceholderImage:[UIImage imageNamed:@"home"]];
-    NSString *tmpURl = [self.bookDetailInfo.images valueForKey:@"large"];
-    [self.bookCoverBtn setImageURL:[NSURL URLWithString:tmpURl]];
-    [self imageButtonLoadedImage:self.bookCoverBtn];
-    self.originalPrice.text = self.bookDetailInfo.baseInfo.PromotionBookCurrentPrice;
-//    self.currentPrice.text = self.bookDetailInfo.baseInfo.PromotionBookCurrentPrice;
-    self.discount.text = @"75";
+    self.currentPriceLabel.text = self.bookBaseInfo.PromotionBookCurrentPrice;
+    self.originalPrice.text = self.oPrice;
+    float currentPrice = [self.currentPriceLabel.text floatValue];
+    float originalPrice = [self.oPrice floatValue];
+    float ra = (originalPrice - currentPrice)/currentPrice;
+    int discount =ra  * 100;
+    self.discount.text = [NSString stringWithFormat:@"%d",discount];
     
     
+    NSDictionary *images = self.bookDetailInfo.images;
+    NSString *UrlStr = images[@"large"];
+    self.cover.imageURL = [NSURL URLWithString:UrlStr];
     if (!self.IsGroupBuy) {
         self.addToCartBtn.hidden = YES;
     }

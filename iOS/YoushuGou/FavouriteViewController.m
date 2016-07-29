@@ -16,6 +16,7 @@
     MBProgressHUD *removeHud;
 }
 @property (nonatomic ,strong) NSMutableArray* FavoriteList;
+@property (nonatomic, strong) NSDictionary* ImgLinkDic;
 @end
 
 @implementation FavouriteViewController
@@ -24,6 +25,7 @@
     [super viewDidLoad];
     [self prepareProperty];
     [self loadFavouriteList];
+    [self getFavoriteBookImageLink];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -46,7 +48,7 @@
     hud.contentColor = [UIColor colorWithRed:0.f green:0.6f blue:0.7f alpha:1.f];
     
     // Set the label text.
-    hud.label.text = NSLocalizedString(@"加载书籍列表...", @"HUD loading title");
+    hud.label.text = NSLocalizedString(@"加载中...", @"HUD loading title");
     
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     if (appdele.OnLineTest) {
@@ -111,13 +113,16 @@
 }
 
 
-
+- (void)getFavoriteBookImageLink {
+    self.ImgLinkDic = [NSMutableDictionary dictionaryWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"collectionDic"]];
+}
 
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+//    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -138,6 +143,12 @@
         UILabel *label;
         label = (UILabel*)[cell viewWithTag:2];
         label.text = item.bookName;
+        
+        label = (UILabel*)[cell viewWithTag:3];
+        label.text = item.bookISBN;
+        
+        EGOImageView *imgView = (EGOImageView*)[cell viewWithTag:1];
+        imgView.imageURL = [NSURL URLWithString:self.ImgLinkDic[item.bookISBN]];
         return cell;
     }
     else {

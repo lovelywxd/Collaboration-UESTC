@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "SettingController.h"
 #import "EGOImageView.h"
+#import "QQViewController.h"
 
 
 
@@ -35,7 +36,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentOnLineUser"];
     if (userName) {
         self.UserNameLabel.text = userName;
         [self initHeader];
@@ -55,7 +56,7 @@
 }
 
 - (void)initHeader {
-    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentUser"];
+    NSString *username = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentOnLineUser"];
 //    NSDictionary *oldHeaderDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"headerDic"];
 //
 //    if (oldHeaderDic) {
@@ -73,9 +74,12 @@
 //    else {
 //        [self downloadPhotoAction];
 //    }@"%@/images/%@",appdele.baseUrl,imgName];
-    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
-    NSString *strUrl = [NSString stringWithFormat:@"%@/images/%@.jpg",appdele.baseUrl,username];
-    self.egoHeader.imageURL = [NSURL URLWithString:strUrl];
+//    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+//    NSString *strUrl = [NSString stringWithFormat:@"%@/images/%@.jpg",appdele.baseUrl,username];
+//    self.egoHeader.imageURL = [NSURL URLWithString:strUrl];
+    
+    NSDictionary *headerDic =[[NSUserDefaults standardUserDefaults] valueForKey:@"accountList"];
+    self.header.image = [UIImage imageNamed:headerDic[username]];
     
 }
 
@@ -120,8 +124,7 @@
                 break;
             case 2:
             {
-                SettingController *vc = [storyboard instantiateViewControllerWithIdentifier:@"SettingController"];
-                [self.navigationController pushViewController:vc animated:YES];
+                [self logOut];
             }
                 break;
             default:
@@ -184,6 +187,47 @@
     }
     [[NSUserDefaults standardUserDefaults] setObject:[newDic copy] forKey:@"headerDic"];
 
+}
+
+
+- (void)logOut {
+    AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+    NSString *url = [NSString stringWithFormat:@"%@/user/logout/",appdele.baseUrl];
+    [appdele.manager POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         NSString *status = [responseObject objectForKey:@"status"];
+         if ([status isEqualToString:@"0"]) {
+             
+             //只是退出登录的话，不从本地用户列表中删除该用户；只是改变当前活跃账号和当前在线账号
+             [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"currentUser"];
+             [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"currentOnLineUser"];
+             AppDelegate *appdele = [UIApplication sharedApplication].delegate;
+             
+             QQViewController *loginVc = [[QQViewController alloc] initWithNibName:@"QQViewController" bundle:nil];
+             
+             
+             appdele.window.rootViewController = loginVc;
+             
+         }
+         else {
+             NSString *msg = [responseObject objectForKey:@"data"];
+             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"退出失败" message:msg preferredStyle:UIAlertControllerStyleAlert];
+             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+             [alert addAction:defaultAction];
+             [self presentViewController:alert animated:YES completion:nil];
+             
+             
+         }
+     }
+                  failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     
+     {
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器无响应" message:@"注销失败" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
+         [alert addAction:defaultAction];
+         [self presentViewController:alert animated:YES completion:nil];
+     }];
+    
 }
 
 

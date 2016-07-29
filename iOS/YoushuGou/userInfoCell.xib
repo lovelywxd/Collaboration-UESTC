@@ -69,6 +69,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="email" destination="gV7-VU-Kod" id="b5G-EV-sdU"/>
+                <outlet property="header" destination="tTR-Oc-du5" id="r8w-YU-HaF"/>
                 <outlet property="name" destination="z0w-2f-rxb" id="SVL-tY-vu1"/>
                 <outlet property="phone" destination="Xsm-Z2-WFn" id="VEg-jS-5v5"/>
                 <outlet property="school" destination="pHO-VI-iOE" id="AhO-th-NIj"/>

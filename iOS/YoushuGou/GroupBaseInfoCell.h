@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *Phone;
 @property (strong, nonatomic) IBOutlet EGOImageView *head;
 @property (strong, nonatomic) IBOutlet UILabel *userName;
+@property (strong, nonatomic) IBOutlet UIImageView *header;
 
 - (void)fillContent:(UserOrderDetail*)uOder;
 @end

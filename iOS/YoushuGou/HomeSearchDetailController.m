@@ -200,6 +200,17 @@
     NSString *bookName = self.targetItem.bookName;
     NSString *bookImageLink = self.targetItem.bookImageLink;
 
+    
+    NSDictionary *oldDic = [[NSUserDefaults standardUserDefaults] objectForKey:@"collectionDic"];
+    NSMutableDictionary *newDic;
+    if (oldDic) {
+        newDic = [NSMutableDictionary dictionaryWithDictionary:oldDic];
+        newDic[self.bookISBN] = bookImageLink;
+    }
+    else newDic= [NSMutableDictionary dictionaryWithObject:bookImageLink forKey:self.bookISBN];
+    [[NSUserDefaults standardUserDefaults] setObject:newDic forKey:@"collectionDic"];
+    
+    
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:bookName,@"bookName",self.bookISBN,@"bookISBN",bookImageLink,@"bookImageLink",self.bookLowestPrice,@"bookLowestPrice",nil];
     
     [appdele.manager POST:url parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject)

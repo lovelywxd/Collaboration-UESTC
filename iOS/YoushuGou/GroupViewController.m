@@ -19,9 +19,18 @@
 {
     MBProgressHUD *hud;
     MBProgressHUD *removeHud;
+     UISegmentedControl *segmentedControl;
 }
 //ValidCombineOrders数组
 @property (nonatomic ,strong) NSArray* VoderList;
+
+//ValidCombineOrders数组,存放状态为6的订单,拼成功的拼单
+@property (nonatomic ,strong) NSMutableArray *succeedVoder;
+//ValidCombineOrders数组,存放状态为4，5的订单,需要用户确认是否接受
+@property (nonatomic ,strong) NSMutableArray *appenVorder;
+//根据segement选择的值二变化的当前展示的list
+@property (nonatomic ,strong) NSMutableArray *displayOrderList;
+
 @end
 
 @implementation GroupViewController
@@ -31,6 +40,8 @@
     // Do any additional setup after loading the view.
     self.table.delegate = self;
     self.table.dataSource = self;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self initSegmentCtl];
     // Do any additional setup after loading the view.
     // 设置回调（一旦进入刷新状态就会调用这个refreshingBlock）
     __unsafe_unretained __typeof(self) weakSelf = self;
@@ -98,6 +109,9 @@
     
 }
 
+
+
+
 - (void) getCOderListLocally {
     // 获取JSON文件所在的路径
     NSString* jsonPath = [[NSBundle mainBundle] pathForResource:@"GroupList"  ofType:@"json"];
@@ -117,10 +131,70 @@
         [result addObject:VcOder];
     }
     self.VoderList = [result copy];
+    [self classifyOrder];
     [self.table reloadData];
     [self.table.mj_header endRefreshing];
     [hud hideAnimated:YES];
 }
+
+#pragma mark - 数据分类显示
+
+
+- (void)initSegmentCtl{
+    NSArray *titles = [NSArray arrayWithObjects: @"组团中",@"已成团",nil];
+    segmentedControl = [[UISegmentedControl alloc]initWithItems:titles];
+    segmentedControl.frame = CGRectMake(15.0, 74.0,345 , 30.0);
+    segmentedControl.selectedSegmentIndex = 0;//设置默认选择项索引
+    self.displayOrderList = self.appenVorder;
+    [segmentedControl addTarget:self action:@selector(selectOrderType:)  forControlEvents:UIControlEventValueChanged];
+    //        self.navigationItem.titleView = segmentedControl;
+    //    self.table.tableHeaderView = segmentedControl;
+    [self.view addSubview:segmentedControl];
+    [self.table.mj_header beginRefreshing];
+    
+}
+
+
+//根据状态，对orderList进行分类
+- (void)classifyOrder {
+    self.succeedVoder = [[NSMutableArray alloc] init];
+    self.appenVorder = [[NSMutableArray alloc] init];
+
+    for (id obj in self.VoderList) {
+        NSNumber *status = [obj valueForKey:@"currentStatus"];
+        NSInteger state = [status intValue];
+        
+    
+        if (state == 4 || state == 5) {
+            [self.appenVorder addObject:obj];
+            
+        }
+        else if (state == 6) {
+            [self.succeedVoder addObject:obj];
+        }
+    }
+    segmentedControl.selectedSegmentIndex = 0;//设置默认选择项索引
+    self.displayOrderList = self.appenVorder;
+    
+}
+
+- (void)selectOrderType:(id)sender {
+    UISegmentedControl *Seg = (UISegmentedControl*)sender;
+    NSInteger Index = Seg.selectedSegmentIndex;
+    switch (Index) {
+        case 0:
+            self.displayOrderList = self.appenVorder;
+            break;
+        case 1:
+            self.displayOrderList = self.succeedVoder;
+            break;
+               default:
+        self.displayOrderList = self.appenVorder;
+            break;
+    }
+    [self.table reloadData];
+}
+
 
 #pragma mark - tableView datasource 和tableView delegate
 
@@ -128,12 +202,13 @@
     return 124;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger result = self.VoderList.count;
+//    NSInteger result = self.VoderList.count;
+    NSInteger result = self.displayOrderList.count;
     return result;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSInteger result = [[self.VoderList[section] valueForKey:@"members"] count] + 1;
+    NSInteger result = [[self.displayOrderList[section] valueForKey:@"members"] count] + 1;
     return  result;
 }
 
@@ -146,7 +221,7 @@
         nibsRegistered=YES;
     }
     GroupBaseInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
-    ValidCombineOrder *VcOrder = self.VoderList[indexPath.section];
+    ValidCombineOrder *VcOrder = self.displayOrderList[indexPath.section];
     switch (indexPath.row) {
         case 0:
         {
@@ -172,7 +247,7 @@
 (NSIndexPath *)indexPath
 {
     
-    ValidCombineOrder *VcOrder = self.VoderList[indexPath.section];
+    ValidCombineOrder *VcOrder = self.displayOrderList[indexPath.section];
     UserOrderDetail *oDetail;
     switch (indexPath.row) {
         case 0:
@@ -211,9 +286,9 @@
     orderID.text = VcOrder.combineOrderID;
     [header addSubview:orderID];
 //
-    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,20, 150, 20)];
-    statusLabel.text = [NSString stringWithFormat:@"status:%@",VcOrder.currentStatus];
-    [header addSubview:statusLabel];
+//    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,20, 150, 20)];
+//    statusLabel.text = [NSString stringWithFormat:@"status:%@",VcOrder.currentStatus];
+//    [header addSubview:statusLabel];
     return header;
 }
 

@@ -84,6 +84,8 @@
     
 }
 
+
+
 #pragma mark - 获取数据源
 
 - (void)SimplyLoadLsit {
@@ -273,9 +275,9 @@
     orderID.text = SoOder.submitOrderID;
     [header addSubview:orderID];
     
-    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,20, 150, 20)];
-    statusLabel.text = [NSString stringWithFormat:@"status:%@",SoOder.currentStatus];
-    [header addSubview:statusLabel];
+//    UILabel *statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,20, 150, 20)];
+//    statusLabel.text = [NSString stringWithFormat:@"status:%@",SoOder.currentStatus];
+//    [header addSubview:statusLabel];
     return header;
 }
 

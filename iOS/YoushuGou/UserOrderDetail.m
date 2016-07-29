@@ -31,7 +31,7 @@
         NSMutableArray *list = [[NSMutableArray alloc] init];
         NSArray *rawList = [dic objectForKey:@"bookList"];
         for (id obj in rawList) {
-            Good *good = [[Good alloc] initWithDicInCOrder:obj];
+            Good *good = [[Good alloc] initWithDicNewWay:obj];
             [list addObject:good];
         }
         self.bookList = [list copy];

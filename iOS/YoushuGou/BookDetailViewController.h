@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BookDetailInfo.h"
 #import "EGOImageButton.h"
+#import "EGOImageView.h"
 
 
 @interface BookDetailViewController : UITableViewController
@@ -23,10 +24,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *discount;
 @property (strong, nonatomic) IBOutlet UILabel *originalPrice;
 
-- (IBAction)addToCart:(id)sender;
 @property (strong, nonatomic) IBOutlet UIButton *addToCartBtn;
-
 @property (strong, nonatomic) IBOutlet UITextView *summaryText;
+
+
+- (IBAction)addToCart:(id)sender;
+
 - (IBAction)changeTextContent:(id)sender;
 - (IBAction)getPriceComparison:(id)sender;
 - (IBAction)GoDouBan:(id)sender;
@@ -36,6 +39,10 @@
 @property (nonatomic, copy) NSString* promotionID;
 @property (nonatomic, copy) NSString* bookIsbn;
 @property (nonatomic, copy) BookBaseInfo* bookBaseInfo;
+@property (nonatomic ,copy) NSString *oPrice;
 
+@property (strong, nonatomic) IBOutlet UILabel *currentPriceLabel;
+
+@property (strong, nonatomic) IBOutlet EGOImageView *cover;
 
 @end
