@@ -72,6 +72,7 @@
     NSString* fileFullPath = [[PhotoOperate sharedPhotoOperate] productFileFullPathWithSubDirectory:@"download" fileName:@"photo.jpg"];
     //    [[PhotoOperate sharedPhotoOperate] downloadPhotoWithDomain:@"http://c.hiphotos.baidu.com" URI:@"/image/pic/item/902397dda144ad34fbf27bd8d2a20cf431ad8524.jpg" fileFullPath:fileFullPath target:self];
     [[PhotoOperate sharedPhotoOperate] downloadPhotoWithURL:photoAddress fileFullPath:fileFullPath target:self];
+    
 }
 
 - (void)requestFinished:(NSDictionary *)dictionary tag:(NSInteger)tag{
@@ -84,14 +85,24 @@
 //    [imageView setFrame:CGRectMake(50, 50, 300, 400)];
 //    [self.view addSubview:imageView];
     self.head.image = image;
+
 }
 
+- (void)getError:(NSError* __autoreleasing *)error {
+    error = nil;
+}
+- (void)callGetError {
+    NSError *error = nil;
+    [self getError:&error];
+
+}
 
 
 - (IBAction)downImage:(id)sender {
 //      UIImage *image = [UIImage imageNamed:@"头像.jpg"];
 //    self.head.image = image;
     [self downloadPhotoAction];
+   
 }
 
 - (IBAction)testReciveHtml:(id)sender {

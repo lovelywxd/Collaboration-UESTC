@@ -94,6 +94,7 @@
 		58DE5C6F1CE072DD000BE711 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58DE5C691CE072DD000BE711 /* HelpViewController.m */; };
 		58E01C791D0D693100D3E259 /* settingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E01C781D0D693100D3E259 /* settingViewController.m */; };
 		58E1F3041D19530E00E2E3E2 /* searchResultTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E1F3031D19530E00E2E3E2 /* searchResultTableViewController.m */; };
+		58E2230E1D5B81E700F9A34C /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E2230D1D5B81E700F9A34C /* test.swift */; };
 		58E263431D2E765200973E21 /* collection.json in Resources */ = {isa = PBXBuildFile; fileRef = 58E263421D2E765200973E21 /* collection.json */; };
 		58E263451D2E767C00973E21 /* cartList.json in Resources */ = {isa = PBXBuildFile; fileRef = 58E263441D2E767C00973E21 /* cartList.json */; };
 		58E263891D2E915800973E21 /* NewCartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58E263881D2E915800973E21 /* NewCartViewController.m */; };
@@ -305,6 +306,8 @@
 		58E01C781D0D693100D3E259 /* settingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = settingViewController.m; sourceTree = "<group>"; };
 		58E1F3021D19530E00E2E3E2 /* searchResultTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchResultTableViewController.h; sourceTree = "<group>"; };
 		58E1F3031D19530E00E2E3E2 /* searchResultTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchResultTableViewController.m; sourceTree = "<group>"; };
+		58E2230C1D5B81E600F9A34C /* YouShuGou-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YouShuGou-Bridging-Header.h"; sourceTree = "<group>"; };
+		58E2230D1D5B81E700F9A34C /* test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		58E263421D2E765200973E21 /* collection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = collection.json; sourceTree = "<group>"; };
 		58E263441D2E767C00973E21 /* cartList.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cartList.json; sourceTree = "<group>"; };
 		58E263871D2E915800973E21 /* NewCartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCartViewController.h; sourceTree = "<group>"; };
@@ -741,6 +744,7 @@
 			children = (
 				58DE5C3C1CE071A4000BE711 /* AppDelegate.h */,
 				58DE5C3D1CE071A4000BE711 /* AppDelegate.m */,
+				58E2230D1D5B81E700F9A34C /* test.swift */,
 				58DE5C3F1CE071A4000BE711 /* ViewController.h */,
 				58DE5C401CE071A4000BE711 /* ViewController.m */,
 				58DE5C421CE071A4000BE711 /* Main.storyboard */,
@@ -749,6 +753,7 @@
 				58DE5C4D1CE071A4000BE711 /* Info.plist */,
 				58DE5C451CE071A4000BE711 /* MyBookRecycle.xcdatamodeld */,
 				58DE5C391CE071A4000BE711 /* Supporting Files */,
+				58E2230C1D5B81E600F9A34C /* YouShuGou-Bridging-Header.h */,
 			);
 			path = MyBookRecycle;
 			sourceTree = "<group>";
@@ -1189,6 +1194,7 @@
 				58DE5C471CE071A4000BE711 /* MyBookRecycle.xcdatamodeld in Sources */,
 				58E5F1651D308F31004DE114 /* UserOderModel.m in Sources */,
 				58E83F311D234D5C002B2B80 /* newLoginViewController.m in Sources */,
+				58E2230E1D5B81E700F9A34C /* test.swift in Sources */,
 				58DBB42D1D39145500419644 /* RegisterViewController.m in Sources */,
 				58E870691D260C7100FC7B71 /* SearchInPromotionRListViewController.m in Sources */,
 				585983A81D201C42009A6A72 /* MJRefreshBackGifFooter.m in Sources */,
@@ -1325,13 +1331,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = MyBookRecycle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xiaoyou;
 				PRODUCT_NAME = YouShuGou;
 				PROVISIONING_PROFILE = "349211ae-395f-4c4d-bcb4-fb9c9792fb21";
+				SWIFT_OBJC_BRIDGING_HEADER = "MyBookRecycle/YouShuGou-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -1339,13 +1349,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
 				INFOPLIST_FILE = MyBookRecycle/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xiaoyou;
 				PRODUCT_NAME = YouShuGou;
 				PROVISIONING_PROFILE = "349211ae-395f-4c4d-bcb4-fb9c9792fb21";
+				SWIFT_OBJC_BRIDGING_HEADER = "MyBookRecycle/YouShuGou-Bridging-Header.h";
 			};
 			name = Release;
 		};

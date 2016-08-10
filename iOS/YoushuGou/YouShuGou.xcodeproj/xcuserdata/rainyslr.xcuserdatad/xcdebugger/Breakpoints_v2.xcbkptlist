@@ -1198,7 +1198,7 @@
                   moduleName = "YouShuGou"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/rainyslr/Documents/Collaboration-UESTC/iOS/YoushuGou/HomeSearchDetailController.m"
-                  timestampString = "491472504.948603"
+                  timestampString = "492536135.002596"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "222"
@@ -1213,7 +1213,7 @@
                   moduleName = "YouShuGou"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/rainyslr/Documents/Collaboration-UESTC/iOS/YoushuGou/HomeSearchDetailController.m"
-                  timestampString = "491472504.948959"
+                  timestampString = "492536135.002875"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "222"
@@ -2254,7 +2254,7 @@
                   moduleName = "YouShuGou"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/rainyslr/Documents/Collaboration-UESTC/iOS/YoushuGou/SettingController.m"
-                  timestampString = "491472504.959337"
+                  timestampString = "492536135.020897"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "132"
@@ -2269,7 +2269,7 @@
                   moduleName = "YouShuGou"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/rainyslr/Documents/Collaboration-UESTC/iOS/YoushuGou/SettingController.m"
-                  timestampString = "491472504.959537"
+                  timestampString = "492536135.021176"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "132"
@@ -2820,6 +2820,22 @@
             startingLineNumber = "43"
             endingLineNumber = "43"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QQViewController.m"
+            timestampString = "492438123.501774"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "244"
+            endingLineNumber = "244"
+            landmarkName = "-login:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

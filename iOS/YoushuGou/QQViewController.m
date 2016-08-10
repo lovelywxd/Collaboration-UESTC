@@ -241,17 +241,18 @@
              NSArray *oldUserList = [[NSUserDefaults standardUserDefaults] objectForKey:@"userList"];
              NSMutableArray *newUserList;
              if (oldUserList) {
-                 newUserList = [NSMutableArray arrayWithArray:oldUserList];
-                 if (![oldUserList containsObject:logingUser]) {
-                     //若此前未存储过该用户信息，存储用户名以及密码
-                     [newUserList addObject:logingUser];
-                 }
+                 [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"userList"];
+//                 newUserList = [NSMutableArray arrayWithArray:oldUserList];
+//                 if (![oldUserList containsObject:logingUser]) {
+//                     //若此前未存储过该用户信息，存储用户名以及密码
+//                     [newUserList addObject:logingUser];
+//                 }
              }
-             else {
-                 //             设备上没有用户
-                 newUserList = [NSMutableArray arrayWithObject:logingUser];
-             }
-             [[NSUserDefaults standardUserDefaults] setObject:[newUserList copy] forKey:@"userList"];
+//             else {
+//                 //             设备上没有用户
+//                 newUserList = [NSMutableArray arrayWithObject:logingUser];
+//             }
+//             [[NSUserDefaults standardUserDefaults] setObject:[newUserList copy] forKey:@"userList"];
              [[NSUserDefaults standardUserDefaults] setObject:logingUser forKey:@"currentOnLineUser"];
              [[NSUserDefaults standardUserDefaults] setObject:logingUser forKey:@"currentUser"];
              [[NSUserDefaults standardUserDefaults] synchronize];

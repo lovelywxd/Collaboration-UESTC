@@ -8,8 +8,9 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
 
+@interface ViewController ()
+@property (nonatomic ,unsafe_unretained) NSString *hah;
 @end
 
 @implementation ViewController
