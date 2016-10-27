@@ -10,8 +10,12 @@
 #import "EGOImageView.h"
 #import "WebViewController.h"
 #import "AppDelegate.h"
+#import "YouShuGou-Swift.h"
+#import "EGOImageView.h"
+#import "Header.h"
 
-@interface HomeSearchDetailController ()
+
+@interface HomeSearchDetailController ()<FaveButtonDelegate>
 @property (nonatomic ,strong) NSMutableArray *PriceList;
 @property (nonatomic, copy) NSString* bookISBN;
 @property (nonatomic, copy) NSString* bookLowestPrice;
@@ -24,6 +28,7 @@
     [self prepareProperty];
     [self searInHomeDetail];
     self.title = self.targetItem.bookName;
+
 }
 
 - (void) searInHomeDetail {
@@ -74,7 +79,7 @@
      failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
          NSLog(@"fail search detail in homepage");
-         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器5⃣️响应" message:@"获取书籍信息失败" preferredStyle:UIAlertControllerStyleAlert];
+         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"服务器无响应" message:@"获取书籍信息失败" preferredStyle:UIAlertControllerStyleAlert];
          UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {}];
          [alert addAction:defaultAction];
          [self presentViewController:alert animated:YES completion:nil];
@@ -90,10 +95,10 @@
         for (id item in arr) {
             
             NSString *tempName = [item objectForKey:@"bookSaler"];
-            NSRange range = [tempName rangeOfString:@"."];//获取$file/的位置
-            NSString *saler = [tempName substringToIndex:range.location];//开始截取
+//            NSRange range = [tempName rangeOfString:@"."];//获取$file/的位置
+//            NSString *saler = [tempName substringToIndex:range.location];//开始截取
             NSString *price = [item objectForKey:@"bookCurrentPrice"];
-            [self.PriceList addObject:[NSDictionary dictionaryWithObjectsAndKeys:saler,@"bookSaler",price,@"bookCurrentPrice", nil]];
+            [self.PriceList addObject:[NSDictionary dictionaryWithObjectsAndKeys:tempName,@"bookSaler",price,@"bookCurrentPrice", nil]];
             CGFloat fPrice = [price floatValue];
             if (fPrice < lowestPrice) {
                 lowestPrice = fPrice;
@@ -116,7 +121,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0:
-            return 123;
+            return 176;
             break;
             
         default:
@@ -149,7 +154,9 @@
             cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
             EGOImageView *imgView = (EGOImageView*)[cell viewWithTag:1];
             NSString *bookImgUrl = self.targetItem.bookImageLink;
+            
             imgView.imageURL = [NSURL URLWithString:bookImgUrl];
+      
             UILabel *label;
             label = (UILabel*)[cell viewWithTag:2];
             label.text = self.targetItem.bookName;
@@ -157,6 +164,15 @@
             label.text = self.targetItem.bookDetail;
             UIButton *btn = (UIButton*)[cell viewWithTag:4];
             [btn addTarget:self action:@selector(GoDouBan:) forControlEvents:UIControlEventTouchUpInside];
+            
+
+            UIView *view = (UIView*)[cell viewWithTag:5];
+            CGRect rect = view.frame;
+            rect.size.width = rect.size.width - 3;
+            rect.size.height = rect.size.height - 2;
+            FaveButton *btn1 = [[FaveButton alloc] initWithFrame:rect faveIconNormal:[UIImage imageNamed:@"love"]];
+            btn1.delegate = self;
+            [self.view addSubview:btn1];
         }
             break;
             
@@ -164,9 +180,10 @@
         {
             static NSString *CellId = @"PriceCell";
             cell = [tableView dequeueReusableCellWithIdentifier:CellId forIndexPath:indexPath];
-            UIImageView *imgView = (UIImageView*)[cell viewWithTag:1];
-            NSString *name = [[self.PriceList objectAtIndex:indexPath.row] objectForKey:@"bookSaler"];
-            imgView.image = [UIImage imageNamed:name];
+//            UIImageView *imgView = (UIImageView*)[cell viewWithTag:1];
+            EGOImageView  *iView = (EGOImageView*)[cell viewWithTag:1];
+            NSString *urlstr =  [[self.PriceList objectAtIndex:indexPath.row] objectForKey:@"bookSaler"];
+            iView.imageURL = [NSURL URLWithString:urlstr];
             UILabel *label = (UILabel*)[cell viewWithTag:2];
             label.text = [[self.PriceList objectAtIndex:indexPath.row] objectForKey:@"bookCurrentPrice"];
 
@@ -190,7 +207,7 @@
 
 
 
-- (IBAction)collect:(id)sender {
+- (void)collectBook {
     AppDelegate *appdele = [UIApplication sharedApplication].delegate;
     NSString *url = [NSString stringWithFormat:@"%@/favourite/add/",appdele.baseUrl];
     
@@ -218,11 +235,11 @@
          //         [hud hideAnimated:YES];
          NSString *status = [responseObject objectForKey:@"status"];
          if ([status isEqualToString:@"0"]) {
-             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:@"收藏成功" preferredStyle:UIAlertControllerStyleAlert];
-             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-             }];
-             [alert addAction:defaultAction];
-             [self presentViewController:alert animated:YES completion:nil];
+//             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:@"收藏成功" preferredStyle:UIAlertControllerStyleAlert];
+//             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+//             }];
+//             [alert addAction:defaultAction];
+//             [self presentViewController:alert animated:YES completion:nil];
              
          }
          else {
@@ -246,4 +263,46 @@
      }];
 
 }
+
+
+#pragma mark - FaveButtonDelegate
+- (void)faveButton:(FaveButton *)faveButton didSelected:(BOOL)selected {
+    if (faveButton.isSelected) {
+        [self collectBook];
+    }
+    else
+        NSLog(@"deSelect");
+    
+}
+
+- (NSArray*)objc_faveButtonDotColors:(FaveButton *)faveButton {
+    NSMutableArray *colors = [[NSMutableArray alloc] init];
+    
+    UIColor *first_color = getColor(0x7DC2F4);
+    UIColor *second_color = getColor(0xE2264D);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    first_color = getColor(0xF8CC61);
+    second_color = getColor(0x9BDFBA);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    first_color = getColor(0xAF90F4);
+    second_color = getColor(0x90D1F9);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    first_color = getColor(0xE9A966);
+    second_color = getColor(0xF8C852);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    first_color = getColor(0xF68FA7);
+    second_color = getColor(0xF6A2B8);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    if (1) {
+        return colors;
+    }
+    return nil;
+}
+
+
 @end

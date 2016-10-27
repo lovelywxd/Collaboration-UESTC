@@ -34,8 +34,8 @@
 //    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"text/html",@"text/plain",nil];
     
 //    self.manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    self.OnLineTest = NO;
-//    self.OnLineTest = YES;
+//    self.OnLineTest = NO;
+    self.OnLineTest = YES;
     [self initShopList];
 
     self.baseUrl = @"http://115.159.219.141:8000";

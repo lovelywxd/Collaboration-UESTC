@@ -11,6 +11,6 @@
 
 @interface HomeSearchDetailController : UITableViewController
 @property (nonatomic ,copy) HomeSearchListItem* targetItem;
-- (IBAction)collect:(id)sender;
+//- (IBAction)collect:(id)sender;
 
 @end

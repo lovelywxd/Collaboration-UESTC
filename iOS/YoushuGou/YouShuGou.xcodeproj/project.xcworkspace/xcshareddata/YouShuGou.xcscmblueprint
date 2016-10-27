@@ -1,18 +1,22 @@
 {
   "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2AA226A917E2351BF795CB4F537903A91A90063E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "b7442473-8484-456d-b779-b3907877eae9++5949" : {
 
+    }
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "8C0FFF9ACCCC3E623C487EA438B65049253F75F3" : 0,
     "2AA226A917E2351BF795CB4F537903A91A90063E" : 0,
     "97890E26408A9C3B0F38BCF8F1D9C7F539D2DD3E" : 0,
-    "8C0FFF9ACCCC3E623C487EA438B65049253F75F3" : 0
+    "b7442473-8484-456d-b779-b3907877eae9++5949" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "DE29A08B-65CD-4D96-AD42-F26B9566F406",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "8C0FFF9ACCCC3E623C487EA438B65049253F75F3" : "MyApp\/",
     "2AA226A917E2351BF795CB4F537903A91A90063E" : "Collaboration-UESTC\/",
     "97890E26408A9C3B0F38BCF8F1D9C7F539D2DD3E" : "MobileContest\/",
-    "8C0FFF9ACCCC3E623C487EA438B65049253F75F3" : "MyApp\/"
+    "b7442473-8484-456d-b779-b3907877eae9++5949" : "Collaboration-UESTC\/iOS\/YoushuGou\/AFNetworking\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "YouShuGou",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -32,6 +36,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "222.197.180.140:sulirong\/MobileContest.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "97890E26408A9C3B0F38BCF8F1D9C7F539D2DD3E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/svn.hz.netease.com\/svn\/mag_jiaoyou",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "b7442473-8484-456d-b779-b3907877eae9++5949"
     }
   ]
 }

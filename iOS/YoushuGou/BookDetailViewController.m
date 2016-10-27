@@ -11,13 +11,16 @@
 #import "MBProgressHUD.h"
 #import "PriceComparisonItem.h"
 #import "PriceComparisonViewController.h"
+#import "YouShuGou-Swift.h"
+#import "Header.h"
 
 
-@interface BookDetailViewController ()<EGOImageButtonDelegate>
+@interface BookDetailViewController ()<EGOImageButtonDelegate,FaveButtonDelegate>
 {
 //    MBProgressHUD *hud;
     MBProgressHUD *addToCarthud;
 //    MBProgressHUD *getPriceListHud;
+    BOOL isLove;
 }
 @property (nonatomic ,copy) BookDetailInfo *bookDetailInfo;
 @end
@@ -26,6 +29,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    CGRect rect = self.collectField.frame;
+    rect.size.width = rect.size.width - 3;
+    rect.size.height = rect.size.height - 2;
+    FaveButton *btn = [[FaveButton alloc] initWithFrame:rect faveIconNormal:[UIImage imageNamed:@"love"]];
+    btn.delegate = self;
+    [self.view addSubview:btn];
+//    [self.collectField addSubview:btn];
     [self LoadBookDetail];
 }
 
@@ -136,7 +146,7 @@
     }
 }
 
-- (IBAction)collect:(id)sender {
+- (void)collectBook {
 
     
 //    hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -168,13 +178,13 @@
 //         [hud hideAnimated:YES];
          NSString *status = [responseObject objectForKey:@"status"];
          if ([status isEqualToString:@"0"]) {
-             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:@"收藏成功" preferredStyle:UIAlertControllerStyleAlert];
-             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-
-                 
-             }];
-             [alert addAction:defaultAction];
-             [self presentViewController:alert animated:YES completion:nil];
+//             UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"收藏" message:@"收藏成功" preferredStyle:UIAlertControllerStyleAlert];
+//             UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+//
+//                 
+//             }];
+//             [alert addAction:defaultAction];
+//             [self presentViewController:alert animated:YES completion:nil];
              
          }
          else {
@@ -350,6 +360,46 @@
     detailVC.bookName = self.bookBaseInfo.promotionBookName;
     [self.navigationController pushViewController:detailVC animated:YES];
     
+}
+
+
+#pragma mark - FaveButtonDelegate
+- (void)faveButton:(FaveButton *)faveButton didSelected:(BOOL)selected {
+    if (faveButton.isSelected) {
+        [self collectBook];
+    }
+    else
+           NSLog(@"deSelect");
+   
+}
+
+- (NSArray*)objc_faveButtonDotColors:(FaveButton *)faveButton {
+    NSMutableArray *colors = [[NSMutableArray alloc] init];
+    
+    UIColor *first_color = getColor(0x7DC2F4);
+    UIColor *second_color = getColor(0xE2264D);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    first_color = getColor(0xF8CC61);
+    second_color = getColor(0x9BDFBA);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    first_color = getColor(0xAF90F4);
+    second_color = getColor(0x90D1F9);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    first_color = getColor(0xE9A966);
+    second_color = getColor(0xF8C852);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    first_color = getColor(0xF68FA7);
+    second_color = getColor(0xF6A2B8);
+    [colors addObject:[NSArray arrayWithObjects:first_color,second_color, nil]];
+    
+    if (1) {
+        return colors;
+    }
+    return nil;
 }
 
 

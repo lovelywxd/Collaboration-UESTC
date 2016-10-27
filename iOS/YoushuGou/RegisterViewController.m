@@ -195,6 +195,9 @@
          [alert addAction:defaultAction];
          [self presentViewController:alert animated:YES completion:nil];
      }];
+    
+//    dispatch_once_t
+
 
 }
 - (IBAction)goLogin:(id)sender {
